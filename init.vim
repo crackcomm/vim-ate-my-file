@@ -46,11 +46,12 @@ let rg_def_opts = ['--ansi', '--prompt', 'Rg> ',
 command! -bang -nargs=* Rg call fzf#vim#grep(rg_def_exe.shellescape(<q-args>), 1, rg_def_opts, <bang>0)
 
 nnoremap <leader>a :Rg<CR>
+nnoremap <leader>f :Files<CR>
 
 " NERDTree
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <leader>b :NERDTreeToggle<CR>
-nnoremap <leader>f :NERDTreeFind<CR>
+nnoremap <leader>lf :NERDTreeFind<CR>
 
 " Coc
 set updatetime=200
