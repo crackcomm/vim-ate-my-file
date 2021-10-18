@@ -25,8 +25,8 @@ call plug#begin('~/.vim/plugged')
 call plug#end()
 
 let g:neoformat_ocaml_ocamlformat = {
-  \ 'exe': 'ocamlformat',
-  \ 'args': ['--name', '"%:p"', '-'],
+  \ 'exe': 'esy',
+  \ 'args': ['ocamlformat', '--name', '"%:p"', '-'],
   \ 'no_append': 1,
   \ 'stdin': 1,
   \ }
