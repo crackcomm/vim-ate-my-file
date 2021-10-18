@@ -1,0 +1,21 @@
+{
+  "languageserver": {
+    "go": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod"],
+      "trace.server": "verbose",
+      "filetypes": ["go"]
+    },
+    "ocaml": {
+      "command": "esy",
+      "args": ["ocamllsp"],
+      "rootPatterns": ["dune-project"],
+      "filetypes": ["ocaml"]
+    },
+    "erlang": {
+      "command": "erlang_ls",
+      "filetypes": ["erlang"]
+    }
+  }
+}
+
