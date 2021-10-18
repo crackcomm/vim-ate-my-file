@@ -32,6 +32,7 @@ let g:neoformat_ocaml_ocamlformat = {
   \ }
 
 let g:neoformat_enabled_ocaml = ['ocamlformat']
+let g:neoformat_enabled_go = ['goimports']
 
 " Format on save
 augroup fmt
@@ -62,8 +63,8 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-nmap <leader> qf  <Plug>(coc-fix-current)
-nmap <leader> cr  <Plug>(coc-rename)
+nmap <leader>qf <Plug>(coc-fix-current)
+nmap <leader>u <Plug>(coc-rename)
 
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
