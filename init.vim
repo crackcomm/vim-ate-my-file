@@ -21,6 +21,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
   Plug 'wookayin/fzf-ripgrep.vim'
+  Plug 'jreybert/vimagit'
 call plug#end()
 
 let g:neoformat_ocaml_ocamlformat = {
