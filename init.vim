@@ -22,6 +22,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'junegunn/fzf.vim'
   Plug 'wookayin/fzf-ripgrep.vim'
   Plug 'jreybert/vimagit'
+  Plug 'christoomey/vim-tmux-navigator'
+  Plug 'ocaml/vim-ocaml'
 call plug#end()
 
 let g:neoformat_ocaml_ocamlformat = {
@@ -33,6 +35,9 @@ let g:neoformat_ocaml_ocamlformat = {
 
 let g:neoformat_enabled_ocaml = ['ocamlformat']
 let g:neoformat_enabled_go = ['goimports']
+
+" Search for selected text
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
 " Format on save
 augroup fmt
@@ -55,16 +60,22 @@ nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <leader>b :NERDTreeToggle<CR>
 nnoremap <leader>lf :NERDTreeFind<CR>
 
+" OCaml
+nmap <leader>ho <Plug>OCamlSwitchEdit
+
 " Coc
 set updatetime=200
 set shortmess+=c
 
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
+nmap <leader> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nmap <leader>qf <Plug>(coc-fix-current)
 nmap <leader>u <Plug>(coc-rename)
+nmap <leader>hh :CocCommand clangd.switchSourceHeader split<CR>
+nmap <leader>hv :CocCommand clangd.switchSourceHeader vsplit<CR>
+nmap <leader>hg :CocCommand clangd.switchSourceHeader<CR>
 
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
