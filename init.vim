@@ -1,5 +1,7 @@
 set nocompatible
 
+let mapleader = ","
+
 call plug#begin('~/.vim/plugged')
   Plug 'preservim/nerdcommenter'
   Plug 'sbdchd/neoformat'
@@ -24,8 +26,15 @@ call plug#begin('~/.vim/plugged')
   Plug 'jreybert/vimagit'
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'ocaml/vim-ocaml'
+  Plug 'tomtom/tlib_vim'
+  Plug 'SirVer/ultisnips'
+  Plug 'honza/vim-snippets'
 call plug#end()
 
+" Snippets
+let g:UltiSnipsExpandTrigger="<c-l>"
+
+" Neoformat
 let g:neoformat_ocaml_ocamlformat = {
   \ 'exe': 'esy',
   \ 'args': ['ocamlformat', '--name', '"%:p"', '-'],
@@ -35,6 +44,9 @@ let g:neoformat_ocaml_ocamlformat = {
 
 let g:neoformat_enabled_ocaml = ['ocamlformat']
 let g:neoformat_enabled_go = ['goimports']
+
+" Replace all alias
+nnoremap S :%s//g<Left><Left>
 
 " Search for selected text
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
@@ -177,6 +189,7 @@ set expandtab
 set background=dark
 set relativenumber
 colorscheme bold-contrast
+colorscheme shrek-contrast
 highlight clear SignColumn
 highlight GitGutterAdd ctermfg=2
 highlight GitGutterChange ctermfg=3
