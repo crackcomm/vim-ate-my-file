@@ -29,6 +29,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'tomtom/tlib_vim'
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
+  Plug 'mattn/webapi-vim'
+  Plug 'mattn/vim-gist'
 call plug#end()
 
 " Snippets
