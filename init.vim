@@ -85,9 +85,13 @@ nmap <leader> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nmap <leader>qf <Plug>(coc-fix-current)
 nmap <leader>u <Plug>(coc-rename)
-nmap <leader>hh :CocCommand clangd.switchSourceHeader split<CR>
-nmap <leader>hv :CocCommand clangd.switchSourceHeader vsplit<CR>
-nmap <leader>hg :CocCommand clangd.switchSourceHeader<CR>
+
+augroup Cppgroup
+  autocmd!
+  autocmd FileType cpp,c,h nmap <leader>hh :CocCommand clangd.switchSourceHeader split<CR>
+  autocmd FileType cpp,c,h nmap <leader>hv :CocCommand clangd.switchSourceHeader vsplit<CR>
+  autocmd FileType cpp,c,h nmap <leader>hg :CocCommand clangd.switchSourceHeader<CR>
+augroup END
 
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
