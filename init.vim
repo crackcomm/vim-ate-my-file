@@ -73,7 +73,10 @@ nnoremap <leader>b :NERDTreeToggle<CR>
 nnoremap <leader>lf :NERDTreeFind<CR>
 
 " OCaml
-nmap <leader>ho <Plug>OCamlSwitchEdit
+augroup OCamlgroup
+  autocmd!
+  nmap <leader>hg <Plug>OCamlSwitchEdit
+augroup END
 
 " Coc
 set updatetime=200
