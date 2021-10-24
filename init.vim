@@ -34,7 +34,7 @@ call plug#begin('~/.vim/plugged')
 call plug#end()
 
 " Snippets
-let g:UltiSnipsExpandTrigger="<c-l>"
+let g:UltiSnipsExpandTrigger="<c-s>"
 
 " Neoformat
 let g:neoformat_ocaml_ocamlformat = {
