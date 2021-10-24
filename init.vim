@@ -58,6 +58,7 @@ augroup fmt
   autocmd!
   autocmd BufWritePre * undojoin | Neoformat
 augroup END
+nnoremap <leader>rd :Neoformat<CR>
 
 " fzf
 let rg_def_exe = "rg"
