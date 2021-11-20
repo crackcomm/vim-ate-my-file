@@ -2,6 +2,7 @@
 
 cap() { read foo; printf -v tmp "$foo" }
 ret() { echo $tmp }
+hg() { rg -e "^" -e $1 }
 
 # Copy to clipboard
 clip() { xclip -sel c }
