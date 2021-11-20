@@ -17,7 +17,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'romainl/vim-cool'
   Plug 'rainglow/vim'
   Plug 'pboettch/vim-cmake-syntax'
-  Plug 'tpope/vim-abolish'
   Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'ekalinin/Dockerfile.vim'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -33,6 +32,17 @@ call plug#begin('~/.vim/plugged')
   Plug 'mattn/vim-gist'
 call plug#end()
 
+" Split vertical
+nnoremap <leader>sv :vsplit<CR>
+nnoremap <leader>ss :split<CR>
+nnoremap <leader>st :tab split<CR>
+
+" Replace all alias
+nnoremap S :%s//g<Left><Left>
+
+" Search for selected text
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
+
 " Snippets
 let g:UltiSnipsExpandTrigger="<c-s>"
 
@@ -46,12 +56,6 @@ let g:neoformat_ocaml_ocamlformat = {
 
 let g:neoformat_enabled_ocaml = ['ocamlformat']
 let g:neoformat_enabled_go = ['goimports']
-
-" Replace all alias
-nnoremap S :%s//g<Left><Left>
-
-" Search for selected text
-vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
 " Format on save
 augroup fmt
@@ -71,6 +75,8 @@ nnoremap <leader>a :Rg<CR>
 nnoremap <leader>f :Files<CR>
 
 " NERDTree
+let NERDTreeIgnore = ['\.pyc$', '\.log$', '_esy', 'esy.lock', 'node_modules', 'target']
+
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <leader>b :NERDTreeToggle<CR>
 nnoremap <leader>lf :NERDTreeFind<CR>
@@ -78,7 +84,9 @@ nnoremap <leader>lf :NERDTreeFind<CR>
 " OCaml
 augroup OCamlgroup
   autocmd!
-  nmap <leader>hg <Plug>OCamlSwitchEdit
+  nmap <silent>mi <Plug>OCamlSwitchEdit
+  "autocmd FileType is not working
+  "autocmd FileType ml,mli nmap <leader>hg <Plug>OCamlSwitchEdit
 augroup END
 
 " Coc
@@ -87,16 +95,16 @@ set shortmess+=c
 
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
-nmap <leader> gi <Plug>(coc-implementation)
+nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nmap <leader>qf <Plug>(coc-fix-current)
 nmap <leader>u <Plug>(coc-rename)
 
 augroup Cppgroup
   autocmd!
-  autocmd FileType cpp,c,h nmap <leader>hh :CocCommand clangd.switchSourceHeader split<CR>
-  autocmd FileType cpp,c,h nmap <leader>hv :CocCommand clangd.switchSourceHeader vsplit<CR>
-  autocmd FileType cpp,c,h nmap <leader>hg :CocCommand clangd.switchSourceHeader<CR>
+  autocmd FileType cc,cpp,c,h nmap <leader>hh :CocCommand clangd.switchSourceHeader split<CR>
+  autocmd FileType cc,cpp,c,h nmap <leader>hv :CocCommand clangd.switchSourceHeader vsplit<CR>
+  autocmd FileType cc,cpp,c,h nmap <silent>gh :CocCommand clangd.switchSourceHeader<CR>
 augroup END
 
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -175,7 +183,7 @@ vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
 " Git gutter
-let g:gitgutter_max_signs = 500
+let g:gitgutter_max_signs = -1
 let g:gitgutter_map_keys = 0
 let g:gitgutter_override_sign_column_highlight = 0
 
@@ -198,8 +206,8 @@ set softtabstop=2
 set expandtab
 set background=dark
 set relativenumber
-colorscheme bold-contrast
-colorscheme shrek-contrast
+set signcolumn=yes
+colorscheme volatile-contrast
 highlight clear SignColumn
 highlight GitGutterAdd ctermfg=2
 highlight GitGutterChange ctermfg=3
