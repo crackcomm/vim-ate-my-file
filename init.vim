@@ -241,7 +241,7 @@ set expandtab
 set background=dark
 set relativenumber
 set signcolumn=yes
-colorscheme volatile-contrast
+colorscheme stasis-contrast
 highlight clear SignColumn
 highlight GitGutterAdd ctermfg=2
 highlight GitGutterChange ctermfg=3
