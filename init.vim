@@ -43,6 +43,17 @@ nnoremap S :%s//g<Left><Left>
 " Search for selected text
 vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
+function RandomColorScheme()
+  let mycolors = split(globpath(&rtp,"**/colors/*.vim"),"\n") 
+  let color = mycolors[localtime() % len(mycolors)]
+  exe 'so ' . color
+  echo color
+  unlet mycolors
+endfunction
+
+:command! NewColor call RandomColorScheme()
+nnoremap <leader>rc :NewColor<CR>
+
 " Snippets
 let g:UltiSnipsExpandTrigger="<c-s>"
 
