@@ -199,6 +199,9 @@ inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
+" Magit
+let g:magit_default_fold_level = 1
+
 " Git gutter
 let g:gitgutter_max_signs = -1
 let g:gitgutter_map_keys = 0
