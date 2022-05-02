@@ -69,10 +69,10 @@ let g:neoformat_enabled_ocaml = ['ocamlformat']
 let g:neoformat_enabled_go = ['goimports']
 
 " Format on save
-augroup fmt
-  autocmd!
-  autocmd BufWritePre * undojoin | Neoformat
-augroup END
+"augroup fmt
+"  autocmd!
+"  autocmd BufWritePre * undojoin | Neoformat
+"augroup END
 nnoremap <leader>rd :Neoformat<CR>
 
 " Disable Arrow keys in Normal mode
