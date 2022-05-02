@@ -64,6 +64,12 @@ augroup fmt
 augroup END
 nnoremap <leader>rd :Neoformat<CR>
 
+" Disable Arrow keys in Normal mode
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+
 " fzf
 let rg_def_exe = "rg"
 let rg_def_opts = ['--ansi', '--prompt', 'Rg> ',
