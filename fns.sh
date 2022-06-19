@@ -13,3 +13,9 @@ psef() {
       --header 'Press CTRL-R to reload' --header-lines=1 \
       --height=50% --layout=reverse
 }
+
+# Aliases
+scripts=$(realpath $(dirname $0))
+edx() { esy dune exec $(echo $@ | sed 's/\.ml/\.exe/') }
+edw() { $scripts/edw.sh $@ }
+edt() { $scripts/edt.sh $@ }
