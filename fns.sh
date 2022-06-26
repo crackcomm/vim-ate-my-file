@@ -26,3 +26,6 @@ edw() { $scripts/edw.sh $@ }
 
 # Watch and execute `esy dune runtest` respecting .gitignore.
 edt() { $scripts/edt.sh $@ }
+
+# Watch and exec respecting .gitignore.
+wx()  { $scripts/wx.sh $@ }
