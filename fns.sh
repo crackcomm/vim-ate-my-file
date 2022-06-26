@@ -7,6 +7,7 @@ hg() { rg -e "^" -e $1 }
 # Copy to clipboard
 clip() { xclip -sel c }
 
+# ps -ef with interactive search
 psef() {
   FZF_DEFAULT_COMMAND='ps -ef' \
     fzf --bind "ctrl-r:reload(ps -ef)" \
@@ -16,6 +17,12 @@ psef() {
 
 # Aliases
 scripts=$(realpath $(dirname $0))
+
+# `esy dune exec $@` but allowing for `.ml` extension.
 edx() { esy dune exec $(echo $@ | sed 's/\.ml/\.exe/') }
+
+# Watch and execute `esy dune exec $@` respecting .gitignore.
 edw() { $scripts/edw.sh $@ }
+
+# Watch and execute `esy dune runtest` respecting .gitignore.
 edt() { $scripts/edt.sh $@ }
