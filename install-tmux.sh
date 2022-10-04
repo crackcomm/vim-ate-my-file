@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-git clone https://github.com/tmux/tmux.git
+git clone git@github.com:tmux/tmux.git
 cd tmux
 sh autogen.sh
 ./configure && make -j`nproc`
