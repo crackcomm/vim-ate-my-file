@@ -82,6 +82,7 @@ let g:neoformat_enabled_go = ['goimports']
 "  autocmd BufWritePre * undojoin | Neoformat
 "augroup END
 nnoremap <leader>rd :Neoformat<CR>
+nnoremap <leader>gg :Neoformat<CR>
 
 " Disable Arrow keys in Normal mode
 map <up> <nop>
