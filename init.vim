@@ -32,6 +32,14 @@ call plug#begin('~/.vim/plugged')
   Plug 'mattn/vim-gist'
 call plug#end()
 
+augroup filetype
+  au! BufReadPost,BufNewFile *.atd set syntax=ocaml
+augroup END
+
+augroup filetype
+  au! BufReadPost,BufNewFile *.td set syntax=tablegen
+augroup END
+
 " Split vertical
 nnoremap <leader>sv :vsplit<CR>
 nnoremap <leader>ss :split<CR>
