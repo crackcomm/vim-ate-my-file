@@ -101,7 +101,7 @@ nnoremap <leader>a :Rg<CR>
 nnoremap <leader>f :Files<CR>
 
 " NERDTree
-let NERDTreeIgnore = ['\.pyc$', '\.log$', '_esy', 'esy.lock', 'node_modules', 'target']
+let NERDTreeIgnore = ['\.pyc$', '\.log$', '^_', 'esy.lock', 'node_modules', '^target', '^bazel-']
 
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <leader>b :NERDTreeToggle<CR>
