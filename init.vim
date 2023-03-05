@@ -40,6 +40,13 @@ augroup filetype
   au! BufReadPost,BufNewFile *.td set syntax=tablegen
 augroup END
 
+augroup filetype
+  au! BufReadPost,BufNewFile *.sky set syntax=python
+  au! BufReadPost,BufNewFile *.BUILD set syntax=python
+  au! BufReadPost,BufNewFile BUILD set syntax=python
+  au! BufReadPost,BufNewFile WORKSPACE set syntax=python
+augroup END
+
 " Split vertical
 nnoremap <leader>sv :vsplit<CR>
 nnoremap <leader>ss :split<CR>
