@@ -2,7 +2,7 @@
 
 cap() { read foo; printf -v tmp "$foo" }
 ret() { echo $tmp }
-hg() { rg -e "^" -e $1 }
+rgh() { rg -e "^" -e $1 }
 
 # Copy to clipboard
 clip() { xclip -sel c }
@@ -29,3 +29,8 @@ edt() { $scripts/edt.sh $@ }
 
 # Watch and exec respecting .gitignore.
 wx()  { $scripts/wx.sh $@ }
+
+t1() { tree -L 1 . }
+t2() { tree -L 2 . }
+t3() { tree -L 3 . }
+t4() { tree -L 4 . }

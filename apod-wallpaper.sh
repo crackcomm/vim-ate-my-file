@@ -1,5 +1,8 @@
 #!/bin/bash
 set -eux
+export DISPLAY=:0
+export XAUTHORITY=$HOME/.Xauthority
+export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u)/bus"
 
 SAVE_TO="${1:-"$(mktemp)"}"
 

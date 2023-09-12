@@ -11,7 +11,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'preservim/nerdtree'
   Plug 'mg979/vim-visual-multi'
   Plug 'fatih/vim-go'
-  Plug 'neoclide/coc.nvim'
+  Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
   Plug 'dcharbon/vim-flatbuffers'
   Plug 'bfrg/vim-cpp-modern'
   Plug 'romainl/vim-cool'
@@ -25,12 +25,24 @@ call plug#begin('~/.vim/plugged')
   Plug 'jreybert/vimagit'
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'ocaml/vim-ocaml'
+  Plug 'aonemd/quietlight.vim'
   Plug 'tomtom/tlib_vim'
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
   Plug 'mattn/webapi-vim'
   Plug 'mattn/vim-gist'
+  Plug 'leafgarland/typescript-vim'
 call plug#end()
+
+" Paste without overwriting register
+xnoremap p pgvy
+
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+let g:NERDCommentEmptyLines = 1
+
+" Align multi line comments
+let g:NERDDefaultAlign = 'left'
 
 augroup filetype
   au! BufReadPost,BufNewFile *.atd set syntax=ocaml
@@ -46,6 +58,14 @@ augroup filetype
   au! BufReadPost,BufNewFile BUILD set syntax=python
   au! BufReadPost,BufNewFile WORKSPACE set syntax=python
 augroup END
+
+" Unmap F9 in insert mode
+imap <F9> <nop>
+nnoremap <F1> <C-PageUp>
+nnoremap <F2> <C-PageDown>
+
+" Copy to system clipboard
+noremap <Leader>y "+y
 
 " Split vertical
 nnoremap <leader>sv :vsplit<CR>
@@ -81,7 +101,10 @@ let g:neoformat_ocaml_ocamlformat = {
   \ }
 
 let g:neoformat_enabled_ocaml = ['ocamlformat']
-let g:neoformat_enabled_go = ['goimports']
+let g:neoformat_enabled_go = ['goimports', 'gofmt']
+let g:neoformat_enabled_python = ['black']
+let g:neoformat_enabled_javascript = ['prettier']
+let g:neoformat_enabled_typescript = ['prettier']
 
 " Format on save
 "augroup fmt
@@ -89,7 +112,10 @@ let g:neoformat_enabled_go = ['goimports']
 "  autocmd BufWritePre * undojoin | Neoformat
 "augroup END
 nnoremap <leader>rd :Neoformat<CR>
-nnoremap <leader>gg :Neoformat<CR>
+nnoremap <leader>gg :Neoformat<CR>:w<CR>
+
+" Save on ss
+nmap <silent> ss :Neoformat<CR>:w<CR>
 
 " Disable Arrow keys in Normal mode
 map <up> <nop>
@@ -108,7 +134,7 @@ nnoremap <leader>a :Rg<CR>
 nnoremap <leader>f :Files<CR>
 
 " NERDTree
-let NERDTreeIgnore = ['\.pyc$', '\.log$', '^_', 'esy.lock', 'node_modules', '^target', '^bazel-']
+let NERDTreeIgnore = ['\.pyc$', '\.log$', '^_esy', '^_build', 'esy.lock', 'node_modules', '^target', '^bazel-', '^__py']
 
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <leader>b :NERDTreeToggle<CR>
@@ -132,7 +158,6 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nmap <leader>qf <Plug>(coc-fix-current)
 nmap <leader>u <Plug>(coc-rename)
-nmap <leader>rc :CocRestart<CR>
 
 augroup Cppgroup
   autocmd!
@@ -180,6 +205,8 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+" Rebuild.
+nnoremap <silent><nowait> <space>r  :<C-u>CocRestart<CR>
 
 function! s:show_documentation()
   if (index(['vim', 'help'], &filetype) >= 0)
@@ -224,11 +251,6 @@ let g:gitgutter_max_signs = -1
 let g:gitgutter_map_keys = 0
 let g:gitgutter_override_sign_column_highlight = 0
 
-" NERDTree
-" Start NERDTree when Vim starts with a directory argument.
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
-    \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
 " Exit Vim if NERDTree is the only window remaining in the only tab.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 " Close the tab if NERDTree is the only window remaining in it.
@@ -259,9 +281,18 @@ set background=dark
 set relativenumber
 set signcolumn=yes
 colorscheme stasis-contrast
+highlight TabLine guibg=NONE gui=NONE
 highlight clear SignColumn
 highlight GitGutterAdd ctermfg=2
 highlight GitGutterChange ctermfg=3
 highlight GitGutterDelete ctermfg=1
 highlight GitGutterChangeDelete ctermfg=4
-
+" Used by coc unused variables
+highlight Error guibg=#470404
+highlight Conceal guibg=#1a1a1a
+highlight CocWarningHighlight guibg=#141414
+highlight CocErrorSign guifg=#400707
+highlight CocWarningSign guifg=#422d18
+highlight CocWarningHighlight gui=NONE
+highlight FgCocErrorFloatBgCocFloating guifg=#b51010
+highlight FgCocWarningFloatBgCocFloating guifg=#a15e1d
