@@ -100,6 +100,13 @@ let g:neoformat_ocaml_ocamlformat = {
   \ 'stdin': 1,
   \ }
 
+let g:neoformat_dune_dune = {
+  \ 'exe': 'esy',
+  \ 'args': ['dune', 'format-dune-file'],
+  \ 'no_append': 1,
+  \ 'stdin': 1,
+  \ }
+
 let g:neoformat_enabled_ocaml = ['ocamlformat']
 let g:neoformat_enabled_go = ['goimports', 'gofmt']
 let g:neoformat_enabled_python = ['black']
