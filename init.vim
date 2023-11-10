@@ -170,6 +170,7 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nmap <leader>qf <Plug>(coc-fix-current)
 nmap <leader>u <Plug>(coc-rename)
+nmap <space>d :CocCommand workspace.diagnosticRelated<CR>
 
 augroup Cppgroup
   autocmd!
