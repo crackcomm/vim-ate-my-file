@@ -28,7 +28,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'aonemd/quietlight.vim'
   Plug 'tomtom/tlib_vim'
   Plug 'SirVer/ultisnips'
-  Plug 'honza/vim-snippets'
   Plug 'mattn/webapi-vim'
   Plug 'mattn/vim-gist'
   Plug 'leafgarland/typescript-vim'
