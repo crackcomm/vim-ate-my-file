@@ -64,6 +64,7 @@ augroup END
 imap <F9> <nop>
 nnoremap <F1> <C-PageUp>
 nnoremap <F2> <C-PageDown>
+nnoremap <C-]> :tabnext<CR>
 
 " Copy to system clipboard
 noremap <Leader>y "+y
