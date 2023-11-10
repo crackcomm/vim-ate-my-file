@@ -55,6 +55,7 @@ augroup END
 augroup filetype
   au! BufReadPost,BufNewFile *.sky set syntax=python
   au! BufReadPost,BufNewFile *.BUILD set syntax=python
+  au! BufReadPost,BufNewFile BUILD.* set syntax=python
   au! BufReadPost,BufNewFile BUILD set syntax=python
   au! BufReadPost,BufNewFile WORKSPACE set syntax=python
 augroup END
