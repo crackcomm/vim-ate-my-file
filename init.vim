@@ -88,6 +88,7 @@ function RandomColorScheme()
   exe 'so ' . color
   echo color
   unlet mycolors
+  call MyHighlights()
 endfunction
 
 :command! NewColor call RandomColorScheme()
@@ -292,18 +293,23 @@ set background=dark
 set relativenumber
 set signcolumn=yes
 colorscheme stasis-contrast
-highlight TabLine guibg=NONE gui=NONE
-highlight clear SignColumn
-highlight GitGutterAdd ctermfg=2
-highlight GitGutterChange ctermfg=3
-highlight GitGutterDelete ctermfg=1
-highlight GitGutterChangeDelete ctermfg=4
-" Used by coc unused variables
-highlight Error guibg=#470404
-highlight Conceal guibg=#1a1a1a
-highlight CocWarningHighlight guibg=#141414
-highlight CocErrorSign guifg=#400707
-highlight CocWarningSign guifg=#422d18
-highlight CocWarningHighlight gui=NONE
-highlight FgCocErrorFloatBgCocFloating guifg=#b51010
-highlight FgCocWarningFloatBgCocFloating guifg=#a15e1d
+
+function MyHighlights()
+  highlight TabLine guibg=NONE gui=NONE
+  highlight clear SignColumn
+  highlight GitGutterAdd ctermfg=2
+  highlight GitGutterChange ctermfg=3
+  highlight GitGutterDelete ctermfg=1
+  highlight GitGutterChangeDelete ctermfg=4
+  " Used by coc unused variables
+  highlight Error guibg=#470404
+  highlight Conceal guibg=#1a1a1a
+  highlight CocWarningHighlight guibg=#141414
+  highlight CocErrorSign guifg=#400707
+  highlight CocWarningSign guifg=#422d18
+  highlight CocWarningHighlight gui=NONE
+  highlight FgCocErrorFloatBgCocFloating guifg=#b51010
+  highlight FgCocWarningFloatBgCocFloating guifg=#a15e1d
+endfunction
+
+call MyHighlights()
