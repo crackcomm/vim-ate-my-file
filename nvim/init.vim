@@ -1,3 +1,11 @@
+" Install vim-plug automatically
+" https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 set nocompatible
 
 let mapleader = ","
@@ -11,7 +19,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'preservim/nerdtree'
   Plug 'mg979/vim-visual-multi'
   Plug 'fatih/vim-go'
-  Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'dcharbon/vim-flatbuffers'
   Plug 'bfrg/vim-cpp-modern'
   Plug 'romainl/vim-cool'
@@ -19,7 +27,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'pboettch/vim-cmake-syntax'
   Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'ekalinin/Dockerfile.vim'
-  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+  Plug 'junegunn/fzf'
   Plug 'junegunn/fzf.vim'
   Plug 'wookayin/fzf-ripgrep.vim'
   Plug 'jreybert/vimagit'
@@ -28,8 +36,11 @@ call plug#begin('~/.vim/plugged')
   Plug 'aonemd/quietlight.vim'
   Plug 'tomtom/tlib_vim'
   Plug 'SirVer/ultisnips'
+  Plug 'honza/vim-snippets'
   Plug 'mattn/webapi-vim'
   Plug 'mattn/vim-gist'
+  Plug 'dhruvasagar/vim-table-mode'
+  Plug 'antiagainst/vim-tablegen'
   Plug 'leafgarland/typescript-vim'
 call plug#end()
 
@@ -298,7 +309,7 @@ set expandtab
 set background=dark
 set relativenumber
 set signcolumn=yes
-colorscheme stasis-contrast
+colorscheme bold-contrast
 
 function MyHighlights()
   highlight TabLine guibg=NONE gui=NONE

@@ -4,6 +4,7 @@ if [ -n "$DISPLAY" ]; then
   setxkbmap -option "caps:escape"
 fi
 
+alias vi=nvim
 alias v="vi ."
 alias ls=eza
 
@@ -29,11 +30,12 @@ PROMPT='%(?.%F{green}√.%F{red}?%?)%f %B%F{240}%1~%f%b %# '
 
 setopt histignorealldups sharehistory
 
-# Use emacs keybindings even if our EDITOR is set to vi
+# Use vim keybindings
 bindkey -v
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
 bindkey "^R" history-incremental-search-backward
+bindkey "^S" history-incremental-search-forward
 
 HISTSIZE=1000000
 SAVEHIST=1000000
@@ -63,3 +65,7 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 bindkey '^[[A' up-line-or-search
 bindkey '^[[B' down-line-or-search
+
+bindkey '^[[1~' beginning-of-line
+bindkey '^[[4~' end-of-line
+bindkey '^[[3~' delete-char

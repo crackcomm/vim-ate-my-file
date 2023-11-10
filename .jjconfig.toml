@@ -1,0 +1,37 @@
+[user]
+name = "Łukasz Kurowski"
+email = "crackcomm@gmail.com"
+
+[ui]
+default-command = "sl"
+color = "always"
+diff.format = "git"
+paginate = "auto"
+
+[aliases]
+sl = ["log", "-r", "open()"]
+
+[revset-aliases]
+# Source: https://github.com/sunshowers/dotfiles/blob/d89f9fbfa89a1db3bae4a845efddd3159e29c1f1/home/.jjconfig.toml#L20-L35
+# We're uninterested in remote branches from origin etc, and their ancestors. But we *are*
+# interested in @git remote branches.
+#
+# What if a commit is present in both @git and a remote branch? In that case we are interested in
+# the commit. In the below computation, the commit is present in both `remote_branches()` and
+# `git_branches()`, and so it is not part of `uninterested()`. This is the desired behavior.
+'git_branches()' = 'remote_branches(remote=exact:"git")'
+'uninterested()' = '::(remote_branches() ~ git_branches())'
+'mine()' = 'author("crackcomm@")'
+'interested()' = 'mine() ~ uninterested()'
+'open()' = '''
+    ancestors(interested(), 2)
+      | (immutable_heads() ~ tags())
+      | ancestors(@, 2)
+'''
+
+# https://martinvonz.github.io/jj/v0.11.0/config/#set-of-immutable-commits
+'immutable_heads()' = 'tags()'
+
+[template-aliases]
+'format_short_id(id)' = 'id.shortest(7)'
+'format_timestamp(timestamp)' = 'timestamp.ago()'
