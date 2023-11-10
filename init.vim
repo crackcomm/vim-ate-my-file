@@ -58,6 +58,8 @@ augroup filetype
   au! BufReadPost,BufNewFile BUILD.* set syntax=python
   au! BufReadPost,BufNewFile BUILD set syntax=python
   au! BufReadPost,BufNewFile WORKSPACE set syntax=python
+  au! BufReadPost,BufNewFile MODULE set syntax=python
+  au! BufReadPost,BufNewFile MODULE.bazel set syntax=python
 augroup END
 
 " Unmap F9 in insert mode
