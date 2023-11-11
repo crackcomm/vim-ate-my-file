@@ -40,13 +40,27 @@ FROM ubuntu:22.04
 COPY --from=glibc /usr/lib/x86_64-linux-gnu/libpthread.a /usr/lib/x86_64-linux-gnu/libpthread.a
 COPY --from=glibc /usr/lib/x86_64-linux-gnu/libpthread.so.0 /usr/lib/x86_64-linux-gnu/libpthread.so.0
 
-COPY . /root/dot-repo
-WORKDIR /root/dot-repo
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Warsaw
-ENV PATH="$PATH:/root/.local/nvim-linux64/bin"
-RUN bash install/install.sh
+
+RUN apt-get update && apt-get install -y --no-install-recommends sudo && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+ARG UNAME=pah
+ARG UID=1000
+ARG GID=1000
+RUN groupadd -g $GID -o $UNAME
+RUN useradd -m -u $UID -g $GID -o -s /bin/bash $UNAME
+RUN usermod -aG sudo $UNAME
+RUN echo "${UNAME} ALL=(ALL) NOPASSWD: ALL" >>/etc/sudoers
+USER ${UNAME}
+
+COPY . /home/${UNAME}/dot-repo
+WORKDIR /home/${UNAME}/dot-repo
+
+ENV PATH="$PATH:$HOME/.local/nvim-linux64/bin"
+RUN sudo -E bash -c "./install/install.sh && chown -hR $UNAME $HOME"
+RUN /bin/zsh -c 'nvim -es -u $HOME/.config/nvim/init.vim -i NONE -c "PlugInstall --sync" -c "qa" || true'
 ENV DEBIAN_FRONTEND=
-RUN bash -c 'nvim -es -u $HOME/.config/nvim/init.vim -i NONE -c "PlugInstall --sync" -c "qa" || true'
-WORKDIR /root
+
+WORKDIR /home/${UNAME}
 ENTRYPOINT /bin/zsh
