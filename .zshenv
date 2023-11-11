@@ -5,7 +5,7 @@ if [ -f "$HOME/.cargo/env" ]; then
   . "$HOME/.cargo/env"
 fi
 
-export VISUAL=vi
+export VISUAL=nvim
 export EDITOR="$VISUAL"
 
 export FZF_DEFAULT_COMMAND="rg --files"
