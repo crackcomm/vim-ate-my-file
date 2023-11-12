@@ -68,5 +68,7 @@ RUN sudo -E bash -c "./install/install.sh && chown -hR $UNAME $HOME"
 RUN /bin/zsh -c 'nvim -es -u $HOME/.config/nvim/init.vim -i NONE -c "PlugInstall --sync" -c "qa" || true'
 ENV DEBIAN_FRONTEND=
 
+RUN cp /home/${UNAME}/dot-repo/.jjconfig.toml /home/${UNAME}/.jjconfig.toml
+
 WORKDIR /home/${UNAME}
 ENTRYPOINT /bin/zsh
