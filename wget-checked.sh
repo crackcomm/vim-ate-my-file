@@ -48,7 +48,10 @@ fi
 if $install; then
   mkdir -p $install_dir
 
-  if file --mime-type "$downloaded_file" | grep -q "application/gzip"; then
+  if file --mime-type "$downloaded_file" | grep -q "application/x-executable"; then
+    chmod +x $downloaded_file
+    mv "$downloaded_file" $install_dir
+  elif file --mime-type "$downloaded_file" | grep -q "application/gzip"; then
     tar -xzf "$downloaded_file" -C $install_dir
   elif file --mime-type "$downloaded_file" | grep -q "application/x-tar"; then
     tar -xf "$downloaded_file" -C $install_dir
