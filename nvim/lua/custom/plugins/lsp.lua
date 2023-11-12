@@ -1,0 +1,32 @@
+return {
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      "simrat39/inlay-hints.nvim",
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
+    },
+    config = function()
+      require("crackcomm.lsp")
+    end,
+  },
+
+  { "j-hui/fidget.nvim", branch = "legacy" },
+
+  {
+    "L3MON4D3/LuaSnip",
+    version = "v2.1.1",
+  },
+
+  "jose-elias-alvarez/nvim-lsp-ts-utils",
+  "folke/neodev.nvim",
+
+  {
+    "smjonas/inc-rename.nvim",
+    config = function()
+      require("inc_rename").setup()
+
+      vim.keymap.set("n", "<leader>rn", ":IncRename ")
+    end,
+  },
+}
