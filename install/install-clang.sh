@@ -2,8 +2,8 @@
 
 set -e
 
-CLANG_VERSION=17
-CLANG_PRIORITY=170
+CLANG_VERSION=19
+CLANG_PRIORITY=190
 
 # LLVM/Clang: https://apt.llvm.org/
 apt-key adv --fetch-keys https://apt.llvm.org/llvm-snapshot.gpg.key
@@ -24,19 +24,27 @@ apt-get install -y --no-install-recommends \
   clangd-${CLANG_VERSION} \
   clang-format-${CLANG_VERSION}
 
+update-alternatives --remove clangd /usr/bin/clangd
+update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-${CLANG_VERSION} ${CLANG_PRIORITY}
+
+update-alternatives --remove clang-format /usr/bin/clang-format
+update-alternatives \
+  --install /usr/bin/clang-format clang-format /usr/bin/clang-format-${CLANG_VERSION} ${CLANG_PRIORITY} \
+  --slave /usr/bin/clang-format-diff clang-format-diff /usr/bin/clang-format-diff-${CLANG_VERSION}
+
+update-alternatives --remove clang /usr/bin/clang
 update-alternatives \
   --install /usr/bin/clang clang /usr/bin/clang-${CLANG_VERSION} ${CLANG_PRIORITY} \
   --slave /usr/bin/clang++ clang++ /usr/bin/clang++-${CLANG_VERSION} \
   --slave /usr/bin/asan_symbolize asan_symbolize /usr/bin/asan_symbolize-${CLANG_VERSION} \
-  --slave /usr/bin/clang-cpp clang-cpp /usr/bin/clang-cpp-${CLANG_VERSION} \
-  --slave /usr/bin/clangd clangd /usr/bin/clangd-${CLANG_VERSION} \
-  --slave /usr/bin/clang-format clang-format /usr/bin/clang-format-${CLANG_VERSION} \
-  --slave /usr/bin/clang-format-diff clang-format-diff /usr/bin/clang-format-diff-${CLANG_VERSION}
+  --slave /usr/bin/clang-cpp clang-cpp /usr/bin/clang-cpp-${CLANG_VERSION}
 
+update-alternatives --remove lld /usr/bin/lld
 update-alternatives \
   --install /usr/bin/lld lld /usr/bin/lld-${CLANG_VERSION} ${CLANG_PRIORITY} \
   --slave /usr/bin/ld.lld ld.lld /usr/bin/lld-${CLANG_VERSION}
 
+update-alternatives --remove llvm-config /usr/bin/llvm-config
 update-alternatives \
   --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-${CLANG_VERSION} ${CLANG_PRIORITY} \
   --slave /usr/bin/llvm-ar llvm-ar /usr/bin/llvm-ar-${CLANG_VERSION} \
