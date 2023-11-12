@@ -42,8 +42,14 @@ COPY --from=glibc /usr/lib/x86_64-linux-gnu/libpthread.so.0 /usr/lib/x86_64-linu
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Warsaw
+ENV LANG=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
 
-RUN apt-get update && apt-get install -y --no-install-recommends sudo && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends sudo less locales tzdata && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* && \
+    locale-gen en_US.UTF-8 && \
+    dpkg-reconfigure locales
 
 ARG UNAME=pah
 ARG UID=1000

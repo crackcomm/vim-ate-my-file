@@ -12,7 +12,8 @@ apt-get install -y --no-install-recommends \
   zlib1g-dev \
   gfortran-11 \
   libstdc++-11-dev \
-  libffi-dev
+  libffi-dev \
+  tzdata
 
 if [ -n "$DISPLAY" ]; then
   apt install -qy --no-install-recommends \
