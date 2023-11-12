@@ -17,6 +17,9 @@ export GOROOT=$HOME/.local/go
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
+# Install to ~/.local/bin instead of /usr/local/bin
+export npm_config_prefix=~/.local
+
 export NPM_PACKAGES="${HOME}/.npm-packages"
 export PATH="$PATH:$NPM_PACKAGES/bin:$HOME/.local/bin"
 export MANPATH="${MANPATH-$(manpath)}:$NPM_PACKAGES/share/man"
