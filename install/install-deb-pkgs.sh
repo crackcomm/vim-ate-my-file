@@ -2,6 +2,7 @@
 
 set -e
 
+add-apt-repository ppa:ubuntu-toolchain-r/test
 apt-get update
 apt-get install -y --no-install-recommends \
   gnupg ca-certificates apt-transport-https software-properties-common \
@@ -10,8 +11,8 @@ apt-get install -y --no-install-recommends \
   make cmake \
   libssl-dev \
   zlib1g-dev \
-  gfortran-11 \
-  libstdc++-11-dev \
+  gfortran-13 \
+  libstdc++-13-dev \
   libffi-dev \
   tzdata
 
