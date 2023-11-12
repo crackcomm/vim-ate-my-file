@@ -124,6 +124,13 @@ let g:neoformat_dune_dune = {
   \ 'stdin': 1,
   \ }
 
+let g:neoformat_bzl_buildifier = {
+  \ 'exe': 'buildifier',
+  \ 'args': ['-lint=fix', '-path', expand('%:p')],
+  \ 'stdin': 1,
+  \ 'try_node_exe': 1,
+  \ }
+
 let g:neoformat_enabled_ocaml = ['ocamlformat']
 let g:neoformat_enabled_go = ['goimports', 'gofmt']
 let g:neoformat_enabled_python = ['black']
