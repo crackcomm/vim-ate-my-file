@@ -104,7 +104,7 @@ M.bazel = function(opts)
   if type(opts) == "string" then
     bazel_build(opts)
   end
-  bazel.picker(bazel_build)
+  bazel.picker(bazel_build, { auto_select = true })
 end
 
 M.run_last = function()

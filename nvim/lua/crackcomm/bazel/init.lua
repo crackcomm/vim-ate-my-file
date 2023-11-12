@@ -1,3 +1,4 @@
+local Path = require("plenary.path")
 local log = require("crackcomm.log")
 local pickers = require("telescope.pickers")
 local finders = require("telescope.finders")
@@ -18,17 +19,35 @@ M.workspace_exists = function()
   return true
 end
 
+M.file_label = function(file_path)
+  -- Get the directory and the file name without extension
+  local dir = vim.fn.fnamemodify(file_path, ":h")
+  local file_name = vim.fn.fnamemodify(file_path, ":t:r") -- Get the file name without the extension
+  -- Replace '/' with '/' in the label format and prepend '//'
+  local label = "//" .. dir:gsub("/", "/") .. ":" .. file_name
+  return label
+end
+
+local function label_exists(label, results)
+  for _, result in ipairs(results) do
+    if result == label then
+      return true
+    end
+  end
+  return false
+end
+
 M.picker = function(callback, opts)
   if not M.workspace_exists() then
     return
   end
 
-  opts = opts or {}
+  opts = opts or { auto_select = false }
   callback = callback or print
 
-  -- TODO: label
   -- Execute the Bazel query command
-  local command = "bazel query --keep_going --noshow_progress --output=label \"kind(.*_binary, '//ocxmr/...')\""
+  local command =
+    "bazel query --keep_going --noshow_progress --output=label \"kind(.*_binary, '//...') union kind(.*_test, '//...')\""
   local output = vim.fn.system(command)
 
   -- Check if the command executed successfully
@@ -47,6 +66,15 @@ M.picker = function(callback, opts)
   -- Show results in Telescope picker
   if #results < 1 then
     callback(nil)
+    return
+  end
+
+  -- If auto_select is enabled and the current file is a Bazel target, select it
+  local fn = Path:new(vim.fn.expand("%:p"))
+  local relative_path = fn:make_relative(vim.fn.getcwd())
+  local bazel_label = M.file_label(relative_path)
+  if opts.auto_select and label_exists(bazel_label, results) then
+    callback(bazel_label)
     return
   end
 
