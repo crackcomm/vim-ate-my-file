@@ -7,6 +7,12 @@ require("crackcomm.globals")
 vim.g.mapleader = ","
 vim.g.maplocalleader = "\\"
 
+vim.opt.backup = true
+vim.opt.backupdir = vim.fn.expand("~/.config/nvim/backup")
+
+vim.opt.undodir = vim.fn.expand("~/.config/nvim/undodir")
+vim.opt.undofile = true
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
