@@ -43,6 +43,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'dhruvasagar/vim-table-mode'
   Plug 'antiagainst/vim-tablegen'
   Plug 'leafgarland/typescript-vim'
+  Plug 'maxmellon/vim-jsx-pretty'
 call plug#end()
 
 " Paste without overwriting register
