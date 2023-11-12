@@ -40,6 +40,15 @@ require("telescope").setup({
         -- even more opts
       }),
     },
+
+    file_browser = {
+      -- theme = "ivy",
+      -- disables netrw and use telescope-file-browser in its place
+      -- hijack_netrw = true,
+      select_buffer = true,
+      respect_gitignore = true,
+      display_stat = { "size" },
+    },
   },
 
   defaults = {
@@ -89,3 +98,8 @@ _ = require("telescope").load_extension("neoclip")
 _ = require("telescope").load_extension("file_browser")
 _ = require("telescope").load_extension("ui-select")
 _ = require("telescope").load_extension("fzf")
+_ = require("telescope").load_extension("dap")
+
+vim.keymap.set("n", "<leader>cf", ":Telescope file_browser path=%:p:h select_buffer=true<CR>")
+vim.keymap.set("n", "<space>fa", ":Telescope oldfiles<CR>")
+vim.keymap.set("n", "<space>fb", ":Telescope buffers<CR>")

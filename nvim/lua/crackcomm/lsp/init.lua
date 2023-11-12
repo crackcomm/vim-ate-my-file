@@ -14,12 +14,13 @@ local servers = {
   },
   clangd = require("crackcomm.lsp.config.clangd"),
   gopls = require("crackcomm.lsp.config.gopls"),
-  tsserver = require("crackcomm.lsp.config.tsserver"),
+  ts_ls = require("crackcomm.lsp.config.ts_ls"),
 
   ocamllsp = {
     cmd = { "esy", "ocamllsp" },
     settings = {
       codelens = { enable = true },
+      syntaxDocumentation = { enable = true },
       server_capabilities = {
         semanticTokensProvider = nil,
       },

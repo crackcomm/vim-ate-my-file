@@ -8,9 +8,9 @@ vim.g.mapleader = ","
 vim.g.maplocalleader = "\\"
 
 vim.opt.backup = true
-vim.opt.backupdir = vim.fn.expand("~/.config/nvim/backup")
+vim.opt.backupdir = vim.fn.expand("~/.cache/nvim/backup")
 
-vim.opt.undodir = vim.fn.expand("~/.config/nvim/undodir")
+vim.opt.undodir = vim.fn.expand("~/.cache/nvim/undodir")
 vim.opt.undofile = true
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

@@ -1,11 +1,8 @@
 require("fidget").setup({
-  text = {
-    spinner = "moon",
-  },
-  align = {
-    bottom = true,
-  },
-  window = {
-    relative = "editor",
+  notification = {
+    window = {
+      align = "bottom",
+      relative = "editor",
+    },
   },
 })

@@ -34,6 +34,8 @@ map <down> <nop>
 map <left> <nop>
 map <right> <nop>
 
+" Telescope
+nnoremap <space>t :Telescope<CR>
 " Rep-grip through files
 nnoremap <leader>a :Telescope live_grep<CR>
 " Find in filenames

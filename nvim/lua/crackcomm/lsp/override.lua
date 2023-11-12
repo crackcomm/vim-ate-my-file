@@ -24,6 +24,7 @@ local custom_attach = function(client, bufnr)
 
   buf_nnoremap({ "<space>cr", vim.lsp.buf.rename })
   buf_nnoremap({ "<space>ca", vim.lsp.buf.code_action })
+  buf_vnoremap({ "<space>ca", vim.lsp.buf.code_action })
 
   buf_nnoremap({ "gd", vim.lsp.buf.definition })
   buf_nnoremap({ "gD", vim.lsp.buf.declaration })

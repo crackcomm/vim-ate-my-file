@@ -15,12 +15,10 @@ end
 
 function M.lsp_references()
   require("telescope.builtin").lsp_references({
-    layout_strategy = "vertical",
     layout_config = {
       prompt_position = "top",
     },
     sorting_strategy = "ascending",
-    ignore_filename = false,
   })
 end
 

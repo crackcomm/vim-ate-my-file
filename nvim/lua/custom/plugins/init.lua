@@ -38,10 +38,10 @@ return {
     },
   },
 
-  -- {
-  --   dir = "~/ocxmr-repos/colab/colab/nvim",
-  --   config = function()
-  --     require("colab").setup()
-  --   end,
-  -- },
+  {
+    dir = "~/ocxmr-repos/colab/nvim",
+    config = function()
+      require("colab").setup()
+    end,
+  },
 }

@@ -11,7 +11,7 @@ return {
     end,
   },
 
-  { "j-hui/fidget.nvim", branch = "legacy" },
+  "j-hui/fidget.nvim",
 
   {
     "L3MON4D3/LuaSnip",

@@ -15,4 +15,12 @@ return {
     end,
   },
   -- "rhysd/git-messenger.vim",
+  {
+    "FabijanZulj/blame.nvim",
+    config = function()
+      require("blame").setup({
+        format_fn = require("blame.formats.default_formats").date_message,
+      })
+    end,
+  },
 }
