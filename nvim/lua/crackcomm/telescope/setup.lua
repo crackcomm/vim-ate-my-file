@@ -1,5 +1,6 @@
 local fb = require("telescope").extensions.file_browser
 local nmap = require("crackcomm.keymap").nmap
+local vmap = require("crackcomm.keymap").vmap
 
 require("telescope").setup({
   pickers = {
@@ -236,6 +237,13 @@ nmap({
 })
 
 nmap({ "<space>of", builtin.oldfiles, "telescope: [o]ld [f]iles" })
+
+-- [g]it
+nmap({ "<space>gs", builtin.git_status, "telescope: [g]it [s]tatus" })
+nmap({ "<space>gf", builtin.git_files, "telescope: [g]it [f]iles" })
+nmap({ "<space>gl", builtin.git_commits, "telescope: [g]it [l]og" })
+nmap({ "<space>gc", builtin.git_bcommits, "telescope: [g]it [c]ommits" })
+vmap({ "<space>gc", builtin.git_bcommits_range, "telescope: [g]it [c]ommits" })
 
 -- Check if Neovim was started with a directory argument
 local args = vim.fn.argv()
