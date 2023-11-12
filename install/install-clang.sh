@@ -21,6 +21,7 @@ apt-get install -y --no-install-recommends \
   llvm-${CLANG_VERSION} \
   clang-${CLANG_VERSION} \
   lld-${CLANG_VERSION} \
+  clangd-${CLANG_VERSION} \
   clang-format-${CLANG_VERSION}
 
 update-alternatives \
@@ -28,6 +29,7 @@ update-alternatives \
   --slave /usr/bin/clang++ clang++ /usr/bin/clang++-${CLANG_VERSION} \
   --slave /usr/bin/asan_symbolize asan_symbolize /usr/bin/asan_symbolize-${CLANG_VERSION} \
   --slave /usr/bin/clang-cpp clang-cpp /usr/bin/clang-cpp-${CLANG_VERSION} \
+  --slave /usr/bin/clangd clangd /usr/bin/clangd-${CLANG_VERSION} \
   --slave /usr/bin/clang-format clang-format /usr/bin/clang-format-${CLANG_VERSION} \
   --slave /usr/bin/clang-format-diff clang-format-diff /usr/bin/clang-format-diff-${CLANG_VERSION}
 
