@@ -2,4 +2,4 @@
 
 set -e
 
-npm install --location=global esy@0.7.2
+npm i -U -g @esy-nightly/esy
