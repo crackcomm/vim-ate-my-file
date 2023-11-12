@@ -80,7 +80,8 @@ nnoremap <F2> <C-PageDown>
 nnoremap <C-]> :tabnext<CR>
 
 " Copy to system clipboard
-noremap <Leader>y "+y
+noremap <leader>y "+y
+nnoremap <leader>g :let @+=expand('%:p:~:.')<CR>:echo 'Relative file path copied to clipboard'<CR>
 
 " Split vertical
 nnoremap <leader>sv :vsplit<CR>
