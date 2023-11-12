@@ -91,6 +91,21 @@ require("telescope").setup({
     file_previewer = require("telescope.previewers").vim_buffer_cat.new,
     grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
     qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
+
+    path_display = function(_, path)
+      local home = os.getenv("HOME")
+      local substitutions = {
+        [home .. "/x/dot-repo/nvim"] = "~/nvim",
+        [home .. "/x/monorepo-ocxmr"] = "~/ocxmr",
+        [home] = "~",
+      }
+      for k, v in pairs(substitutions) do
+        if path:sub(1, #k) == k then
+          path = v .. path:sub(#k + 1)
+        end
+      end
+      return path
+    end,
   },
 })
 
