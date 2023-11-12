@@ -42,10 +42,10 @@ moveback = ["move", "--from", "@+", "--to", "@"]
 # interested in @git remote branches.
 #
 # What if a commit is present in both @git and a remote branch? In that case we are interested in
-# the commit. In the below computation, the commit is present in both `remote_branches()` and
+# the commit. In the below computation, the commit is present in both `remote_bookmarks()` and
 # `git_branches()`, and so it is not part of `uninterested()`. This is the desired behavior.
-'git_branches()' = 'remote_branches(remote=exact:"git")'
-'uninterested()' = '::(remote_branches() ~ git_branches()) | tags()'
+'git_branches()' = 'remote_bookmarks(remote=exact:"git")'
+'uninterested()' = '::(remote_bookmarks() ~ git_branches()) | tags()'
 'mine()' = 'author("crackcomm@")'
 'interested()' = 'mine() ~ uninterested()'
 'open()' = '''
