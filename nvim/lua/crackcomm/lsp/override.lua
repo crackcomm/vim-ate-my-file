@@ -1,7 +1,4 @@
 local autocmd = require("crackcomm.autocmd").autocmd
-local buf_nnoremap = require("crackcomm.keymap").buf_nnoremap
-local buf_inoremap = require("crackcomm.keymap").buf_inoremap
-local buf_vnoremap = require("crackcomm.keymap").buf_vnoremap
 local telescope_mapper = require("crackcomm.telescope.mappings")
 local handlers = require("crackcomm.lsp.handlers")
 local inlay_hints = require("crackcomm.lsp.inlay")
@@ -9,6 +6,11 @@ local inlay_hints = require("crackcomm.lsp.inlay")
 local autocmd_clear = vim.api.nvim_clear_autocmds
 local augroup_highlight = vim.api.nvim_create_augroup("custom-lsp-references", { clear = true })
 -- local augroup_codelens = vim.api.nvim_create_augroup("custom-lsp-codelens", { clear = true })
+
+local keymap = require("crackcomm.keymap")
+local buf_nnoremap = keymap.buf_nnoremap
+local buf_inoremap = keymap.buf_inoremap
+local buf_vnoremap = keymap.buf_vnoremap
 
 local custom_init = function(client)
   client.config.flags = client.config.flags or {}
@@ -20,20 +22,21 @@ local custom_attach = function(client, bufnr)
     return
   end
 
-  buf_inoremap({ "<c-s>", vim.lsp.buf.signature_help })
+  keymap.nmap({ "<space>e", vim.diagnostic.open_float, "lsp:diagnostic" })
+  buf_inoremap({ "<c-s>", vim.lsp.buf.signature_help, "lsp:signature_help" })
 
-  buf_nnoremap({ "<space>cr", vim.lsp.buf.rename })
-  buf_nnoremap({ "<space>ca", vim.lsp.buf.code_action })
-  buf_vnoremap({ "<space>ca", vim.lsp.buf.code_action })
+  buf_nnoremap({ "<space>cr", vim.lsp.buf.rename, "lsp:rename" })
+  buf_nnoremap({ "<space>ca", vim.lsp.buf.code_action, "lsp:code_action" })
+  buf_vnoremap({ "<space>ca", vim.lsp.buf.code_action, "lsp:code_action" })
 
-  buf_nnoremap({ "gd", vim.lsp.buf.definition })
-  buf_nnoremap({ "gD", vim.lsp.buf.declaration })
-  buf_nnoremap({ "gT", vim.lsp.buf.type_definition })
-  buf_nnoremap({ "K", vim.lsp.buf.hover, { desc = "lsp:hover" } })
+  buf_nnoremap({ "gd", vim.lsp.buf.definition, "lsp:definition" })
+  buf_nnoremap({ "gD", vim.lsp.buf.declaration, "lsp:declaration" })
+  buf_nnoremap({ "gT", vim.lsp.buf.type_definition, "lsp:type_definition" })
+  buf_nnoremap({ "K", vim.lsp.buf.hover, "lsp:hover" })
 
-  buf_nnoremap({ "<space>gI", handlers.implementation })
-  buf_nnoremap({ "<space>lr", "<cmd>lua require('crackcomm.lsp.codelens').run()<CR>" })
-  buf_nnoremap({ "<space>rr", "<cmd>LspRestart<CR>" })
+  buf_nnoremap({ "<space>gI", handlers.implementation, "lsp:implementation" })
+  buf_nnoremap({ "<space>lr", "<cmd>lua require('crackcomm.lsp.codelens').run()<CR>", "lsp:codelens" })
+  buf_nnoremap({ "<space>rr", "<cmd>LspRestart<CR>", "lsp:restart" })
 
   telescope_mapper("gr", "lsp_references", nil, true)
   telescope_mapper("gI", "lsp_implementations", nil, true)

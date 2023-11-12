@@ -13,14 +13,16 @@ local map_tele = function(key, f, options, buffer)
   local rhs = string.format("<cmd>lua require('crackcomm.telescope')['%s'](TelescopeMapArgs['%s'])<CR>", f, map_key)
 
   local map_options = {
+    desc = "telescope:" .. f,
     noremap = true,
     silent = true,
   }
 
   if not buffer then
-    vim.api.nvim_set_keymap(mode, key, rhs, map_options)
+    vim.keymap.set(mode, key, rhs, map_options)
   else
-    vim.api.nvim_buf_set_keymap(0, mode, key, rhs, map_options)
+    map_options.buffer = buffer
+    vim.keymap.set(mode, key, rhs, map_options)
   end
 end
 

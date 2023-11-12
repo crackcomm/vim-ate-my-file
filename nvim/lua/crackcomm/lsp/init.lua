@@ -68,5 +68,3 @@ end
 for server, config in pairs(servers) do
   setup_server(server, config)
 end
-
-vim.keymap.set("n", "<space>e", vim.diagnostic.open_float)
