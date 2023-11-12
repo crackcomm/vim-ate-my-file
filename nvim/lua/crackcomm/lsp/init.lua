@@ -2,16 +2,7 @@ local override = require("crackcomm.lsp.override")
 local lspconfig = require("lspconfig")
 
 local servers = {
-  pyright = {
-    settings = {
-      python = {
-        pythonPath = "/usr/bin/python3.10",
-        analysis = {
-          pythonVersion = "3.10",
-        },
-      },
-    },
-  },
+  pyright = require("crackcomm.lsp.config.pyright"),
   clangd = require("crackcomm.lsp.config.clangd"),
   gopls = require("crackcomm.lsp.config.gopls"),
   ts_ls = require("crackcomm.lsp.config.ts_ls"),
