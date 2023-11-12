@@ -44,6 +44,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'antiagainst/vim-tablegen'
   Plug 'leafgarland/typescript-vim'
   Plug 'maxmellon/vim-jsx-pretty'
+  Plug 'google/vim-jsonnet'
 call plug#end()
 
 " Paste without overwriting register
