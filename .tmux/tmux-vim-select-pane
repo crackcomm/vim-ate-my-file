@@ -3,14 +3,26 @@
 # running in the current pane, or only one pane exists.
 set -e
 
+flags="${1#-}"
+
+if [ "$(printf %.1s "$flags")" = "o" ]; then
+  tmux send-keys "C-n"
+fi
+
+direction=$(echo "$flags" | tr -d o | tr 'lLDUR' '\\hjkl')
+
+if [ -z "${direction}" ]; then
+  exit 0
+fi
+
 cmd="$(tmux display -p '#{pane_current_command}')"
 cmd="$(basename "$cmd" | tr A-Z a-z)"
 pane_count="$(tmux list-panes | wc -l)"
 
 if [ "${cmd}" = "nvim" ] || [ "$pane_count" -eq 1 ]; then
-  direction="$(echo "${1#-}" | tr 'lLDUR' '\\hjkl')"
   # forward the keystroke to Vim
   tmux send-keys "C-$direction"
 else
-  tmux select-pane "$@"
+  pane=$(echo "$@" | tr -d o)
+  tmux select-pane "$pane"
 fi
