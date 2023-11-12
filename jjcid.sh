@@ -26,7 +26,7 @@ if [[ "${CID_EDITOR}" == "editor" ]]; then
   body+="$CHGSTR\n"
 
   t=$(mktemp)
-  printf "$body" >"$t"
+  echo -e "$body" >"$t"
   mv "$t" "$1"
 else
   export CID_EDITOR="editor"
