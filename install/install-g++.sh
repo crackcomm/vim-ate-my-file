@@ -11,5 +11,8 @@ apt-get install -y --no-install-recommends \
 update-alternatives --install /usr/bin/cc cc /usr/bin/gcc-13 130
 update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++-13 130
 
+update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 130
+update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 130
+
 apt-get clean
 rm -rf /var/lib/apt/lists/*
