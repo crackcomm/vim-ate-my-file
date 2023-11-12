@@ -3,7 +3,7 @@
 set -eu
 
 if [ "$#" -lt 2 ]; then
-  echo "Usage: $0 <URL> <Expected_SHA256> [--install]"
+  echo "Usage: $0 <URL> <Expected_SHA256> [--install] [--install-dir]"
   exit 1
 fi
 
