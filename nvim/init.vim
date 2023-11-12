@@ -7,6 +7,7 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
 endif
 
 set nocompatible
+set noruler " Show columns on Ctrl+G
 
 let mapleader = ","
 
