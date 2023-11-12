@@ -1,0 +1,49 @@
+#!/bin/bash
+
+set -xe
+
+# Capture a series of screenshots in PNG format
+capture_images() {
+  local sel="$1"
+  local output_dir=$(mktemp -d)
+  local fps=8 # Frames per second
+
+  # Change the working directory to the temporary directory
+  cd $output_dir
+
+  # Function to handle cleanup and exit
+  cleanup_and_exit() {
+    local png_files=$(ls *.png)
+    local output_gif=$(mktemp).gif
+
+    echo
+    echo "Writing GIF to $output_gif"
+
+    # Convert captured PNG images to GIF
+    convert $png_files $output_gif
+    xdg-open "$output_gif"
+
+    # Copy the GIF to the clipboard
+    xclip -t 'image/gif' -sel clip -i $output_gif
+
+    # Clean up temporary files
+    # rm -rf $output_gif $png_files
+    rm -rf $png_files
+
+    exit 0
+  }
+
+  # Trap Ctrl+C to handle cleanup before exiting
+  trap cleanup_and_exit INT
+
+  # Use shotgun to capture screenshots in a loop with a delay
+  local frame_index=0
+  while :; do
+    shotgun $sel -f png "$(date "+%s%3N").png"
+    sleep $(echo "scale=2; 1/$fps" | bc)
+  done
+}
+
+# Main script
+sel=$(slop -f "-i %i -g %g")
+capture_images "$sel"
