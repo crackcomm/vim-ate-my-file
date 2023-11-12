@@ -2,10 +2,12 @@
 
 set -e
 
+apt-get update
+apt-get install -y --no-install-recommends \
+  software-properties-common gnupg ca-certificates apt-transport-https
 add-apt-repository ppa:ubuntu-toolchain-r/test
 apt-get update
 apt-get install -y --no-install-recommends \
-  gnupg ca-certificates apt-transport-https software-properties-common \
   file git curl wget unzip \
   lbzip2 xz-utils patch m4 \
   make cmake \
