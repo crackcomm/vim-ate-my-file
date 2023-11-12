@@ -7,14 +7,15 @@ default-command = "sl"
 color = "always"
 diff-args = ["--color=always", "$left", "$right"]
 paginate = "auto"
+diff-editor = ":builtin"
 
 [aliases]
-ll = ["log", "-l", "4"]
+ll = ["log", "-n", "4"]
 sl = ["log", "-r", "crit"]
 sq = ["squash"]
 s = ["show"]
 goto = ["edit"]
-ops = ["op", "log", "-l", "5"]
+ops = ["op", "log", "-n", "5"]
 d = ["diff", "--git"]
 dt = ["diff", "--tool=delta"]
 nb = ["new", "-B", "@"]

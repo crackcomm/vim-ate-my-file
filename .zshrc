@@ -48,7 +48,7 @@ else
   compinit -C
 fi
 
-source <(jj util completion --zsh)
+source <(jj util completion zsh)
 
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
