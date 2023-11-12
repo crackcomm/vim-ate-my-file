@@ -1,5 +1,6 @@
 local override = require("crackcomm.lsp.override")
 local lspconfig = require("lspconfig")
+local configs = require("lspconfig.configs")
 
 local servers = {
   pyright = require("crackcomm.lsp.config.pyright"),
@@ -38,24 +39,29 @@ require("mason-lspconfig").setup({
   ensure_installed = { "lua_ls", "jsonls", "rust_analyzer" },
 })
 
-local setup_server = function(server, config)
-  if not config then
-    return
-  end
-
-  if type(config) ~= "table" then
-    config = {}
-  end
-
-  config = vim.tbl_deep_extend("force", {
+local function config_with_defaults(config)
+  return vim.tbl_deep_extend("force", {
     on_init = override.on_init,
     on_attach = override.on_attach,
     capabilities = override.capabilities,
   }, config)
-
-  lspconfig[server].setup(config)
 end
 
 for server, config in pairs(servers) do
-  setup_server(server, config)
+  local default_config = config_with_defaults(config)
+  lspconfig[server].setup(default_config)
 end
+
+local function bazel_lsp()
+  vim.lsp.start(config_with_defaults({
+    name = "bazel-lsp",
+    cmd = { "bazel-lsp" },
+    -- root_dir = vim.lsp.util.root_pattern("WORKSPACE", "BUILD"),
+    filetypes = { "bzl" },
+  }))
+end
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = { "*.bzl", "*.bazel", "BUILD", "WORKSPACE" },
+  callback = bazel_lsp,
+})
