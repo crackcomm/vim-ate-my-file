@@ -4,6 +4,8 @@ if [ -n "$DISPLAY" ]; then
   setxkbmap -option "caps:escape"
 fi
 
+plugins+=(bazel)
+
 alias vi=nvim
 alias v="vi ."
 alias ls=eza
@@ -31,7 +33,7 @@ bindkey -v
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
 bindkey "^R" history-incremental-search-backward
-bindkey "^S" history-incremental-search-forward
+bindkey "^P" history-incremental-search-forward
 
 HISTSIZE=1000000
 SAVEHIST=1000000
@@ -71,14 +73,10 @@ zstyle ':completion:*' cache-path ~/.cache/zsh
 bindkey '^[[A' up-line-or-search
 bindkey '^[[B' down-line-or-search
 
-bindkey '^[[1~' beginning-of-line
-bindkey '^[[4~' end-of-line
-bindkey '^[[3~' delete-char
 zmodload zsh/complist
 
 bindkey '^n' menu-complete
 bindkey '^u' accept-and-menu-complete
-bindkey '^v' accept-and-infer-next-history
 
 bindkey -M menuselect '^n' accept-and-infer-next-history
 bindkey -M menuselect 'h' vi-backward-char
