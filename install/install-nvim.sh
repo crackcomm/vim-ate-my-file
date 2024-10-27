@@ -5,8 +5,8 @@ set -e
 DIR=$(realpath $(dirname $0))/..
 
 $DIR/wget-checked.sh \
-  "https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz" \
-  "dbf4eae83647ca5c3ce1cd86939542a7b6ae49cd78884f3b4236f4f248e5d447" \
+  "https://github.com/neovim/neovim/releases/download/v0.10.2/nvim-linux64.tar.gz" \
+  "9f696e635d503b844e4e78e88a22bcf512a78f288bf471379afc3d0004e15217" \
   --install-dir ~/.local
 
 # Add the directory to the PATH for Bash
