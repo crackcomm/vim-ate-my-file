@@ -1,6 +1,28 @@
 return {
-  { "nvim-lua/plenary.nvim", dev = false },
-  { "christoomey/vim-tmux-navigator" },
+  {
+    "nvim-lua/plenary.nvim",
+    dev = false,
+    config = function()
+      LOG_ = require("crackcomm.log")
+    end,
+  },
+  {
+    "christoomey/vim-tmux-navigator",
+    cmd = {
+      "TmuxNavigateLeft",
+      "TmuxNavigateDown",
+      "TmuxNavigateUp",
+      "TmuxNavigateRight",
+      "TmuxNavigatePrevious",
+    },
+    keys = {
+      { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+      { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+      { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+      { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+      { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+    },
+  },
   { "sbdchd/neoformat" },
   "dyng/ctrlsf.vim",
 
@@ -40,7 +62,7 @@ return {
   },
 
   {
-    dir = "~/ocxmr-repos/colab/nvim",
+    dir = "~/x/llmlsp",
     config = function()
       require("colab").setup()
     end,

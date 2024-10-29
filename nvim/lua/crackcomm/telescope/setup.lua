@@ -1,3 +1,6 @@
+local fb = require("telescope").extensions.file_browser
+local nmap = require("crackcomm.keymap").nmap
+
 require("telescope").setup({
   pickers = {
     colorscheme = {
@@ -48,11 +51,46 @@ require("telescope").setup({
       select_buffer = true,
       respect_gitignore = true,
       display_stat = { "size" },
+      mappings = {
+        ["i"] = {
+          ["<A-c>"] = fb.actions.create,
+          ["<S-CR>"] = fb.actions.create_from_prompt,
+          ["<A-r>"] = fb.actions.rename,
+          ["<A-m>"] = fb.actions.move,
+          ["<A-y>"] = fb.actions.copy,
+          ["<A-d>"] = fb.actions.remove,
+          ["<C-o>"] = fb.actions.open,
+          ["<C-g>"] = fb.actions.goto_parent_dir,
+          ["<C-e>"] = fb.actions.goto_home_dir,
+          ["<C-w>"] = fb.actions.goto_cwd,
+          ["<C-t>"] = fb.actions.change_cwd,
+          ["<C-f>"] = fb.actions.toggle_browser,
+          ["<C-h>"] = fb.actions.toggle_hidden,
+          ["<C-s>"] = fb.actions.toggle_all,
+          ["<bs>"] = fb.actions.backspace,
+        },
+        ["n"] = {
+          ["c"] = fb.actions.create,
+          ["r"] = fb.actions.rename,
+          ["m"] = fb.actions.move,
+          ["y"] = fb.actions.copy,
+          ["d"] = fb.actions.remove,
+          ["o"] = fb.actions.open,
+          ["g"] = fb.actions.goto_parent_dir,
+          ["e"] = fb.actions.goto_home_dir,
+          ["w"] = fb.actions.goto_cwd,
+          ["t"] = fb.actions.change_cwd,
+          ["f"] = fb.actions.toggle_browser,
+          ["h"] = fb.actions.toggle_hidden,
+          ["s"] = fb.actions.toggle_all,
+        },
+      },
     },
   },
 
   defaults = {
     winblend = 0,
+    -- initial_mode = "normal",
     layout_strategy = "horizontal",
     layout_config = {
       width = 0.95,
@@ -97,6 +135,7 @@ require("telescope").setup({
       local substitutions = {
         [home .. "/x/dot-repo/nvim"] = "~/nvim",
         [home .. "/x/monorepo-ocxmr"] = "~/ocxmr",
+        [home .. "/.local/nvim-linux64/share/nvim/runtime/lua/vim"] = "/vim",
         [home] = "~",
       }
       for k, v in pairs(substitutions) do
@@ -115,6 +154,101 @@ _ = require("telescope").load_extension("ui-select")
 _ = require("telescope").load_extension("fzf")
 _ = require("telescope").load_extension("dap")
 
-vim.keymap.set("n", "<leader>cf", ":Telescope file_browser path=%:p:h select_buffer=true<CR>")
-vim.keymap.set("n", "<space>fa", ":Telescope oldfiles<CR>")
-vim.keymap.set("n", "<space>fb", ":Telescope buffers<CR>")
+local builtin = require("telescope.builtin")
+
+local M = {}
+
+M.browse_files = function(opts)
+  opts = opts or {}
+  -- builtin.file_browser({ path = vim.fn.expand("%:p:h"), select_buffer = true })
+  fb.file_browser(vim.tbl_extend("force", {
+    -- cwd = vim.fn.expand("%:p:h"),
+    grouped = true,
+    depth = 2,
+    select_buffer = true,
+  }, opts))
+end
+
+-- telescope builtins
+nmap({ "<space>t", builtin.builtin, { silent = true, desc = "telescope:" } })
+
+-- [h]ome
+nmap({
+  "<space>hf",
+  function()
+    M.browse_files({
+      path = vim.fn.expand("~/x"),
+      depth = 1,
+      hide_parent_dir = true,
+      initial_mode = "normal",
+    })
+  end,
+  "telescope: [h]ome [f]iles",
+})
+
+-- [w]orkspace (cwd)
+nmap({ "<space>wf", builtin.find_files, "telescope: [w]orkspace [f]iles" })
+nmap({ "<space>wg", builtin.live_grep, "telescope: [w]orkspace [g]rep" })
+nmap({
+  "<space>wd",
+  function()
+    M.browse_files({
+      depth = 3,
+      files = true,
+    })
+  end,
+  "telescope: [w]orkspace [d]irectories",
+})
+
+-- [b]uffers
+nmap({
+  "<space>bg",
+  function()
+    builtin.current_buffer_fuzzy_find({ reverse = false })
+  end,
+  "telescope: [b]uffer [g]rep",
+})
+nmap({
+  "<space>bb",
+  function()
+    builtin.buffers({ initial_mode = "normal" })
+  end,
+  "telescope: [b]uffers",
+})
+
+-- current [f]ile
+nmap({
+  "<space>fg",
+  function()
+    builtin.live_grep({ cwd = vim.fn.expand("%:p:h") })
+  end,
+  "telescope: current [f]ile directory [g]rep",
+})
+nmap({
+  "<space>ff",
+  function()
+    M.browse_files({
+      path = vim.fn.expand("%:p:h"),
+      prompt_path = true,
+    })
+  end,
+  "telescope: current [f]ile directory [f]ile browser",
+})
+
+nmap({ "<space>of", builtin.oldfiles, "telescope: [o]ld [f]iles" })
+
+-- Check if Neovim was started with a directory argument
+local args = vim.fn.argv()
+if #args == 1 and vim.fn.isdirectory(args[1]) == 1 then
+  -- Get the directory path from the argument
+  local dir = args[1]
+
+  -- Set an autocommand to run after Neovim finishes loading
+  vim.api.nvim_create_autocmd("VimEnter", {
+    callback = function()
+      builtin.find_files({ cwd = dir })
+    end,
+  })
+end
+
+return M

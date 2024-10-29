@@ -34,13 +34,6 @@ map <down> <nop>
 map <left> <nop>
 map <right> <nop>
 
-" Telescope
-nnoremap <space>t :Telescope<CR>
-" Rep-grip through files
-nnoremap <leader>a :Telescope live_grep<CR>
-" Find in filenames
-nnoremap <leader>f :Telescope find_files<CR>
-
 " Move lines with <alt+key>
 nnoremap <A-j> :m .+1<CR>==
 nnoremap <A-k> :m .-2<CR>==
