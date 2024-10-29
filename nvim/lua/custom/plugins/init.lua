@@ -2,6 +2,7 @@ return {
   { "nvim-lua/plenary.nvim", dev = false },
   { "christoomey/vim-tmux-navigator" },
   { "sbdchd/neoformat" },
+  "dyng/ctrlsf.vim",
 
   "mg979/vim-visual-multi",
 
