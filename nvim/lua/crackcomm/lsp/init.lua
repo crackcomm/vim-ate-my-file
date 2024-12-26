@@ -1,6 +1,5 @@
 local override = require("crackcomm.lsp.override")
 local lspconfig = require("lspconfig")
-local configs = require("lspconfig.configs")
 
 local servers = {
   pyright = require("crackcomm.lsp.config.pyright"),
@@ -9,7 +8,7 @@ local servers = {
   ts_ls = require("crackcomm.lsp.config.ts_ls"),
 
   ocamllsp = {
-    cmd = { "esy", "ocamllsp" },
+    cmd = { "ocamllsp" },
     settings = {
       codelens = { enable = true },
       syntaxDocumentation = { enable = true },
@@ -32,11 +31,21 @@ local servers = {
   },
 
   rust_analyzer = {},
+
+  nil_ls = {
+    settings = {
+      ["nil"] = {
+        formatting = {
+          command = { "nixfmt" },
+        },
+      },
+    },
+  },
 }
 
 require("mason").setup()
 require("mason-lspconfig").setup({
-  ensure_installed = { "lua_ls", "jsonls", "rust_analyzer" },
+  ensure_installed = { "lua_ls", "jsonls", "rust_analyzer", "nil_ls" },
 })
 
 local function config_with_defaults(config)

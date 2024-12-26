@@ -159,13 +159,16 @@ local builtin = require("telescope.builtin")
 
 local M = {}
 
+-- Telescope resume
+-- Telescope grep_string
+
 M.browse_files = function(opts)
   opts = opts or {}
   -- builtin.file_browser({ path = vim.fn.expand("%:p:h"), select_buffer = true })
   fb.file_browser(vim.tbl_extend("force", {
     -- cwd = vim.fn.expand("%:p:h"),
     grouped = true,
-    depth = 2,
+    depth = 1,
     select_buffer = true,
   }, opts))
 end
@@ -194,7 +197,7 @@ nmap({
   "<space>wd",
   function()
     M.browse_files({
-      depth = 3,
+      depth = 1,
       files = true,
     })
   end,
@@ -254,7 +257,7 @@ if #args == 1 and vim.fn.isdirectory(args[1]) == 1 then
   -- Set an autocommand to run after Neovim finishes loading
   vim.api.nvim_create_autocmd("VimEnter", {
     callback = function()
-      builtin.find_files({ cwd = dir })
+      builtin.find_files()
     end,
   })
 end

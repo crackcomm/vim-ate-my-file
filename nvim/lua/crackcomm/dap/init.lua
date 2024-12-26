@@ -1,4 +1,5 @@
 local R = R
+local Path = require("plenary.path")
 local dap = R("dap")
 local dapui = R("dapui")
 local log = R("crackcomm.log")
@@ -29,11 +30,7 @@ local M = {}
 -- vim.g.last_dap_target = nil
 
 local bazel_build = function(target)
-  if not target then
-    return
-  end
-
-  if not bazel.workspace_exists() then
+  if not target or not bazel.workspace_exists() then
     return
   end
 
@@ -92,6 +89,9 @@ local bazel_build = function(target)
             remoteRoot = remote_root,
           },
         },
+        env = {
+          PYTHONPATH = remote_root,
+        },
       }, { new = true })
 
       handle:report({ title = "Starting debugger", percentage = 100 })
@@ -144,16 +144,48 @@ M.close = function()
   vt.refresh()
 end
 
-M.setup = function()
+local function setup_python()
   R("dap-python").setup("/usr/bin/python3.10")
-
   dap.adapters.python = DEFAULT_ADAPTER
-
   table.insert(dap.configurations.python, DEFAULT_CONFIG)
+end
 
-  vim.keymap.set("n", "<C-b>", function()
-    dap.toggle_breakpoint()
-  end, { desc = "[DAP] Toggle [B]reakpoint" })
+local function setup_cpp()
+  dap.adapters.codelldb = {
+    type = "server",
+    port = "${port}",
+    executable = {
+      command = "codelldb",
+      args = { "--port", "${port}" },
+    },
+  }
+
+  dap.configurations.cpp = {
+    {
+      type = "codelldb",
+      -- request = "attach",
+      name = "Launch codelldb",
+      request = "launch", -- could also attach to a currently running process
+      program = function()
+        local f = bazel.current_source_output()
+        return vim.fn.input("Path to executable: ", f, "file")
+      end,
+      cwd = "${workspaceFolder}",
+      stopOnEntry = false,
+      args = {},
+      runInTerminal = false,
+      sourceMap = {
+        ["/proc/self/cwd"] = "${workspaceFolder}",
+      },
+    },
+  }
+end
+
+M.setup = function()
+  setup_python()
+  setup_cpp()
+
+  vim.keymap.set("n", "<C-b>", dap.toggle_breakpoint, { desc = "[DAP] Toggle [B]reakpoint" })
   vim.keymap.set("n", "<C-F5>", dap.step_out, { desc = "[D]ebug Step Out" })
   vim.keymap.set("n", "<C-F6>", dap.step_over, { desc = "[D]ebug Step Over" })
   vim.keymap.set("n", "<C-F8>", dap.step_into, { desc = "[D]ebug Step Into" })

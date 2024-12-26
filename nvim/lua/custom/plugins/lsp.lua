@@ -29,4 +29,18 @@ return {
       vim.keymap.set("n", "<leader>rn", ":IncRename ")
     end,
   },
+
+  {
+    "stevanmilic/nvim-lspimport",
+    config = function()
+      -- vim.keymap.set("n", "<leader>a", require("lspimport").import, { noremap = true })
+    end,
+  },
+
+  {
+    "ray-x/lsp_signature.nvim",
+    config = function()
+      require("lsp_signature").setup()
+    end,
+  },
 }

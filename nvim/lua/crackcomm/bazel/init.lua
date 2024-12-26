@@ -150,6 +150,17 @@ M.output_path = function(label)
   return vim.fn.getcwd() .. "/bazel-bin/" .. path_of_label(label)
 end
 
+M.source_output = function(file_path)
+  local label = M.file_label(file_path)
+  return M.output_path(label)
+end
+
+M.current_source_output = function()
+  local fn = Path:new(vim.fn.expand("%:p"))
+  local relative_path = fn:make_relative(vim.fn.getcwd())
+  return M.source_output(relative_path)
+end
+
 M.main_module_name = function()
   local cwd = vim.fn.getcwd()
   local repo_name = vim.fn.fnamemodify(cwd, ":t")

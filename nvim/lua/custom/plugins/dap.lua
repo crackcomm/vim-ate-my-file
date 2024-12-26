@@ -3,8 +3,9 @@ return {
   {
     "mfussenegger/nvim-dap-python",
     config = function()
-      require("crackcomm.dap").setup()
-      require("crackcomm.dap").setupui()
+      local dap = require("crackcomm.dap")
+      dap.setup()
+      dap.setupui()
     end,
   },
   "mfussenegger/nvim-dap-python",

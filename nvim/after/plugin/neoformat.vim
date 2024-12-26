@@ -7,8 +7,8 @@ let g:NERDDefaultAlign = 'left'
 
 " Neoformat
 let g:neoformat_ocaml_ocamlformat = {
-  \ 'exe': 'esy',
-  \ 'args': ['ocamlformat', '--name', '"%:p"', '-'],
+  \ 'exe': 'ocamlformat',
+  \ 'args': ['--name', '"%:p"', '-'],
   \ 'no_append': 1,
   \ 'stdin': 1,
   \ }

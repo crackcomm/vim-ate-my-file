@@ -1,6 +1,8 @@
 return {
   cmd = {
     "clangd",
+    "--inlay-hints",
+    "--completion-style=detailed",
     "--background-index",
     "--suggest-missing-includes",
     "--clang-tidy",
@@ -19,5 +21,6 @@ return {
     "cc",
     "cxx",
     "hxx",
+    "arduino",
   },
 }
