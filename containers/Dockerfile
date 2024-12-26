@@ -63,6 +63,7 @@ USER ${UNAME}
 COPY . /home/${UNAME}/dot-repo
 WORKDIR /home/${UNAME}/dot-repo
 
+ENV HOME="/home/${UNAME}"
 ENV PATH="$PATH:$HOME/.local/nvim-linux64/bin"
 RUN sudo -E bash -c "./install/install.sh && chown -hR $UNAME $HOME"
 RUN /bin/zsh -c 'nvim -es -u $HOME/.config/nvim/init.vim -i NONE -c "PlugInstall --sync" -c "qa" || true'
