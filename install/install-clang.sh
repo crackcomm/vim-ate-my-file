@@ -4,6 +4,7 @@ set -e
 
 CLANG_VERSION=19
 CLANG_PRIORITY=190
+UBUNTU_CODENAME=$(awk -F= '/UBUNTU_CODENAME/{print $2}' /etc/os-release)
 
 # LLVM/Clang: https://apt.llvm.org/
 apt-key adv --fetch-keys https://apt.llvm.org/llvm-snapshot.gpg.key
@@ -12,8 +13,8 @@ apt-key adv --fetch-keys https://apt.llvm.org/llvm-snapshot.gpg.key
 cat >/etc/apt/sources.list.d/custom.list <<SOURCES
 
 # LLVM/Clang repository
-deb http://apt.llvm.org/focal/ llvm-toolchain-focal-${CLANG_VERSION} main
-deb-src http://apt.llvm.org/focal/ llvm-toolchain-focal-${CLANG_VERSION} main
+deb http://apt.llvm.org/${UBUNTU_CODENAME}/ llvm-toolchain-${UBUNTU_CODENAME}-${CLANG_VERSION} main
+deb-src http://apt.llvm.org/${UBUNTU_CODENAME}/ llvm-toolchain-${UBUNTU_CODENAME}-${CLANG_VERSION} main
 SOURCES
 
 apt-get update
