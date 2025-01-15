@@ -17,6 +17,16 @@ local custom_init = function(client)
   client.config.flags.allow_incremental_sync = true
 end
 
+local function has_document_highlight_support(bufnr)
+  local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
+  for _, client in ipairs(clients) do
+    if client.supports_method("textDocument/documentHighlight") then
+      return true
+    end
+  end
+  return false
+end
+
 local custom_attach = function(client, bufnr)
   if client.name == "copilot" then
     return
@@ -47,7 +57,16 @@ local custom_attach = function(client, bufnr)
   -- Set autocommands conditional on server_capabilities
   if client.server_capabilities.documentHighlightProvider then
     autocmd_clear({ group = augroup_highlight, buffer = bufnr })
-    autocmd({ "CursorHold", augroup_highlight, vim.lsp.buf.document_highlight, bufnr })
+    autocmd({
+      "CursorHold",
+      augroup_highlight,
+      function()
+        if has_document_highlight_support(bufnr) then
+          vim.lsp.buf.document_highlight()
+        end
+      end,
+      bufnr,
+    })
     autocmd({ "CursorMoved", augroup_highlight, vim.lsp.buf.clear_references, bufnr })
   end
 

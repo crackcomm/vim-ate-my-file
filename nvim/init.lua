@@ -35,3 +35,5 @@ require("lazy").setup("custom.plugins", {
     fallback = false,
   },
 })
+
+require("crackcomm.filetypes")

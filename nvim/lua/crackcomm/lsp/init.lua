@@ -30,7 +30,15 @@ local servers = {
     },
   },
 
-  rust_analyzer = {},
+  rust_analyzer = {
+    settings = {
+      ["rust-analyzer"] = {
+        diagnostics = {
+          enable = false,
+        },
+      },
+    },
+  },
 
   nil_ls = {
     settings = {
@@ -71,6 +79,6 @@ local function bazel_lsp()
 end
 
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = { "*.bzl", "*.bazel", "BUILD", "WORKSPACE" },
+  pattern = { "*.bzl", "*.bazel", "BUILD", "WORKSPACE", "*.sky" },
   callback = bazel_lsp,
 })
