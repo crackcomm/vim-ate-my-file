@@ -1,14 +1,15 @@
+local cmd = {
+  "clangd",
+  "--inlay-hints",
+  "--completion-style=detailed",
+  "--background-index",
+  "--suggest-missing-includes",
+  "--clang-tidy",
+  "--header-insertion=iwyu",
+  "--offset-encoding=utf-16",
+}
 return {
-  cmd = {
-    "clangd",
-    "--inlay-hints",
-    "--completion-style=detailed",
-    "--background-index",
-    "--suggest-missing-includes",
-    "--clang-tidy",
-    "--header-insertion=iwyu",
-    "--offset-encoding=utf-16",
-  },
+  cmd = cmd,
   init_options = {
     clangdFileStatus = true,
   },
@@ -23,4 +24,14 @@ return {
     "hxx",
     "arduino",
   },
+  root_dir = function()
+    return vim.fn.getcwd()
+  end,
+  before_init = function(_, config)
+    local workspace_dir = vim.fn.getcwd()
+    config.cmd = vim.list_extend(cmd, {
+      "--compile-commands-dir=" .. workspace_dir,
+      "--tweaks=-I" .. workspace_dir, -- Add the workspace directory as an include path
+    })
+  end,
 }
