@@ -95,16 +95,16 @@ require("telescope").setup({
     layout_strategy = "horizontal",
     layout_config = {
       width = 0.95,
-      height = 0.85,
-      -- preview_cutoff = 120,
+      height = 0.90,
+      preview_cutoff = 120,
       prompt_position = "top",
 
       horizontal = {
         preview_width = function(_, cols, _)
-          if cols > 200 then
+          if cols > 100 then
             return math.floor(cols * 0.4)
           else
-            return math.floor(cols * 0.6)
+            return math.floor(cols * 0.8)
           end
         end,
       },
@@ -117,7 +117,7 @@ require("telescope").setup({
 
       flex = {
         horizontal = {
-          preview_width = 0.9,
+          preview_width = 1.2,
         },
       },
     },
