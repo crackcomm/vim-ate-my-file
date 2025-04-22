@@ -7,6 +7,13 @@ rgh() { rg -e "^" -e $1 }
 # Copy to clipboard
 clip() { xclip -sel c }
 
+# Copy to clipboard for a language model
+cliplm() {
+  for file in "$@"; do
+    echo "File: $file\n\`\`\`\n$(cat "$file")\n\`\`\`\n" 
+  done | xclip -sel c
+}
+
 # ps -ef with interactive search
 psef() {
   FZF_DEFAULT_COMMAND='ps -ef' \
