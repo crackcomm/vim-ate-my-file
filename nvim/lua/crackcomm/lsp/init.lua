@@ -23,9 +23,15 @@ local servers = {
   },
 
   lua_ls = {
-    Lua = {
-      workspace = {
-        checkThirdParty = false,
+    settings = {
+      Lua = {
+        runtime = {
+          version = "LuaJIT", -- Neovim uses LuaJIT
+        },
+        workspace = {
+          library = { vim.env.VIMRUNTIME .. "/lua" },
+          checkThirdParty = false,
+        },
       },
     },
   },
