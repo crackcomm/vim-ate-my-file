@@ -20,6 +20,10 @@ local function get_python_path(workspace)
   return "/usr/bin/python3.10"
 end
 
+local function get_bazel_python_paths(workspace)
+  return vim.fn.globpath(workspace, "bazel-*/external/pip_deps_*/site-packages", false, 1)
+end
+
 return {
   settings = {
     python = {
@@ -29,6 +33,12 @@ return {
     },
   },
   before_init = function(_, config)
-    config.settings.python.pythonPath = get_python_path(config.root_dir)
+    if config.root_dir ~= nil then
+      config.settings.python.pythonPath = get_python_path(config.root_dir)
+
+      -- Add Bazel paths to extraPaths
+      local extra_paths = get_bazel_python_paths(config.root_dir)
+      config.settings.python.analysis.extraPaths = extra_paths
+    end
   end,
 }
