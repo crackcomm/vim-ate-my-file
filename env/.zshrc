@@ -1,9 +1,5 @@
 # Set up the prompt
 
-if [ -n "$DISPLAY" ]; then
-  setxkbmap -option "caps:escape"
-fi
-
 plugins+=(bazel)
 
 alias vi=nvim
@@ -11,8 +7,8 @@ alias v="vi ."
 alias ls=eza
 
 files_to_source=(
-  "$HOME/dot-repo/fns.sh"
-  "$HOME/.cargo/env"
+  "$HOME/x/dot-repo/scripts/nix-fns.sh"
+  "$HOME/x/dot-repo/scripts/fns.sh"
 )
 
 for file in "${files_to_source[@]}"; do
@@ -34,6 +30,12 @@ bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
 bindkey "^R" history-incremental-search-backward
 bindkey "^P" history-incremental-search-forward
+
+# Home and End keys
+bindkey "^[[H" beginning-of-line
+bindkey "^[[F" end-of-line
+bindkey "^[[1~" beginning-of-line
+bindkey "^[[4~" end-of-line
 
 HISTSIZE=1000000
 SAVEHIST=1000000
