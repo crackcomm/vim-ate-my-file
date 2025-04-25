@@ -58,11 +58,17 @@ local servers = {
       },
     },
   },
+
+  marksman = {
+    cmd = { "marksman", "server" },
+    filetypes = { "markdown", "md", "markdown.pandoc" },
+    single_file_support = true,
+  },
 }
 
 require("mason").setup()
 require("mason-lspconfig").setup({
-  ensure_installed = { "lua_ls", "jsonls", "rust_analyzer", "nil_ls" },
+  ensure_installed = { "lua_ls", "jsonls", "rust_analyzer", "nil_ls", "marksman" },
 })
 
 local function config_with_defaults(config)
