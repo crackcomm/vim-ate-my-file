@@ -4,26 +4,26 @@ email = "crackcomm@gmail.com"
 
 [ui]
 default-command = "sl"
-color = "always"
-diff-args = ["--color=always", "$left", "$right"]
+color = "auto"
+diff.tool = [ "delta" ]
 paginate = "auto"
 diff-editor = ":builtin"
 
 [aliases]
-ll = ["log", "-n", "4"]
-sl = ["log", "-r", "crit"]
-sq = ["squash"]
-s = ["show"]
-goto = ["edit"]
-ops = ["op", "log", "-n", "5"]
-d = ["diff", "--git"]
-ds = ["diff", "--stat"]
-dt = ["diff", "--tool=delta"]
-nb = ["new", "-B", "@"]
-moveback = ["move", "--from", "@+", "--to", "@"]
+ll = [ "log", "-n", "4" ]
+sl = [ "log", "-r", "crit" ]
+sq = [ "squash" ]
+s = [ "show" ]
+goto = [ "edit" ]
+ops = [ "op", "log", "-n", "5" ]
+d = [ "diff", "--git" ]
+ds = [ "diff", "--stat" ]
+dt = [ "diff", "--tool=delta" ]
+nb = [ "new", "-B", "@" ]
+moveback = [ "move", "--from", "@+", "--to", "@" ]
 
-"e-" = ["edit", "@-"]
-"e+" = ["edit", "@+"]
+"e-" = [ "edit", "@-" ]
+"e+" = [ "edit", "@+" ]
 
 [revset-aliases]
 'chore' = '''
@@ -63,3 +63,16 @@ moveback = ["move", "--from", "@+", "--to", "@"]
 [template-aliases]
 'format_short_id(id)' = 'id.shortest(7)'
 'format_timestamp(timestamp)' = 'timestamp.ago()'
+
+[templates]
+draft_commit_description = '''
+concat(
+  description,
+  surround(
+    "\nJJ: This commit contains the following changes:\n", "",
+    indent("JJ:     ", diff.stat(72)),
+  ),
+  "\nJJ: ignore-rest\n",
+  indent("JJ:     ", diff.git()),
+)
+'''
