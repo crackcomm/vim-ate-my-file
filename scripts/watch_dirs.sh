@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 filtered_dirs() {
   dirs=$(find . -maxdepth 1 -type d)

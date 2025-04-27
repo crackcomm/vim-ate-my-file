@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/usr/bin/env bash
 
 sel=$(slop -f "-i %i -g %g")
 shotgun $sel - | xclip -t 'image/png' -selection clipboard
