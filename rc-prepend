@@ -5,7 +5,7 @@ ulimit -s 65536
 setxkbmap -option "caps:escape"
 
 # TODO: this path is not perfect
-source ~/dot-repo/fns.sh
+source ~/dot-repo/scripts/fns.sh
 
 export VISUAL=vi
 export EDITOR="$VISUAL"
