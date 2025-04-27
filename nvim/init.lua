@@ -4,6 +4,8 @@
 
 require("crackcomm.globals")
 
+vim.deprecate = function() end -- pure evil
+
 vim.g.mapleader = ","
 vim.g.maplocalleader = "\\"
 

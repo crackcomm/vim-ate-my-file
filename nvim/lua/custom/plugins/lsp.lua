@@ -2,7 +2,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      "simrat39/inlay-hints.nvim",
+      "ofirgall/inlay-hints.nvim",
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
     },
