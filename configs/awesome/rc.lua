@@ -18,11 +18,15 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+-- Add config directory to package.path
+local config_dir = require("gears.filesystem").get_configuration_dir()
+package.path = package.path .. ";" .. config_dir .. "?.lua"
 -- Config and theme path
-local config_dir = os.getenv("HOME") .. "/.config/awesome/"
+local scripts_path = os.getenv("HOME") .. "/x/dot-repo/scripts/"
 local theme_path = config_dir .. "themes/zenburn/theme.lua"
 
--- theme_path = gears.filesystem.get_themes_dir() .. "zenburn/theme.lua"
+-- Include our widgets library
+local population_count = require("widgets.population_count")
 
 local log = io.open("/tmp/awesome_debug.log", "a+")
 log:write("Theme path: " .. theme_path .. "\n")
@@ -250,7 +254,7 @@ awful.screen.connect_for_each_screen(function(s)
 		s.mytasklist, -- Middle widget
 		{ -- Right widgets
 			layout = wibox.layout.fixed.horizontal,
-			mykeyboardlayout,
+			population_count,
 			wibox.widget.systray(),
 			mytextclock,
 			s.mylayoutbox,
@@ -311,6 +315,9 @@ globalkeys = gears.table.join(
 	awful.key({ modkey }, "Return", function()
 		awful.spawn(terminal)
 	end, { description = "open a terminal", group = "launcher" }),
+	awful.key({ modkey, "Shift" }, "b", function()
+		awful.spawn("brave")
+	end, { description = "open a terminal", group = "launcher" }),
 	awful.key({ modkey, "Control" }, "r", awesome.restart, { description = "reload awesome", group = "awesome" }),
 	awful.key({ modkey, "Shift" }, "q", awesome.quit, { description = "quit awesome", group = "awesome" }),
 
@@ -363,7 +370,12 @@ globalkeys = gears.table.join(
 	-- Menubar
 	awful.key({ modkey }, "p", function()
 		menubar.show()
-	end, { description = "show the menubar", group = "launcher" })
+	end, { description = "show the menubar", group = "launcher" }),
+
+	-- Print screen
+	awful.key({}, "Print", function()
+		awful.spawn(scripts_path .. "ssx")
+	end, { description = "screenshot", group = "launcher" })
 )
 
 clientkeys = gears.table.join(
