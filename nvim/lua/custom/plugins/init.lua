@@ -59,6 +59,19 @@ return {
         return { "treesitter", "indent" }
       end,
     },
+    config = function()
+      local ufo = require("ufo")
+
+      vim.o.foldlevel = 99
+      vim.o.foldlevelstart = 99
+      vim.o.foldenable = false
+
+      vim.keymap.set("n", "zR", ufo.openAllFolds, { desc = "Open all folds" })
+      vim.keymap.set("n", "zM", ufo.closeAllFolds, { desc = "Close all folds" })
+      vim.keymap.set("n", "zZ", ufo.peekFoldedLinesUnderCursor, { desc = "Peek folded lines under cursor" })
+
+      ufo.setup()
+    end,
   },
 
   {

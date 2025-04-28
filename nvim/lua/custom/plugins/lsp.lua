@@ -11,7 +11,19 @@ return {
     end,
   },
 
-  "j-hui/fidget.nvim",
+  {
+    "j-hui/fidget.nvim",
+    config = function()
+      require("fidget").setup({
+        notification = {
+          window = {
+            align = "bottom",
+            relative = "editor",
+          },
+        },
+      })
+    end,
+  },
 
   {
     "L3MON4D3/LuaSnip",
