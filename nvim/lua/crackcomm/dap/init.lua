@@ -36,7 +36,7 @@ local bazel_build = function(target)
 
   vim.g.last_dap_target = target
 
-  local progress = R("fidget.progress")
+  local progress = require("fidget.progress")
 
   local handle = progress.handle.create({
     title = "Bazel build",
