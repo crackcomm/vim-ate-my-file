@@ -15,7 +15,6 @@
     m4
     gnumake
     cmake
-    bazelisk
 
     # Development Libraries
     openssl

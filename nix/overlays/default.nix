@@ -9,8 +9,5 @@
     rustToolchain = prev.rust-bin.nightly."2024-11-28".default.override {
       targets = [ "x86_64-unknown-linux-gnu" ];
     };
-
-    bazelisk = prev.bazelisk.overrideAttrs
-      (oldAttrs: { postFixup = "ln -s $out/bin/bazelisk $out/bin/bazel"; });
   };
 }
