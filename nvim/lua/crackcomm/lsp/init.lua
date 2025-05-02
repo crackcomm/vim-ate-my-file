@@ -91,16 +91,18 @@ for server, config in pairs(servers) do
   lspconfig[server].setup(default_config)
 end
 
-local function bazel_lsp()
-  vim.lsp.start(config_with_defaults({
-    name = "bazel-lsp",
-    cmd = { "bazel-lsp" },
-    -- root_dir = vim.lsp.util.root_pattern("WORKSPACE", "BUILD"),
-    filetypes = { "bzl" },
-  }))
-end
+if vim.fn.executable("bazel-lsp") == 1 then
+  local function bazel_lsp()
+    vim.lsp.start(config_with_defaults({
+      name = "bazel-lsp",
+      cmd = { "bazel-lsp" },
+      -- root_dir = vim.lsp.util.root_pattern("WORKSPACE", "BUILD"),
+      filetypes = { "bzl" },
+    }))
+  end
 
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = { "*.bzl", "*.bazel", "BUILD", "WORKSPACE", "*.sky" },
-  callback = bazel_lsp,
-})
+  vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    pattern = { "*.bzl", "*.bazel", "BUILD", "WORKSPACE", "*.sky" },
+    callback = bazel_lsp,
+  })
+end
