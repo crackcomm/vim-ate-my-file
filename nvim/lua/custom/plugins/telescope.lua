@@ -15,4 +15,6 @@ return {
       require("neoclip").setup()
     end,
   },
+  "zschreur/telescope-jj.nvim",
+  "nvim-telescope/telescope-frecency.nvim",
 }
