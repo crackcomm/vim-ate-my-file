@@ -42,6 +42,7 @@ SOURCE_EXTS = {
     ".thrift",
     ".ts",
     ".tsx",
+    ".conf",
 }
 STEM_INCLUDE = {
     "BUILD",
@@ -151,20 +152,21 @@ def show_full_diff(f: PatchedFile):
         print(str(line.line_type).replace("@", " "), line.value.rstrip())
 
 
-def summarize_file(f: PatchedFile, context_radius: int):
-    if f.is_rename:
-        print(f"--- {f.path} renamed to {f.target_file}")
-        return
-    if f.is_removed_file:
-        print(f"--- {f.path} removed")
-        return
-    if f.is_added_file:
-        show_full_diff(f)
-        return
-    if not (f.is_modified_file and is_source_file(Path(f.path))):
-        return
-    if len(f) != 1 or not f[0].is_valid():
-        return
+def summarize_file(f: PatchedFile, context_radius: int, force: bool = False):
+    if not force:
+        if f.is_rename:
+            print(f"--- {f.path} renamed to {f.target_file}")
+            return
+        if f.is_removed_file:
+            print(f"--- {f.path} removed")
+            return
+        if f.is_added_file:
+            show_full_diff(f)
+            return
+        if not (f.is_modified_file and is_source_file(Path(f.path))):
+            return
+        if len(f) != 1 or not f[0].is_valid():
+            return
 
     hunk = f[0]
     if hunk.added == 0 and hunk.removed == 0:
@@ -195,7 +197,11 @@ def summarize_file(f: PatchedFile, context_radius: int):
 
     omitted = 0
     for line in lines:
-        if not line.is_modified and not line.is_extra_context or (omitted > 0 and line.value == ""):
+        if (
+            not line.is_modified
+            and not line.is_extra_context
+            or (omitted > 0 and line.value == "")
+        ):
             omitted += 1
             continue
         if omitted:
@@ -233,8 +239,10 @@ def main():
         check=True,
     ).stdout
 
-    for f in PatchSet(raw):
-        summarize_file(f, args.context)
+    patch_set = PatchSet(raw)
+    force = len(patch_set) == 1
+    for f in patch_set:
+        summarize_file(f, args.context, force)
 
 
 if __name__ == "__main__":

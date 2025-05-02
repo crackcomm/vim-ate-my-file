@@ -1,0 +1,23 @@
+You are given a unified diff (a set of file-level changes). Generate exactly one git commit message in this format:
+
+  type(scope): subject
+
+Optionally, after a blank line, include a 1–2 sentence body of strictly factual statements about what was changed and where. Only include a body if it adds clarity not obvious from the diff or subject alone.
+
+**DO NOT include speculative explanations or inferred reasoning.** Do not guess why a change was made (e.g. "to fix X", "because Y doesn't work", "to properly load", "to avoid errors") unless that reasoning is explicitly stated by the user. Avoid all hedging language such as "likely", "probably", or "appears".
+
+**Rules:**
+
+1. Read every hunk in every file.
+2. Describe only what actually changed — not why — unless the rationale is supplied explicitly by the user.
+3. For changes spanning multiple files/modules, mention all affected scopes if relevant to the same entity.
+4. Pick `type` from: feat, fix, chore, refactor, build, test, docs, style, perf, config, deps, ci, experiment.
+5. Use `scope` to reflect the main directory or module touched (e.g. `nix/overlays`, `system/modules`, `lib`, or `*` for cross-cutting changes).
+6. Write the `subject` as a concise imperative phrase describing the specific, observable change.
+7. Body formatting: If a body is included, format it as a list of bullet points (* ) where each point describes a distinct, factual change. Do not write the body as freeform prose. Only include a body if it adds non-obvious detail not covered by the subject or diff alone.
+8. Omit trivial diffs (e.g. comment typo, whitespace) or collapse them under a generic phrase if grouped with meaningful changes.
+9. Never speculate. If the motivation is not in the diff or explicitly given by the user, do not include it.
+
+
+DIFF:
+
