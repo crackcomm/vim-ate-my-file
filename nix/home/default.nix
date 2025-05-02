@@ -18,7 +18,10 @@
     enable = true;
     userName = "Łukasz Kurowski";
     userEmail = "crackcomm@gmail.com";
-    extraConfig = { credential.helper = ""; };
+    extraConfig = {
+      credential.helper = "";
+      github.user = "crackcomm";
+    };
   };
 
   programs.fd = {
