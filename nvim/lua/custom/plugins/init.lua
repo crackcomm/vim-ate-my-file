@@ -39,7 +39,7 @@ return {
 
   {
     "kevinhwang91/nvim-ufo",
-    -- event = { "User AstroFile", "InsertEnter" },
+    event = {},
     dependencies = { "kevinhwang91/promise-async" },
     opts = {
       preview = {
