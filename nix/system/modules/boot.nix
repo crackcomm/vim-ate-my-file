@@ -12,5 +12,7 @@
     };
 
     loader.efi.canTouchEfiVariables = false;
+
+    kernel.sysctl = { "fs.aio-max-nr" = 1048576; };
   };
 }
