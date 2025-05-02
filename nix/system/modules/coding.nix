@@ -31,14 +31,19 @@
     # # llvmPackages_19.llvm
     rustToolchain
 
-    # Interpreters
+    # Node.js for Github Copilot
     nodejs_22
-    uv
+
+    # Development Tools
+    devenv
 
     # Language servers and tools
+    ruff
     lua-language-server
     stylua
     shfmt
-    nixfmt
+    nixfmt-classic
+    keep-sorted
+    pyright
   ];
 }

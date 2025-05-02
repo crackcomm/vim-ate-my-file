@@ -2,7 +2,7 @@
   nixpkgs.config.allowUnfree = true;
 
   nixpkgs = {
-    overlays = [ 
+    overlays = [
       inputs.rust-overlay.overlays.default
       outputs.overlays.additions
       outputs.overlays.modifications
@@ -13,6 +13,7 @@
     ./bluetooth.nix
     ./coding.nix
     ./desktop.nix
+    ./devenv.nix
     ./fonts.nix
     ./keyboard.nix
     ./linux.nix

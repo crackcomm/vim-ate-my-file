@@ -18,6 +18,7 @@
     enable = true;
     userName = "Łukasz Kurowski";
     userEmail = "crackcomm@gmail.com";
+    extraConfig = { credential.helper = ""; };
   };
 
   programs.fd = {
@@ -83,7 +84,9 @@
       fi
 
       ENV_DIR="$DOTFILES_DIR/env"
-      ln -sf "$DOTFILES_DIR/.tmux" "$HOME/.tmux"
+      if [ ! -d "$HOME/.tmux" ]; then
+        ln -sf "$DOTFILES_DIR/.tmux" "$HOME/.tmux"
+      fi
       ln -sf "$ENV_DIR/.zshrc" "$HOME/.zshrc"
       ln -sf "$ENV_DIR/.zshenv" "$HOME/.zshenv"
       ln -sf "$ENV_DIR/.jjconfig.toml" "$HOME/.jjconfig.toml"
