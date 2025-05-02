@@ -64,11 +64,18 @@ local servers = {
     filetypes = { "markdown", "md", "markdown.pandoc" },
     single_file_support = true,
   },
+
+  taplo = {
+    cmd = { "taplo", "lsp", "stdio" },
+    filetypes = { "toml" },
+    single_file_support = true,
+  },
 }
 
 require("mason").setup()
 require("mason-lspconfig").setup({
-  ensure_installed = { "jsonls", "rust_analyzer", "nil_ls", "marksman" },
+  automatic_installation = false,
+  ensure_installed = { "jsonls", "rust_analyzer", "nil_ls", "marksman", "taplo" },
 })
 
 local function config_with_defaults(config)
