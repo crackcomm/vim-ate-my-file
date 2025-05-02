@@ -25,9 +25,6 @@ vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 " Format the file
 nnoremap <leader>rd :Neoformat<CR>
 
-" Save on ss
-nmap <silent> ss :Neoformat<CR>:w<CR>
-
 " Disable Arrow keys in Normal mode
 map <up> <nop>
 map <down> <nop>
