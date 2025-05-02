@@ -78,9 +78,6 @@ cmp.setup({
       { "i", "c" }
     ),
 
-    -- ["<tab>"] = false,
-    ["<tab>"] = cmp.config.disable,
-
     -- Cody completion
     ["<c-a>"] = cmp.mapping.complete({
       config = {
@@ -91,36 +88,16 @@ cmp.setup({
       },
     }),
 
-    -- ["<tab>"] = cmp.mapping {
-    --   i = cmp.config.disable,
-    --   c = function(fallback)
-    --     fallback()
-    --   end,
-    -- },
+    -- ["<tab>"] = cmp.config.disable,
+    ["<tab>"] = cmp.mapping({
+      i = cmp.config.disable,
+    }),
 
     -- Testing
     ["<c-q>"] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
       select = false,
     }),
-
-    -- If you want tab completion :'(
-    --  First you have to just promise to read `:help ins-completion`.
-    --
-    -- ["<Tab>"] = function(fallback)
-    --   if cmp.visible() then
-    --     cmp.select_next_item()
-    --   else
-    --     fallback()
-    --   end
-    -- end,
-    -- ["<S-Tab>"] = function(fallback)
-    --   if cmp.visible() then
-    --     cmp.select_prev_item()
-    --   else
-    --     fallback()
-    --   end
-    -- end,
   },
   sources = cmp.config.sources({
     { name = "cody" },
@@ -137,6 +114,7 @@ cmp.setup({
   }),
 
   sorting = {
+    priority_weight = 2,
     comparators = {
       function(entry1, entry2)
         local name1 = entry1.source.source and entry1.source.source.client and entry1.source.source.client.name
