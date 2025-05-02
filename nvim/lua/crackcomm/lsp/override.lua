@@ -35,8 +35,7 @@ local custom_attach = function(client, bufnr)
   keymap.nmap({ "<space>e", vim.diagnostic.open_float, "lsp:diagnostic" })
   buf_inoremap({ "<c-s>", vim.lsp.buf.signature_help, "lsp:signature_help" })
 
-  buf_nnoremap({ "<space>cr", vim.lsp.buf.rename, "lsp:rename" })
-  buf_nnoremap({ "<space>ca", vim.lsp.buf.code_action, "lsp:code_action" })
+  buf_nnoremap({ "<space>cr", ":IncRename ", "lsp:rename" })
   buf_vnoremap({ "<space>ca", vim.lsp.buf.code_action, "lsp:code_action" })
 
   buf_nnoremap({ "gd", vim.lsp.buf.definition, "lsp:definition" })

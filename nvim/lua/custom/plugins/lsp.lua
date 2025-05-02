@@ -35,10 +35,11 @@ return {
 
   {
     "smjonas/inc-rename.nvim",
+    dependencies = { "stevearc/dressing.nvim" },
     config = function()
-      require("inc_rename").setup()
-
-      vim.keymap.set("n", "<leader>rn", ":IncRename ")
+      require("inc_rename").setup({
+        input_buffer_type = "dressing",
+      })
     end,
   },
 
