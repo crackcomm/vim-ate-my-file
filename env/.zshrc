@@ -6,9 +6,16 @@ alias vi=nvim
 alias v="vi ."
 alias ls=eza
 
+export DOTPATH="$HOME/x/dot-repo"
+export LANGUAGE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_TYPE=en_US.UTF-8
+export PATH="$DOTPATH/scripts:$PATH"
+
 files_to_source=(
-  "$HOME/x/dot-repo/scripts/nix-fns.sh"
-  "$HOME/x/dot-repo/scripts/fns.sh"
+  "$DOTPATH/scripts/nix-fns.sh"
+  "$DOTPATH/scripts/fns.sh"
 )
 
 for file in "${files_to_source[@]}"; do
