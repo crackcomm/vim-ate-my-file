@@ -7,4 +7,10 @@ return {
   { "hrsh7th/cmp-nvim-lsp" },
   { "onsails/lspkind-nvim" },
   { "tamago324/cmp-zsh" },
+  {
+    "zbirenbaum/copilot-cmp",
+    config = function()
+      require("copilot_cmp").setup()
+    end,
+  },
 }

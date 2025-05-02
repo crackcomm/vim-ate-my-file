@@ -1,3 +1,8 @@
 return {
-  "github/copilot.vim",
+  {
+    "zbirenbaum/copilot.lua",
+    config = function()
+      require("copilot").setup({})
+    end,
+  },
 }
