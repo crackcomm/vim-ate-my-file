@@ -38,7 +38,7 @@ local custom_attach = function(client, bufnr)
   buf_nnoremap({ "<space>cr", ":IncRename ", "lsp:rename" })
   buf_vnoremap({ "<space>ca", vim.lsp.buf.code_action, "lsp:code_action" })
 
-  buf_nnoremap({ "gd", vim.lsp.buf.definition, "lsp:definition" })
+  buf_nnoremap({ "gd", vim.lsp.buf.definition, "lsp:definition" }) -- todo: use telescope
   buf_nnoremap({ "gD", vim.lsp.buf.declaration, "lsp:declaration" })
   buf_nnoremap({ "gT", vim.lsp.buf.type_definition, "lsp:type_definition" })
   buf_nnoremap({ "K", vim.lsp.buf.hover, "lsp:hover" })
@@ -50,7 +50,8 @@ local custom_attach = function(client, bufnr)
   telescope_mapper("gr", "lsp_references", nil, true)
   telescope_mapper("gI", "lsp_implementations", nil, true)
   telescope_mapper("<space>a", "diagnostics", { ignore_filename = true }, true)
-  telescope_mapper("<space>ws", "lsp_document_symbols", { ignore_filename = true }, true)
+  telescope_mapper("<space>ds", "lsp_document_symbols", { ignore_filename = true }, true)
+  telescope_mapper("<space>ws", "lsp_workspace_symbols", { ignore_filename = true }, true)
   telescope_mapper("<space>wr", "lsp_dynamic_workspace_symbols", { ignore_filename = true }, true)
 
   -- Set autocommands conditional on server_capabilities
