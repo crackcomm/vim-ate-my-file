@@ -13,6 +13,8 @@ return {
         },
       })
 
+      vim.keymap.set("n", "<leader>gs", ":Gitsigns preview_hunk_inline<CR>", { desc = "[G]it preview hunk inline" })
+
       local overrides = require("crackcomm.themes").overrides
 
       overrides()
