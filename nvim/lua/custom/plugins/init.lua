@@ -82,7 +82,7 @@ return {
     config = function(_, opts)
       require("origami").setup({
         -- requires with `nvim-ufo`
-        keepFoldsAcrossSessions = package.loaded["ufo"] ~= nil,
+        keepFoldsAcrossSessions = false, -- package.loaded["ufo"] ~= nil,
 
         pauseFoldsOnSearch = true,
 
