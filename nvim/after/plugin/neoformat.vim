@@ -20,9 +20,14 @@ let g:neoformat_dune_dune = {
   \ 'stdin': 1,
   \ }
 
+" https://github.com/bazelbuild/buildtools/blob/main/WARNINGS.md
 let g:neoformat_bzl_buildifier = {
   \ 'exe': 'buildifier',
-  \ 'args': ['-lint=fix', '-path', '"%:p"'],
+  \ 'args': [
+  \   '-lint=fix',
+  \   '--warnings=-native-cc-binary,-native-cc-import,-native-cc-library,-native-cc-shared-library,-native-cc-test,-native-cc-common,-native-cc-info,-native-cc-proto,-native-proto,-native-sh-binary',
+  \   '-path', '"%:p"'
+  \ ],
   \ 'stdin': 1,
   \ 'no_append': 1,
   \ }
