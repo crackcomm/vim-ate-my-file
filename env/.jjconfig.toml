@@ -78,3 +78,8 @@ concat(
   indent("JJ:     ", diff.git()),
 )
 '''
+
+[colors]
+# turn off underline on removed and added tokens
+"diff removed token" = { underline = false }
+"diff added token" = { underline = false }
