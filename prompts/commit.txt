@@ -1,4 +1,4 @@
-You are given a unified diff (a set of file-level changes). Generate exactly one git commit message in this format:
+You are given a unified diff (a set of file-level changes). Generate exactly one git commit message in this FORMAT:
 
   type(scope): subject
 
