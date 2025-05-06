@@ -13,3 +13,8 @@ R = function(name)
   RELOAD(name)
   return _require(name)
 end
+
+--- @diagnostic disable-next-line: lowercase-global
+errorf = function(msg, ...)
+  error(string.format(msg, ...))
+end
