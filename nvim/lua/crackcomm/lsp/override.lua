@@ -1,4 +1,4 @@
-local autocmd = require("crackcomm.autocmd").autocmd
+local autocmd = require("crackcomm.common.autocmd").autocmd
 local telescope_mapper = require("crackcomm.telescope.handler")
 local handlers = require("crackcomm.lsp.handlers")
 local inlay_hints = require("crackcomm.lsp.inlay")
@@ -7,7 +7,7 @@ local autocmd_clear = vim.api.nvim_clear_autocmds
 local augroup_highlight = vim.api.nvim_create_augroup("custom-lsp-references", { clear = true })
 -- local augroup_codelens = vim.api.nvim_create_augroup("custom-lsp-codelens", { clear = true })
 
-local keymap = require("crackcomm.keymap")
+local keymap = require("crackcomm.common.keymap")
 local buf_nnoremap = keymap.buf_nnoremap
 local buf_inoremap = keymap.buf_inoremap
 local buf_vnoremap = keymap.buf_vnoremap
@@ -73,21 +73,6 @@ local custom_attach = function(client, bufnr)
   if client.name == "ocamllsp" then
     client.server_capabilities.semanticTokensProvider = nil
   end
-
-  -- local filetype = vim.api.nvim_buf_get_option(0, "filetype")
-  -- if client.server_capabilities.codeLensProvider then
-  --   if filetype ~= "elm" then
-  --     autocmd_clear({ group = augroup_codelens, buffer = bufnr })
-  --     autocmd({ "BufEnter", augroup_codelens, vim.lsp.codelens.refresh, bufnr, once = true })
-  --     autocmd({ { "BufWritePost", "CursorHold" }, augroup_codelens, vim.lsp.codelens.refresh, bufnr })
-  --   end
-  -- end
-
-  -- if filetype == "typescript" or filetype == "lua" then
-  --   client.server_capabilities.semanticTokensProvider = nil
-  -- end
-
-  -- filetype_attach[filetype]()
 
   inlay_hints(client, bufnr)
 end

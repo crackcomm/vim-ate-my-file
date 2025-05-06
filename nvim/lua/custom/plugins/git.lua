@@ -41,16 +41,7 @@ return {
         gs.diffthis()
       end, { desc = "[G]it [D]iff" })
 
-      local overrides = require("crackcomm.themes").overrides
-
-      overrides()
-
-      vim.api.nvim_create_autocmd("ColorScheme", {
-        pattern = "*",
-        callback = function()
-          overrides()
-        end,
-      })
+      require("crackcomm.common.colorscheme").overrides()
     end,
   },
   -- "rhysd/git-messenger.vim",

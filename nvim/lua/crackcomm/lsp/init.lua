@@ -78,7 +78,7 @@ require("mason-lspconfig").setup({
   ensure_installed = { "jsonls", "rust_analyzer", "nil_ls", "marksman", "taplo" },
 })
 
-local function config_with_defaults(config)
+local function get_merged_config(config)
   return vim.tbl_deep_extend("force", {
     on_init = override.on_init,
     on_attach = override.on_attach,
@@ -87,13 +87,12 @@ local function config_with_defaults(config)
 end
 
 for server, config in pairs(servers) do
-  local default_config = config_with_defaults(config)
-  lspconfig[server].setup(default_config)
+  lspconfig[server].setup(get_merged_config(config))
 end
 
 if vim.fn.executable("bazel-lsp") == 1 then
   local function bazel_lsp()
-    vim.lsp.start(config_with_defaults({
+    vim.lsp.start(get_merged_config({
       name = "bazel-lsp",
       cmd = { "bazel-lsp" },
       -- root_dir = vim.lsp.util.root_pattern("WORKSPACE", "BUILD"),

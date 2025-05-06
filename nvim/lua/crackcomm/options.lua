@@ -1,4 +1,14 @@
 local o = vim.opt
+local g = vim.g
+
+g.mapleader = ","
+g.maplocalleader = "\\"
+
+o.backup = true
+o.backupdir = vim.fn.expand("~/.cache/nvim/backup")
+
+o.undodir = vim.fn.expand("~/.cache/nvim/undodir")
+o.undofile = true
 
 o.belloff = "all"
 o.compatible = false
@@ -25,6 +35,6 @@ o.ruler = false
 -- o.statusline = [[%!luaeval('coc#status()') .. get(b:, 'coc_current_function', '')]]
 
 -- disable builtin file explorer
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-vim.g.loaded_netrwSettings = 1
+g.loaded_netrw = 1
+g.loaded_netrwPlugin = 1
+g.loaded_netrwSettings = 1

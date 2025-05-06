@@ -1,6 +1,6 @@
 local fb = require("telescope").extensions.file_browser
-local nmap = require("crackcomm.keymap").nmap
-local vmap = require("crackcomm.keymap").vmap
+local nmap = require("crackcomm.common.keymap").nmap
+local vmap = require("crackcomm.common.keymap").vmap
 local custom = require("crackcomm.telescope.custom")
 local telescope = require("telescope")
 

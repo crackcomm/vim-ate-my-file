@@ -65,33 +65,4 @@ M.implementation = function()
   end)
 end
 
--- TODO:
--- vim.lsp.codelens.display = require("gl.codelens").display
-
---[[
-|| brrr brrr brrr.... running test...
-|| {
-||   arguments = { "file:///home/tjdevries/plugins/green_light.nvim/test/green_light/example_test.go", { "TestExample" }, vim.NIL },
-||   command = "gopls.test",
-||   title = "run test"
-|| }
-|| {
-||   bufnr = 1,
-||   client_id = 1
-|| }
---]]
--- vim.lsp.commands["gopls.test"] = function(command, context)
---   local TestRun = require("gl.test").TestRun
---
---   local test_pattern = command.arguments[2][1]
---   print("test pattern:", test_pattern)
---
---   TestRun
---     :new({
---       file_pattern = "/home/tjdevries/plugins/green_light.nvim/test/green_light/...",
---       test_pattern = "^" .. test_pattern .. "$",
---     })
---     :run()
--- end
-
 return M

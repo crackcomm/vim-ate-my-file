@@ -16,7 +16,7 @@ func.autocmd = function(args)
   })
 end
 
-func.autocmd_global = function(event, callback)
+func.window = function(event, callback)
   vim.api.nvim_create_autocmd(event, {
     callback = function()
       callback()

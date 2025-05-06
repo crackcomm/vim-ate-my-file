@@ -1,5 +1,5 @@
 local a = require("plenary.async")
-local common = require("crackcomm.common")
+local common = require("crackcomm.common.init")
 local jj_log = require("crackcomm.jj.log")
 
 local M = {}

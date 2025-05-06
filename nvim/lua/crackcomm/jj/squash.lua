@@ -1,7 +1,7 @@
 local async = require("plenary.async")
 local hunks = R("crackcomm.jj.hunks")
 local common = R("crackcomm.jj.common")
-local scripts = require("crackcomm.common").scripts
+local scripts = require("crackcomm.common.init").scripts
 local Job = require("plenary.job")
 
 local M = {}

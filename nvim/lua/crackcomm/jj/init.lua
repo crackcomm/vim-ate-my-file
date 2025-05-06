@@ -1,5 +1,5 @@
 local a = require("plenary.async")
-local keymap = require("crackcomm.keymap")
+local keymap = require("crackcomm.common.keymap")
 
 local M = {}
 
