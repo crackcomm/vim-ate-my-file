@@ -1,8 +1,10 @@
 local fb = require("telescope").extensions.file_browser
 local nmap = require("crackcomm.keymap").nmap
 local vmap = require("crackcomm.keymap").vmap
+local custom = require("crackcomm.telescope.custom")
+local telescope = require("telescope")
 
-require("telescope").setup({
+telescope.setup({
   pickers = {
     colorscheme = {
       enable_preview = true,
@@ -34,6 +36,12 @@ require("telescope").setup({
   },
 
   extensions = {
+    frecency = {
+      auto_validate = true,
+      db_safe_mode = false,
+      matcher = "fuzzy",
+    },
+
     fzf_writer = {
       use_highlighter = false,
       minimum_grep_characters = 6,
@@ -150,39 +158,29 @@ require("telescope").setup({
   },
 })
 
-_ = require("telescope").load_extension("neoclip")
-_ = require("telescope").load_extension("file_browser")
-_ = require("telescope").load_extension("ui-select")
-_ = require("telescope").load_extension("fzf")
-_ = require("telescope").load_extension("dap")
+local extensions_to_load = {
+  "ui-select",
+  "neoclip",
+  "file_browser",
+  "fzf",
+  "dap",
+  "frecency",
+}
+for _, ext in ipairs(extensions_to_load) do
+  pcall(telescope.load_extension, ext) -- Use pcall for safety
+end
 
 local builtin = require("telescope.builtin")
 
-local M = {}
-
--- Telescope resume
--- Telescope grep_string
-
-M.browse_files = function(opts)
-  opts = opts or {}
-  -- builtin.file_browser({ path = vim.fn.expand("%:p:h"), select_buffer = true })
-  fb.file_browser(vim.tbl_extend("force", {
-    -- cwd = vim.fn.expand("%:p:h"),
-    grouped = true,
-    depth = 1,
-    select_buffer = true,
-  }, opts))
-end
-
 -- telescope builtins
-nmap({ "<space>tt", builtin.builtin, { silent = true, desc = "telescope:" } })
-nmap({ "<space>tr", builtin.resume, { silent = true, desc = "telescope:" } })
+nmap({ "<space>tt", builtin.builtin, { silent = true, desc = "telescope: [t]elescope" } })
+nmap({ "<space>tr", builtin.resume, { silent = true, desc = "telescope: [r]esume" } })
 
 -- [h]ome
 nmap({
   "<space>hf",
   function()
-    M.browse_files({
+    custom.browse_files({
       path = vim.fn.expand("~/x"),
       depth = 1,
       hide_parent_dir = true,
@@ -198,7 +196,7 @@ nmap({ "<space>wg", builtin.live_grep, "telescope: [w]orkspace [g]rep" })
 nmap({
   "<space>wd",
   function()
-    M.browse_files({
+    custom.browse_files({
       depth = 1,
       files = true,
     })
@@ -233,7 +231,7 @@ nmap({
 nmap({
   "<space>ff",
   function()
-    M.browse_files({
+    custom.browse_files({
       path = vim.fn.expand("%:p:h"),
       prompt_path = true,
     })
@@ -250,18 +248,5 @@ nmap({ "<space>gl", builtin.git_commits, "telescope: [g]it [l]og" })
 nmap({ "<space>gc", builtin.git_bcommits, "telescope: [g]it [c]ommits" })
 vmap({ "<space>gc", builtin.git_bcommits_range, "telescope: [g]it [c]ommits" })
 
--- Check if Neovim was started with a directory argument
-local args = vim.fn.argv()
-if #args == 1 and vim.fn.isdirectory(args[1]) == 1 then
-  -- Get the directory path from the argument
-  local dir = args[1]
-
-  -- Set an autocommand to run after Neovim finishes loading
-  vim.api.nvim_create_autocmd("VimEnter", {
-    callback = function()
-      builtin.find_files()
-    end,
-  })
-end
-
-return M
+-- [f][r]ecency
+nmap({ "<space>fr", custom.frecency, "telescope: [f]recency" })

@@ -4,8 +4,6 @@
 
 require("crackcomm.globals")
 
-vim.deprecate = function() end -- pure evil
-
 vim.g.mapleader = ","
 vim.g.maplocalleader = "\\"
 
@@ -38,5 +36,4 @@ require("lazy").setup("custom.plugins", {
   },
 })
 
-require("crackcomm.filetypes")
-require("crackcomm.jj").setup()
+require("crackcomm.setup")()

@@ -1,5 +1,5 @@
 local autocmd = require("crackcomm.autocmd").autocmd
-local telescope_mapper = require("crackcomm.telescope.mappings")
+local telescope_mapper = require("crackcomm.telescope.handler")
 local handlers = require("crackcomm.lsp.handlers")
 local inlay_hints = require("crackcomm.lsp.inlay")
 
