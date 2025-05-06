@@ -7,25 +7,25 @@ email = "crackcomm@gmail.com"
 [ui]
 default-command = "sl"
 color = "auto"
-diff.tool = [ "delta" ]
+diff.tool = ["delta"]
 paginate = "auto"
 diff-editor = ":builtin"
 
 [aliases]
-ll = [ "log", "-n", "4" ]
-sl = [ "log", "-r", "crit", "--no-pager" ]
-sq = [ "squash" ]
-s = [ "show" ]
-goto = [ "edit" ]
-ops = [ "op", "log", "-n", "5" ]
-d = [ "diff", "--git" ]
-ds = [ "diff", "--stat", "--no-pager" ]
-dt = [ "diff", "--tool=delta" ]
-nb = [ "new", "-B", "@" ]
-moveback = [ "move", "--from", "@+", "--to", "@" ]
+ll = ["log", "-n", "4"]
+sl = ["log", "-r", "crit", "--no-pager"]
+sq = ["squash"]
+s = ["show"]
+ops = ["op", "log", "-n", "5"]
+d = ["diff", "--git"]
+ds = ["diff", "--stat", "--no-pager"]
+dt = ["diff", "--tool=delta"]
+na = ["new", "-A", "@", "--no-edit"]
+nb = ["new", "-B", "@", "--no-edit"]
+sb = ["squash", "--to", "@-"]
 
-"e-" = [ "edit", "@-" ]
-"e+" = [ "edit", "@+" ]
+"e-" = ["edit", "@-"]
+"e+" = ["edit", "@+"]
 
 [revset-aliases]
 'chore' = '''
