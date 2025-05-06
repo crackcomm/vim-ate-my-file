@@ -44,4 +44,5 @@ return function()
   register_vim_enter()
   register_colorscheme()
   register_filetypes()
+  require("crackcomm.telescope.mappings")
 end
