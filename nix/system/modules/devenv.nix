@@ -42,5 +42,7 @@ in {
     pkgs.zsh-bd
     pkgs.zsh-abbr
     pkgs.zsh-autocomplete
+    pkgs.lsproxy
+    pkgs.python312Packages.jedi-language-server
   ];
 }
