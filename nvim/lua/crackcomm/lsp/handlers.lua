@@ -1,18 +1,5 @@
--- TODO: this doesnt work and I'm not sure I want it?
-
--- Jump directly to the first available definition every time.
-vim.lsp.handlers["textDocument/definition"] = function(_, result)
-  if not result or vim.tbl_isempty(result) then
-    print("[LSP] Could not find definition")
-    return
-  end
-
-  if vim.tbl_islist(result) then
-    vim.lsp.util.jump_to_location(result[1], "utf-8")
-  else
-    vim.lsp.util.jump_to_location(result, "utf-8")
-  end
-end
+--- LSP Handlers overrides
+local lsp_telescope = require("crackcomm.lsp.telescope")
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
   vim.lsp.with(vim.lsp.handlers["textDocument/publishDiagnostics"], {
@@ -29,8 +16,34 @@ vim.lsp.handlers["window/showMessage"] = require("crackcomm.lsp.show_message")
 
 local M = {}
 
+M.definition = function()
+  local params = vim.lsp.util.make_position_params(0, "utf-8")
+  vim.lsp.buf_request_all(0, "textDocument/definition", params, function(results_per_client, _, ctx)
+    -- if exactly one location, jump there:
+    local total = 0
+    for _, r in pairs(results_per_client) do
+      if r.result and not vim.tbl_isempty(r.result) then
+        total = total + 1
+      end
+    end
+    if total == 1 then
+      for cid, r in pairs(results_per_client) do
+        local loc = (type(r.result) == "table" and r.result[1] or r.result)
+        vim.lsp.util.jump_to_location(loc, vim.lsp.get_client_by_id(cid).offset_encoding)
+        return
+      end
+    end
+    if total == 0 then
+      vim.notify("No definition found", vim.log.levels.WARN)
+      return
+    end
+    -- otherwise show our picker
+    lsp_telescope.pick("LSP Definitions", results_per_client, { context = ctx })
+  end)
+end
+
 M.implementation = function()
-  local params = vim.lsp.util.make_position_params()
+  local params = vim.lsp.util.make_position_params(0, "utf-8")
 
   vim.lsp.buf_request(0, "textDocument/implementation", params, function(err, result, ctx, config)
     local bufnr = ctx.bufnr

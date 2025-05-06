@@ -1,4 +1,5 @@
 local themes = require("telescope.themes")
+local lsp_opts = require("crackcomm.lsp.telescope").default_opts
 
 local M = {}
 
@@ -23,14 +24,7 @@ function M.lsp_references()
 end
 
 function M.lsp_implementations()
-  require("telescope.builtin").lsp_implementations({
-    layout_strategy = "vertical",
-    layout_config = {
-      prompt_position = "top",
-    },
-    sorting_strategy = "ascending",
-    ignore_filename = false,
-  })
+  require("telescope.builtin").lsp_implementations(lsp_opts)
 end
 
 return setmetatable({}, {

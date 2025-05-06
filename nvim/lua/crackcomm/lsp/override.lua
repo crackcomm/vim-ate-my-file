@@ -38,7 +38,7 @@ local custom_attach = function(client, bufnr)
   buf_nnoremap({ "<space>cr", ":IncRename ", "lsp:rename" })
   buf_vnoremap({ "<space>ca", vim.lsp.buf.code_action, "lsp:code_action" })
 
-  buf_nnoremap({ "gd", vim.lsp.buf.definition, "lsp:definition" }) -- todo: use telescope
+  buf_nnoremap({ "gd", handlers.definition, "lsp:definition" })
   buf_nnoremap({ "gD", vim.lsp.buf.declaration, "lsp:declaration" })
   buf_nnoremap({ "gT", vim.lsp.buf.type_definition, "lsp:type_definition" })
   buf_nnoremap({ "K", vim.lsp.buf.hover, "lsp:hover" })
