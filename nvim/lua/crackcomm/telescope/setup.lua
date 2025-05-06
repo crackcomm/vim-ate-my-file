@@ -51,7 +51,8 @@ require("telescope").setup({
       -- hijack_netrw = true,
       select_buffer = true,
       respect_gitignore = true,
-      display_stat = { "size" },
+      display_stat = { size = true },
+      use_fd = false, -- problems with /usr/...
       mappings = {
         ["i"] = {
           ["<A-c>"] = fb.actions.create,
