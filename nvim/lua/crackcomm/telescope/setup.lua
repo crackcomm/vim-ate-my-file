@@ -174,7 +174,8 @@ M.browse_files = function(opts)
 end
 
 -- telescope builtins
-nmap({ "<space>t", builtin.builtin, { silent = true, desc = "telescope:" } })
+nmap({ "<space>tt", builtin.builtin, { silent = true, desc = "telescope:" } })
+nmap({ "<space>tr", builtin.resume, { silent = true, desc = "telescope:" } })
 
 -- [h]ome
 nmap({
