@@ -5,7 +5,6 @@ local inlay_hints = require("crackcomm.lsp.inlay")
 
 local autocmd_clear = vim.api.nvim_clear_autocmds
 local augroup_highlight = vim.api.nvim_create_augroup("custom-lsp-references", { clear = true })
--- local augroup_codelens = vim.api.nvim_create_augroup("custom-lsp-codelens", { clear = true })
 
 local keymap = require("crackcomm.common.keymap")
 local buf_nnoremap = keymap.buf_nnoremap
@@ -44,7 +43,6 @@ local custom_attach = function(client, bufnr)
   buf_nnoremap({ "K", vim.lsp.buf.hover, "lsp:hover" })
 
   buf_nnoremap({ "<space>gI", handlers.implementation, "lsp:implementation" })
-  buf_nnoremap({ "<space>lr", "<cmd>lua require('crackcomm.lsp.codelens').run()<CR>", "lsp:codelens" })
   buf_nnoremap({ "<space>rr", "<cmd>LspRestart<CR>", "lsp:restart" })
 
   telescope_mapper("gr", "lsp_references", nil, true)
