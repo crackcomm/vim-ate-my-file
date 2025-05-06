@@ -31,6 +31,6 @@ if [[ "${CID_EDITOR}" == "editor" ]]; then
 else
   export CID_EDITOR="editor"
   export CID_REVISION="$1"
-  jj --config-toml="ui.editor='$0'" describe $CID_REVISION
+  jj --config="ui.editor='$0'" describe $CID_REVISION
   jj describe $CID_REVISION
 fi
