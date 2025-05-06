@@ -8,7 +8,7 @@ local servers = {
   ts_ls = require("crackcomm.lsp.config.ts_ls"),
 
   ocamllsp = {
-    cmd = { "ocamllsp" },
+    cmd = { "ocamllsp", "--fallback-read-dot-merlin" },
     settings = {
       codelens = { enable = true },
       syntaxDocumentation = { enable = true },
