@@ -6,70 +6,12 @@ local servers = {
   clangd = require("crackcomm.lsp.config.clangd"),
   gopls = require("crackcomm.lsp.config.gopls"),
   ts_ls = require("crackcomm.lsp.config.ts_ls"),
-
-  ocamllsp = {
-    cmd = { "ocamllsp", "--fallback-read-dot-merlin" },
-    settings = {
-      codelens = { enable = true },
-      syntaxDocumentation = { enable = true },
-      server_capabilities = {
-        semanticTokensProvider = nil,
-      },
-    },
-
-    get_language_id = function(_, ftype)
-      return ftype
-    end,
-  },
-
-  lua_ls = {
-    settings = {
-      Lua = {
-        runtime = {
-          version = "LuaJIT", -- Neovim uses LuaJIT
-        },
-        workspace = {
-          library = { vim.env.VIMRUNTIME .. "/lua" },
-          checkThirdParty = false,
-        },
-      },
-    },
-  },
-
-  rust_analyzer = {
-    settings = {
-      ["rust-analyzer"] = {
-        diagnostics = {
-          enable = false,
-        },
-        files = {
-          excludeDirs = { "bazel-out", "bazel-bin", "bazel-testlogs", "bazel-monorepo-ocxmr" },
-        },
-      },
-    },
-  },
-
-  nil_ls = {
-    settings = {
-      ["nil"] = {
-        formatting = {
-          command = { "nixfmt" },
-        },
-      },
-    },
-  },
-
-  marksman = {
-    cmd = { "marksman", "server" },
-    filetypes = { "markdown", "md", "markdown.pandoc" },
-    single_file_support = true,
-  },
-
-  taplo = {
-    cmd = { "taplo", "lsp", "stdio" },
-    filetypes = { "toml" },
-    single_file_support = true,
-  },
+  ocamllsp = require("crackcomm.lsp.config.ocamllsp"),
+  lua_ls = require("crackcomm.lsp.config.lua_ls"),
+  rust_analyzer = require("crackcomm.lsp.config.rust_analyzer"),
+  nil_ls = require("crackcomm.lsp.config.nil_ls"),
+  marksman = require("crackcomm.lsp.config.marksman"),
+  taplo = require("crackcomm.lsp.config.taplo"),
 }
 
 require("mason").setup()
