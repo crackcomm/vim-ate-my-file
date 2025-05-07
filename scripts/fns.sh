@@ -25,15 +25,6 @@ psef() {
 # Aliases
 scripts=$(realpath $(dirname $0))
 
-# `esy dune exec $@` but allowing for `.ml` extension.
-edx() { esy dune exec $(echo $@ | sed 's/\.ml/\.exe/') }
-
-# Watch and execute `esy dune exec $@` respecting .gitignore.
-edw() { $scripts/edw.sh $@ }
-
-# Watch and execute `esy dune runtest` respecting .gitignore.
-edt() { $scripts/edt.sh $@ }
-
 # Watch and exec respecting .gitignore.
 wx()  { $scripts/wx.sh $@ }
 
