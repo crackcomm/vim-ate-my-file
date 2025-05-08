@@ -10,6 +10,9 @@ local cmd = {
 }
 return {
   cmd = cmd,
+  cmd_env = {
+    USER = "crackcomm",
+  },
   init_options = {
     clangdFileStatus = true,
   },
