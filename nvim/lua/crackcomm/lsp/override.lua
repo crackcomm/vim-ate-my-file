@@ -19,7 +19,7 @@ end
 local function has_document_highlight_support(bufnr)
   local clients = vim.lsp.get_clients({ bufnr = bufnr })
   for _, client in ipairs(clients) do
-    if client.supports_method("textDocument/documentHighlight") then
+    if client:supports_method("textDocument/documentHighlight", bufnr) then
       return true
     end
   end
