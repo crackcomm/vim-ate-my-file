@@ -17,7 +17,7 @@ local servers = {
 require("mason").setup()
 require("mason-lspconfig").setup({
   automatic_installation = false,
-  ensure_installed = { "jsonls", "rust_analyzer", "nil_ls", "marksman", "taplo" },
+  ensure_installed = { "jsonls", "marksman", "taplo" },
 })
 
 local function get_merged_config(config)
