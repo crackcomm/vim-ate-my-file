@@ -49,6 +49,19 @@ return {
         --    Can be string (lua regex)
         --    Or function (that returns lua regex)
         ignore = nil,
+
+        ---Controls space between the comment
+        padding = true,
+
+        ---Whether cursor should stay at the
+        sticky = true,
+
+        ---LHS of extra mappings
+        extra = {
+          above = "gcO",
+          below = "gco",
+          eol = "gcA",
+        },
       })
     end,
   },
