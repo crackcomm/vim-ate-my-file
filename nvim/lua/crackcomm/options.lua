@@ -31,6 +31,11 @@ o.relativenumber = true
 -- Disable ruler and show columns on Ctrl+G
 o.ruler = false
 
+-- completions
+o.completeopt = { "menu", "menuone", "noselect" }
+-- Don't show the dumb matching stuff.
+o.shortmess:append("c")
+
 -- Set custom statusline with coc.nvim integration
 -- o.statusline = [[%!luaeval('coc#status()') .. get(b:, 'coc_current_function', '')]]
 

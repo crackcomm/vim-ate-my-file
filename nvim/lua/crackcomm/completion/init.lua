@@ -1,10 +1,4 @@
-local o = vim.opt
-
-o.completeopt = { "menu", "menuone", "noselect" }
-
--- Don't show the dumb matching stuff.
-o.shortmess:append("c")
-
+local luasnip = require("luasnip")
 local lspkind = require("lspkind")
 local cmp = require("cmp")
 
