@@ -498,6 +498,7 @@ awful.rules.rules = {
 			placement = awful.placement.no_overlap + awful.placement.no_offscreen,
 		},
 	},
+	{ rule = { class = "kitty" }, properties = { fullscreen = true, floating = true } },
 
 	-- Floating clients.
 	{
@@ -538,7 +539,13 @@ awful.rules.rules = {
 	{ rule_any = { type = { "normal", "dialog" } }, properties = { titlebars_enabled = true } },
 
 	-- Set Firefox to always map on the tag named "2" on screen 1.
-	{ rule = { class = "brave" }, properties = { screen = 1, tag = "2" } },
+	{
+		rule = { class = "Brave-browser" },
+		properties = {
+			fullscreen = true,
+			floating = true,
+		},
+	},
 }
 -- }}}
 
