@@ -37,6 +37,18 @@ local function register_filetypes()
   })
 end
 
+local function clear_default_keymaps()
+  for _, bind in ipairs({
+    -- default lsp keymaps
+    "grn",
+    "gra",
+    "gri",
+    "grr",
+  }) do
+    vim.keymap.del("n", bind)
+  end
+end
+
 return function()
   --- @diagnostic disable-next-line: duplicate-set-field
   vim.deprecate = function() end
@@ -44,5 +56,6 @@ return function()
   register_vim_enter()
   register_colorscheme()
   register_filetypes()
+  clear_default_keymaps()
   require("crackcomm.telescope.mappings")
 end
