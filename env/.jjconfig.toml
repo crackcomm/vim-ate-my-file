@@ -57,7 +57,7 @@ sb = ["squash", "--to", "@-"]
   | ancestors(@, 2)
 '''
 
-'crit' = 'open()'
+'crit' = 'open() | @+'
 
 # https://martinvonz.github.io/jj/v0.11.0/config/#set-of-immutable-commits
 'immutable_heads()' = 'tags()'
