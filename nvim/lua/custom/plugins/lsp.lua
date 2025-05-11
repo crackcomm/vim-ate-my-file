@@ -54,6 +54,7 @@ return {
     "ray-x/lsp_signature.nvim",
     config = function()
       require("lsp_signature").setup()
+      vim.api.nvim_del_augroup_by_name("lsp_signature")
     end,
   },
 
