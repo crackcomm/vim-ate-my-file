@@ -1,19 +1,7 @@
 local builtin = require("telescope.builtin")
-local themes = require("telescope.themes")
 local lsp_opts = require("crackcomm.lsp.telescope").default_opts
 
 local M = {}
-
-M.lsp_code_actions = function()
-  local opts = themes.get_dropdown({
-    winblend = 10,
-    border = true,
-    previewer = false,
-    shorten_path = false,
-  })
-
-  builtin.lsp_code_actions(opts)
-end
 
 M.lsp_references = function()
   builtin.lsp_references({
