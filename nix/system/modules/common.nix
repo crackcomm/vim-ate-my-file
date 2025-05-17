@@ -1,7 +1,6 @@
 { outputs, inputs, ... }: {
-  nixpkgs.config.allowUnfree = true;
-
   nixpkgs = {
+    config.allowUnfree = true;
     overlays = [
       inputs.rust-overlay.overlays.default
       outputs.overlays.additions
@@ -21,6 +20,7 @@
     ./network.nix
     ./nix.nix
     # ./python.nix
+    ./nvidia.nix
     ./shell.nix
     ./sound.nix
     ./time.nix

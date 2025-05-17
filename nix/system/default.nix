@@ -12,7 +12,7 @@
 
   services.xserver.xrandrHeads = [
     {
-      output = "DP-1";
+      output = "DP-0";
       monitorConfig = ''
         Option "PreferredMode" "1920x1200" # Corresponds to --mode
         Option "Position" "0 0"           # Corresponds to --pos 0x0
@@ -20,7 +20,7 @@
       '';
     }
     {
-      output = "DP-3";
+      output = "DP-4";
       primary = true; # Corresponds to --primary
       monitorConfig = ''
         Option "PreferredMode" "1920x1200"
@@ -37,7 +37,7 @@
       '';
     }
     {
-      output = "HDMI-1";
+      output = "HDMI-0";
       monitorConfig = ''
         Option "PreferredMode" "1920x1080"
         Option "Position" "3840 -1610"    # Corresponds to --pos 3840x-1730
