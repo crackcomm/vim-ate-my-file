@@ -17,7 +17,7 @@ local function get_python_path(workspace)
     end
   end
 
-  return "/usr/bin/python3.10"
+  return "/usr/bin/python"
 end
 
 local function get_bazel_python_paths(workspace)
