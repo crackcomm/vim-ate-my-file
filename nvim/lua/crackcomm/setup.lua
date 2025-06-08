@@ -25,6 +25,8 @@ local function register_filetypes()
       star = "bzl",
       atd = "ocaml",
       td = "tablegen",
+      ts = "typescript",
+      tsx = "typescriptreact",
     },
   })
 
