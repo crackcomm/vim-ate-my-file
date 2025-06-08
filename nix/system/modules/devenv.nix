@@ -44,5 +44,6 @@ in {
     pkgs.zsh-autocomplete
     pkgs.lsproxy
     pkgs.python312Packages.jedi-language-server
+    pkgs.bazel-lsp
   ];
 }
