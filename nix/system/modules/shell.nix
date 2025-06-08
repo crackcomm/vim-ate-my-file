@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   users.defaultUserShell = pkgs.zsh;
 
-  environment.shells = with pkgs; [ zsh ];
+  environment.shells = [ pkgs.zsh ];
   environment.pathsToLink = [ "/share/zsh" ];
 
   environment.variables = {
@@ -23,7 +23,6 @@
     kitty
     xterm # fallback
     zsh
-    zsh-syntax-highlighting
     tmux
     delta
     direnv
