@@ -19,7 +19,6 @@
     ./locale.nix
     ./network.nix
     ./nix.nix
-    # ./python.nix
     ./nvidia.nix
     ./shell.nix
     ./sound.nix
