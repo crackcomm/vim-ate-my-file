@@ -25,6 +25,11 @@
     }
   ];
 
+  # xrandr \
+  #   --output DP-0 --mode 1920x1200 --pos 0x0 --rotate normal \
+  #   --output DP-4 --mode 1920x1200 --pos 1920x0 --rotate normal --primary \
+  #   --output DP-2 --mode 1920x1200 --pos 3840x-530 --rotate left \
+  #   --output HDMI-0 --mode 1920x1080 --pos 3840x-1610 --rotate normal
   services.xserver.xrandrHeads = [
     {
       output = "DP-0";
