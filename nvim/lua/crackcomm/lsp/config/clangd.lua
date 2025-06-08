@@ -1,9 +1,8 @@
 local cmd = {
   "clangd",
-  "--inlay-hints",
+  "--log=error",
   "--completion-style=detailed",
   "--background-index",
-  "--suggest-missing-includes",
   "--clang-tidy",
   "--header-insertion=iwyu",
   "--offset-encoding=utf-16",
