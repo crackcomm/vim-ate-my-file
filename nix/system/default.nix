@@ -10,6 +10,21 @@
 
   system.stateVersion = "24.05";
 
+  security.pam.loginLimits = [
+    {
+      domain = "*";
+      type = "soft";
+      item = "nproc";
+      value = "unlimited";
+    }
+    {
+      domain = "*";
+      type = "hard";
+      item = "nproc";
+      value = "unlimited";
+    }
+  ];
+
   services.xserver.xrandrHeads = [
     {
       output = "DP-0";
