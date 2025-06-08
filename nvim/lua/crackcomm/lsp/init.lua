@@ -29,7 +29,10 @@ local function get_merged_config(config)
 end
 
 for server, config in pairs(servers) do
-  lspconfig[server].setup(get_merged_config(config))
+  local cfg = get_merged_config(config)
+  if not cfg.cmd or vim.fn.executable(cfg.cmd[1]) == 1 then
+    lspconfig[server].setup(cfg)
+  end
 end
 
 if vim.fn.executable("bazel-lsp") == 1 then
