@@ -1,5 +1,5 @@
 { pkgs, lib, ... }: {
-  imports = [ ./awesome.nix ./brave.nix ];
+  imports = [ ./awesome.nix ./blorq.nix ./brave.nix ];
 
   home.stateVersion = "24.05";
 

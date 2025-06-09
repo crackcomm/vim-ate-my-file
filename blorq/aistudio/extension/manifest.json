@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "AI Studio chat relay",
+  "version": "1.0",
+  "description": "AI Studio chat relay extension.",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["tabs", "debugger", "scripting"],
+  "host_permissions": ["http://localhost:4437/*", "*://aistudio.google.com/*"]
+}
