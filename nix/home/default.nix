@@ -87,13 +87,10 @@
       fi
 
       ENV_DIR="$DOTFILES_DIR/env"
-      if [ ! -d "$HOME/.tmux" ]; then
-        ln -sf "$DOTFILES_DIR/.tmux" "$HOME/.tmux"
-      fi
       ln -sf "$ENV_DIR/.zshrc" "$HOME/.zshrc"
       ln -sf "$ENV_DIR/.zshenv" "$HOME/.zshenv"
       ln -sf "$ENV_DIR/.jjconfig.toml" "$HOME/.jjconfig.toml"
-      ln -sf "$ENV_DIR/.tmux.conf" "$HOME/.tmux.conf"
+      ln -sf "$DOTFILES_DIR/configs/tmux/.tmux.conf" "$HOME/.tmux.conf"
 
       echo "All configs linked successfully."
     '';
