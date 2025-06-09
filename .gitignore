@@ -1,3 +1,4 @@
 nvim/undodir
 nvim/backup
 node_modules
+.tmp*

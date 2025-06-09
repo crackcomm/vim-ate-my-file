@@ -1,13 +1,4 @@
-{ outputs, inputs, ... }: {
-  nixpkgs = {
-    config.allowUnfree = true;
-    overlays = [
-      inputs.rust-overlay.overlays.default
-      outputs.overlays.additions
-      outputs.overlays.modifications
-    ];
-  };
-
+{ ... }: {
   imports = [
     ./bluetooth.nix
     ./coding.nix
