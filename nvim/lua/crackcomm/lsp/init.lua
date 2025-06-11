@@ -30,7 +30,11 @@ end
 
 for server, config in pairs(servers) do
   local cfg = get_merged_config(config)
-  if not cfg.cmd or vim.fn.executable(cfg.cmd[1]) == 1 then
+  local cmd = cfg.cmd or lspconfig[server].config_def.default_config.cmd
+  if not cmd then
+    vim.notify("No command specified for LSP server: " .. server, vim.log.levels.WARN)
+  end
+  if vim.fn.executable(cmd[1]) == 1 then
     lspconfig[server].setup(cfg)
   end
 end
