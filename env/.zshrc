@@ -92,3 +92,11 @@ bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
+
+function fg-widget() {
+  fg
+  zle reset-prompt  # Optional: redraw prompt after resuming
+}
+
+zle -N fg-widget
+bindkey '^f' fg-widget  # Binds Ctrl-f to fg
