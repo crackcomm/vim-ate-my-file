@@ -32,6 +32,8 @@ local log = io.open("/tmp/awesome_debug.log", "a+")
 log:write("Theme path: " .. theme_path .. "\n")
 log:close()
 
+local browser = "brave --silent-debugger-extension-api"
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -123,7 +125,7 @@ myawesomemenu = {
 mymainmenu = awful.menu({
 	items = {
 		{ "awesome", myawesomemenu, beautiful.awesome_icon },
-		{ "brave", "brave" },
+		{ "brave", browser },
 		{ "open terminal", terminal },
 	},
 })
@@ -316,7 +318,7 @@ globalkeys = gears.table.join(
 		awful.spawn(terminal)
 	end, { description = "open a terminal", group = "launcher" }),
 	awful.key({ modkey, "Shift" }, "b", function()
-		awful.spawn("brave")
+		awful.spawn(browser)
 	end, { description = "open a terminal", group = "launcher" }),
 	awful.key({ modkey, "Control" }, "r", awesome.restart, { description = "reload awesome", group = "awesome" }),
 	awful.key({ modkey, "Shift" }, "q", awesome.quit, { description = "quit awesome", group = "awesome" }),
