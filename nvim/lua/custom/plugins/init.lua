@@ -83,6 +83,7 @@ return {
       require("origami").setup({
         -- requires with `nvim-ufo`
         keepFoldsAcrossSessions = false, -- package.loaded["ufo"] ~= nil,
+        useLspFoldsWithTreesitterFallback = false,
 
         pauseFoldsOnSearch = true,
 
@@ -108,9 +109,28 @@ return {
   },
 
   {
-    dir = "~/x/llmlsp",
+    "smoka7/hop.nvim",
+    version = "*",
+    opts = {
+      keys = "qweasdzcpoiukjmnb",
+    },
+    config = function(_, opts)
+      local hop = require("hop")
+      hop.setup(opts)
+      -- local directions = require("hop.hint").HintDirection
+      vim.keymap.set("n", "<C-p>", function()
+        --- @diagnostic disable: missing-fields
+        hop.hint_words({})
+        -- hop.hint_char1({})
+      end, { remap = true, desc = "Hop to char" })
+    end,
+  },
+
+  {
+    "echasnovski/mini.jump",
+    version = false,
     config = function()
-      require("colab").setup()
+      require("mini.jump").setup()
     end,
   },
 }
