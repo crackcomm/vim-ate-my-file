@@ -30,9 +30,7 @@
       };
 
       specialArgs = { inherit inputs outputs; };
-      arionAppScript = import ./blorq/arion/app-script.nix { inherit pkgs; };
     in {
-      apps.${system}.arion = arionAppScript;
       nixosConfigurations = {
         nixos-vm = nixpkgs.lib.nixosSystem {
           inherit system;
