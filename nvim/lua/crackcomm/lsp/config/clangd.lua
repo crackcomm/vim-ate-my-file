@@ -26,9 +26,6 @@ return {
     "hxx",
     "arduino",
   },
-  root_dir = function()
-    return vim.fn.getcwd()
-  end,
   before_init = function(_, config)
     local workspace_dir = vim.fn.getcwd()
     config.cmd = vim.list_extend(cmd, {

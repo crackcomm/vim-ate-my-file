@@ -1,5 +1,4 @@
 local override = require("crackcomm.lsp.override")
-local lspconfig = require("lspconfig")
 
 local servers = {
   pyright = require("crackcomm.lsp.config.pyright"),
@@ -30,12 +29,13 @@ end
 
 for server, config in pairs(servers) do
   local cfg = get_merged_config(config)
-  local cmd = cfg.cmd or lspconfig[server].config_def.default_config.cmd
+  local cmd = cfg.cmd or vim.lsp.config[server].cmd
   if not cmd then
     vim.notify("No command specified for LSP server: " .. server, vim.log.levels.WARN)
   end
   if vim.fn.executable(cmd[1]) == 1 then
-    lspconfig[server].setup(cfg)
+    vim.lsp.config(server, cfg)
+    vim.lsp.enable(server)
   end
 end
 
