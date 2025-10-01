@@ -6,7 +6,7 @@ require("crackcomm.common.globals")
 require("crackcomm.options")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -18,14 +18,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
--- local pluginspath = vim.fn.stdpath("config") .. "/plugin"
-require("lazy").setup("custom.plugins", {
-  dev = {
-    -- directory where you store your local plugin projects
-    -- path = pluginspath,
-    path = "~/ocxmr-repos/plugins",
-    fallback = false,
-  },
-})
+require("lazy").setup("custom.plugins")
 
 require("crackcomm.setup")()
