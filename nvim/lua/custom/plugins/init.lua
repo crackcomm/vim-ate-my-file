@@ -38,64 +38,27 @@ return {
   "romainl/vim-qf",
 
   {
-    "kevinhwang91/nvim-ufo",
-    event = {},
-    dependencies = { "kevinhwang91/promise-async" },
-    opts = {
-      preview = {
-        win_config = {
-          border = { "┏", "━", "┓", "┃", "┛", "━", "┗", "┃" },
-          winblend = 0,
-          winhighlight = "Normal:LazyNormal",
-        },
-        mappings = {
-          scrollB = "<C-b>",
-          scrollF = "<C-f>",
-          scrollU = "<C-u>",
-          scrollD = "<C-d>",
-        },
-      },
-      provider_selector = function(bufnr, filetype, buftype)
-        return { "treesitter", "indent" }
-      end,
-    },
-    config = function()
-      local ufo = require("ufo")
-
-      vim.o.foldlevel = 99
-      vim.o.foldlevelstart = 99
-      vim.o.foldenable = false
-
-      vim.keymap.set("n", "zR", ufo.openAllFolds, { desc = "Open all folds" })
-      vim.keymap.set("n", "zM", ufo.closeAllFolds, { desc = "Close all folds" })
-      vim.keymap.set("n", "zZ", ufo.peekFoldedLinesUnderCursor, { desc = "Peek folded lines under cursor" })
-
-      ufo.setup()
-    end,
-  },
-
-  {
     "chrisgrieser/nvim-origami",
     dependencies = { "kevinhwang91/nvim-ufo" },
     event = "VeryLazy",
     opts = {},
-    config = function(_, opts)
+    config = function()
       require("origami").setup({
         -- requires with `nvim-ufo`
         keepFoldsAcrossSessions = false, -- package.loaded["ufo"] ~= nil,
-        useLspFoldsWithTreesitterFallback = false,
+        useLspFoldsWithTreesitterFallback = true,
 
         pauseFoldsOnSearch = true,
 
         -- incompatible with `nvim-ufo`
-        foldtextWithLineCount = {
-          enabled = package.loaded["ufo"] == nil,
+        foldtext = {
+          enabled = true, -- package.loaded["ufo"] == nil,
           template = "   %s lines", -- `%s` gets the number of folded lines
           hlgroupForCount = "Comment",
         },
 
         foldKeymaps = {
-          setup = true, -- modifies `h` and `l`
+          setup = true, -- modifies `h`, `l`, and `$`
           hOnlyOpensOnFirstColumn = false,
         },
 

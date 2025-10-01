@@ -46,3 +46,7 @@ g.loaded_netrwSettings = 1
 
 -- vim-visual-multi
 g.VM_silent_exit = 1
+
+-- disable auto fold
+o.foldlevel = 99
+o.foldlevelstart = 99
