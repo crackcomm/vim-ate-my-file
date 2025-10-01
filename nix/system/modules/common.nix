@@ -16,5 +16,6 @@
     ./sound.nix
     ./time.nix
     ./users.nix
+    ./steam.nix
   ];
 }
