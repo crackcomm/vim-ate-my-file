@@ -3,17 +3,10 @@ local jj = require("crackcomm.jj.common")
 
 local ns = vim.api.nvim_create_namespace("jj_squash")
 
--- TODO: move
-vim.api.nvim_set_hl(0, "JJHunkDeleted", {
-  underline = true,
-  sp = "#f85149",
-  cterm = { underline = true },
-})
-
 local function hunk_range(h)
   if h.type == "delete" then
     -- return h.removed.start, h.removed.start + h.removed.count - 1
-    return h.added.start, h.removed.start - 1
+    return h.added.start + 1, h.added.start + h.added.count + 1
   else
     return h.added.start, h.added.start + h.added.count - 1
   end
@@ -21,7 +14,7 @@ end
 
 local function hunk_style(h)
   if h.type == "delete" then
-    return "JJHunkDeleted"
+    return "DiffDelete"
   elseif h.type == "add" then
     return "DiffAdd"
   elseif h.type == "change" then
