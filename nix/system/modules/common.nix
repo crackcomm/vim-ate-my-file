@@ -4,6 +4,7 @@
     ./coding.nix
     ./desktop.nix
     ./devenv.nix
+    ./docker.nix
     ./fonts.nix
     ./keyboard.nix
     ./linux.nix

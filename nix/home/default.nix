@@ -10,6 +10,7 @@
     EDITOR = "nvim";
     TERMINAL = "kitty -1";
     TERM = "xterm-kitty";
+    DOCKER_HOST = "unix://$XDG_RUNTIME_DIR/docker.sock";
   };
 
   home.packages = with pkgs; [ shotgun slop xclip ];
