@@ -28,6 +28,12 @@ return {
   {
     "L3MON4D3/LuaSnip",
     version = "v2.1.1",
+    config = function()
+      local ls = require("luasnip")
+      ls.add_snippets("sh", {
+        ls.parser.parse_snippet("bash", "#!/usr/bin/env bash\n$0"),
+      })
+    end,
   },
 
   "jose-elias-alvarez/nvim-lsp-ts-utils",
