@@ -2,6 +2,10 @@
 
 plugins+=(bazel)
 
+if [ -d /usr/share/zsh/site-functions ]; then
+  fpath=(/usr/share/zsh/site-functions $fpath)
+fi
+
 alias vi=nvim
 alias v="vi ."
 alias ls=eza
