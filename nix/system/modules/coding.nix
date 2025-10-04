@@ -9,6 +9,7 @@
     xz
     patch
     neovim
+    luajitPackages.luarocks
     jujutsu
 
     # Build Tools
