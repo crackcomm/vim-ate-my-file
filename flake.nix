@@ -4,7 +4,8 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     rust-overlay = {
-      url = "github:oxalica/rust-overlay";
+      url =
+        "github:crackcomm/rust-overlay?rev=2ced420b3bdf54601c08037ca05fbd54a9c6ff0c";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
