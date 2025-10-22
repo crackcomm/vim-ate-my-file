@@ -65,4 +65,73 @@ M.implementation = function()
   end)
 end
 
+M.restart = function()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local clients = vim.lsp.get_clients({ bufnr = bufnr })
+
+  if #clients == 0 then
+    vim.notify("No LSP clients to restart for this buffer.", vim.log.levels.INFO)
+    return
+  end
+
+  -- Get the IDs of the clients we are about to stop
+  local client_ids = {}
+  for _, client in ipairs(clients) do
+    if client.name ~= "copilot" then
+      table.insert(client_ids, client.id)
+    end
+  end
+
+  -- Stop the clients
+  vim.lsp.stop_client(client_ids)
+  vim.notify("Stopping LSP clients...", vim.log.levels.INFO)
+
+  -- Create a timer to periodically check if the clients have stopped
+  local wait_timer = vim.uv.new_timer()
+  --- Nil check
+  if wait_timer == nil then
+    vim.notify("Failed to create timer for LSP restart.", vim.log.levels.ERROR)
+    return
+  end
+
+  local check_interval = 100 -- Check every 100ms
+  local timeout = 5000 -- Give up after 5 seconds
+
+  local function check_clients_stopped()
+    timeout = timeout - check_interval
+    if timeout <= 0 then
+      vim.notify("LSP restart timed out.", vim.log.levels.ERROR)
+      wait_timer:close()
+      return
+    end
+
+    local all_stopped = true
+    for _, id in ipairs(client_ids) do
+      if vim.lsp.get_client_by_id(id) ~= nil then
+        all_stopped = false -- At least one client is still running
+        break
+      end
+    end
+
+    if not all_stopped then
+      return
+    end
+
+    if not wait_timer:is_closing() then
+      wait_timer:close()
+    end
+
+    vim.notify("All LSP clients stopped. Reloading buffer...", vim.log.levels.INFO)
+
+    -- All clients are confirmed to be stopped, now we can safely reload
+    local view = vim.fn.winsaveview()
+    vim.cmd("noautocmd write | edit")
+    vim.fn.winrestview(view)
+    vim.notify("LSP clients restarted.", vim.log.levels.INFO)
+  end
+
+  -- Start the timer
+  wait_timer:start(0, check_interval, vim.schedule_wrap(check_clients_stopped))
+end
+
 return M

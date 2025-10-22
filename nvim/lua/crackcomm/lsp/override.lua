@@ -44,7 +44,7 @@ local custom_attach = function(client, bufnr)
   buf_nnoremap({ "K", vim.lsp.buf.hover, "lsp:hover" })
 
   buf_nnoremap({ "<space>gI", handlers.implementation, "lsp:implementation" })
-  buf_nnoremap({ "<space>rr", "<cmd>LspRestart<CR>", "lsp:restart" })
+  buf_nnoremap({ "<space>rr", handlers.restart, "lsp:restart" })
 
   telescope_mapper("gr", "lsp_references", nil, true)
   telescope_mapper("gI", "lsp_implementations", nil, true)
