@@ -1,5 +1,6 @@
 local fb = require("telescope").extensions.file_browser
 local telescope = require("telescope")
+local custom = require("crackcomm.telescope.custom")
 
 telescope.setup({
   pickers = {
@@ -62,7 +63,7 @@ telescope.setup({
         ["i"] = {
           ["<A-c>"] = fb.actions.create,
           ["<S-CR>"] = fb.actions.create_from_prompt,
-          ["<A-r>"] = fb.actions.rename,
+          ["<A-r>"] = custom.lsp_safe_rename,
           ["<A-m>"] = fb.actions.move,
           ["<A-y>"] = fb.actions.copy,
           ["<A-d>"] = fb.actions.remove,
@@ -78,7 +79,7 @@ telescope.setup({
         },
         ["n"] = {
           ["c"] = fb.actions.create,
-          ["r"] = fb.actions.rename,
+          ["r"] = custom.lsp_safe_rename,
           ["m"] = fb.actions.move,
           ["y"] = fb.actions.copy,
           ["d"] = fb.actions.remove,
@@ -138,12 +139,8 @@ telescope.setup({
     qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
 
     path_display = function(_, path)
-      local home = os.getenv("HOME")
       local substitutions = {
-        [home .. "/x/dot-repo/nvim"] = "~/nvim",
-        [home .. "/x/monorepo-ocxmr"] = "~/ocxmr",
-        [home .. "/.local/nvim-linux64/share/nvim/runtime/lua/vim"] = "/vim",
-        [home] = "~",
+        [vim.fn.getcwd()] = ".",
       }
       for k, v in pairs(substitutions) do
         if path:sub(1, #k) == k then
