@@ -1,0 +1,1 @@
+rewrite (.*) http://localhost:7462/$1

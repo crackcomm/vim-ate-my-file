@@ -1,5 +1,9 @@
 { pkgs, lib, ... }: {
-  imports = [ ./awesome.nix ./brave.nix ];
+  imports = [
+    ./awesome.nix
+    ./brave.nix
+    ../../apps/bazel_download_proxy/service.nix
+  ];
 
   home.stateVersion = "24.05";
 
