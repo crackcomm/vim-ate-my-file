@@ -134,4 +134,42 @@ M.restart = function()
   wait_timer:start(0, check_interval, vim.schedule_wrap(check_clients_stopped))
 end
 
+-- Copy all diagnostics from the current buffer to the system clipboard
+function M.copy_all_diagnostics()
+  local bufnr = 0
+  local diagnostics = vim.diagnostic.get(bufnr)
+
+  if vim.tbl_isempty(diagnostics) then
+    vim.notify("No diagnostics found", vim.log.levels.INFO)
+    return
+  end
+
+  -- Get workspace root (prefer LSP, fallback to cwd)
+  local workspace_roots = vim.lsp.buf.list_workspace_folders()
+  local root = (#workspace_roots > 0) and workspace_roots[1] or vim.fn.getcwd()
+
+  -- Normalize path to remove trailing slash
+  root = root:gsub("/+$", "")
+
+  local filename = vim.api.nvim_buf_get_name(bufnr)
+  local relname = filename:gsub("^" .. vim.pesc(root) .. "/", "")
+
+  local lines = {}
+  for _, d in ipairs(diagnostics) do
+    local line = string.format(
+      "%s:%d:%d: [%s] %s",
+      relname,
+      d.lnum + 1,
+      d.col + 1,
+      vim.diagnostic.severity[d.severity] or "Unknown",
+      d.message:gsub("\n", " ")
+    )
+    table.insert(lines, line)
+  end
+
+  local text = table.concat(lines, "\n")
+  vim.fn.setreg("+", text)
+  vim.notify("Copied " .. #diagnostics .. " diagnostics to clipboard", vim.log.levels.INFO)
+end
+
 return M

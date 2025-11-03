@@ -46,8 +46,11 @@ local custom_attach = function(client, bufnr)
   buf_nnoremap({ "<space>gI", handlers.implementation, "lsp:implementation" })
   buf_nnoremap({ "<space>rr", handlers.restart, "lsp:restart" })
 
+  buf_nnoremap({ "<leader>cd", handlers.copy_all_diagnostics, "lsp:copy_all_diagnostics" })
+
   telescope_mapper("gr", "lsp_references", nil, true)
   telescope_mapper("gI", "lsp_implementations", nil, true)
+  telescope_mapper("<space>ad", "diagnostics", { ignore_filename = true, bufnr }, true)
   telescope_mapper("<space>a", "diagnostics", { ignore_filename = true }, true)
   telescope_mapper("<space>ds", "lsp_document_symbols", { ignore_filename = true }, true)
   telescope_mapper("<space>ws", "lsp_workspace_symbols", { ignore_filename = true }, true)
