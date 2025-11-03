@@ -2,27 +2,38 @@ return {
   {
     -- Faster file navigation
     "ThePrimeagen/harpoon",
+    branch = "harpoon2",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
-      require("harpoon").setup({
-        menu = {
-          width = vim.api.nvim_win_get_width(0) - 10,
-        },
-        global_settings = {
-          tabline = true,
-        },
-      })
+      local harpoon = require("harpoon")
+      harpoon:setup()
 
-      local mark = require("harpoon.mark")
-      local ui = require("harpoon.ui")
-      vim.keymap.set("n", "<leader>ha", mark.add_file, { desc = "[H]arpoon [A]dd file" })
-      vim.keymap.set("n", "<leader>hu", ui.toggle_quick_menu, { desc = "[H]arpoon [U]I" })
+      vim.keymap.set("n", "<leader>ha", function()
+        harpoon:list():add()
+      end, { desc = "[H]arpoon [A]dd file" })
+
+      vim.keymap.set("n", "<leader>hu", function()
+        harpoon.ui:toggle_quick_menu(harpoon:list())
+      end, { desc = "[H]arpoon [U]I" })
+
       vim.keymap.set("n", "<leader>gm", "<cmd>Telescope harpoon marks<CR>", { desc = "[H]arpoon [M]arks" })
+
       for id = 1, 5 do
         vim.keymap.set("n", "<leader>h" .. id, function()
-          ui.nav_file(id)
+          harpoon:list():select(id)
         end, { desc = "[H]arpoon File [" .. id .. "]" })
       end
+
+      -- kitty +kitten show_key
+      -- "next" on Ctrl+Alt+A
+      vim.keymap.set("n", string.char(0x1b, 0x01), function()
+        harpoon:list():next()
+      end, { desc = "Harpoon Next (raw Ctrl+Alt+A)" })
+
+      -- "prev" on Ctrl+Alt+D
+      vim.keymap.set("n", string.char(0x1b, 0x04), function()
+        harpoon:list():prev()
+      end, { desc = "Harpoon Prev (raw Ctrl+Alt+D)" })
 
       require("telescope").load_extension("harpoon")
     end,
