@@ -69,20 +69,49 @@ gc = ["git", "clone", "--colocate"]
 'format_short_id(id)' = 'id.shortest(7)'
 'format_timestamp(timestamp)' = 'timestamp.ago()'
 
+[colors]
+# turn off underline on removed and added tokens
+"diff removed token" = { underline = false }
+"diff added token" = { underline = false }
+
 [templates]
 draft_commit_description = '''
 concat(
   description,
   surround(
-    "\nJJ: This commit contains the following changes:\n", "",
-    indent("JJ:     ", diff.stat(72)),
-  ),
-  "\nJJ: ignore-rest\n",
-  indent("JJ:     ", diff.git()),
+    "\nJJ: ---------------------------[ INSTRUCTIONS FOR COPILOT ]---------------------------\n",
+    "\nJJ: ignore-rest",
+    indent(
+      "JJ: ",
+      concat(
+        "You are an expert programmer writing a commit message for this project.\n",
+        "Follow these rules strictly:\n",
+        "1. Complete the conventional commit message above. A scope is ALWAYS required.\n",
+        "2. The subject line MUST be lowercase and imperative (e.g., `add feature`, not `added feature`).\n",
+        "3. The body should explain the `why` of the change. Omit trivial explanations.\n",
+        "4. ALWAYS use backticks (`` ` ``) for paths, code, functions, classes, etc.\n",
+        "5. NEVER use capitalization, except for code literals like `MY_CONSTANT`.\n",
+        "6. Use the provided diff as context. Do not list the changed files in the message.\n",
+        "\n",
+        "---------------------------------[ VALID TYPES ]----------------------------------\n",
+        "feat, fix, docs, style, refactor, test, chore, build, ci, perf, security, dependency, revert, config\n",
+        "\n",
+        "-----------------------------[ EXAMPLES OF YOUR STYLE ]-----------------------------\n",
+        "fix(rt/http2): correctly detect if this is the last chunk of data to send\n",
+        "refactor(rt/http2): use `std::exception_ptr` for propagating exceptions\n",
+        "chore(.bazelrc): add `--repo_env` for ocaml in nix sandbox\n",
+        "docs(smf): improve `rpc.fbs` documentation for clarity\n",
+        "build(bazel): add bazel wrapper to isolate environment variables\n",
+        "deps(flatbuffers): add `--python-fields-snake-case` option to flatbuffers\n",
+        "\n",
+        "----------------------------------[ DIFF SUMMARY ]----------------------------------\n",
+        "This commit contains the following changes:\n",
+        indent("    ", diff.stat(72)),
+        "\n",
+        "------------------------------------[ FULL DIFF ]-------------------------------------\n",
+        diff.git()
+      )
+    )
+  )
 )
 '''
-
-[colors]
-# turn off underline on removed and added tokens
-"diff removed token" = { underline = false }
-"diff added token" = { underline = false }
