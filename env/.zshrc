@@ -52,8 +52,8 @@ bindkey "^[[F" end-of-line
 bindkey "^[[1~" beginning-of-line
 bindkey "^[[4~" end-of-line
 
-HISTSIZE=1000000
-SAVEHIST=1000000
+HISTSIZE=10000000
+SAVEHIST=10000000
 HISTFILE=~/.zsh_history
 
 # Use modern completion system
@@ -108,3 +108,5 @@ function fg-widget() {
 
 zle -N fg-widget
 bindkey '^f' fg-widget  # Binds Ctrl-f to fg
+
+eval "$(zoxide init zsh)"
