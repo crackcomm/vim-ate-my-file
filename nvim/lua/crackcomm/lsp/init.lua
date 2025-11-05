@@ -32,8 +32,9 @@ for server, config in pairs(servers) do
   local cmd = cfg.cmd or vim.lsp.config[server].cmd
   if not cmd then
     vim.notify("No command specified for LSP server: " .. server, vim.log.levels.WARN)
+    return
   end
-  if vim.fn.executable(cmd[1]) == 1 then
+  if type(cmd) == "function" or vim.fn.executable(cmd[1]) == 1 then
     vim.lsp.config(server, cfg)
     vim.lsp.enable(server)
   end

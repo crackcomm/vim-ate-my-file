@@ -1,19 +1,15 @@
-local lspconfig = require("lspconfig")
-
 local gopkgsdriver = vim.fn.stdpath("config") .. "/scripts/gopackagesdriver.sh"
 
 return {
-  on_new_config = function(config, root_dir)
-    local workspace = root_dir .. "/WORKSPACE"
-    if vim.loop.fs_stat(workspace) ~= nil then
-      config.cmd_env = {
-        GOPACKAGESDRIVER = gopkgsdriver,
-      }
+  cmd = function(dispatchers)
+    local workspace_dir = vim.fn.getcwd()
+    local env = {}
+    if vim.uv.fs_stat(workspace_dir .. "/WORKSPACE") ~= nil then
+      env["GOPACKAGESDRIVER"] = gopkgsdriver
     end
+    return vim.lsp.rpc.start({ "gopls" }, dispatchers, { env = env })
   end,
-  root_dir = function(fname)
-    return lspconfig.util.find_git_ancestor(fname)
-  end,
+  root_dir = vim.fn.getcwd(),
   settings = {
     gopls = {
       analyses = {
