@@ -17,6 +17,10 @@ export LANG=en_US.UTF-8
 export LC_TYPE=en_US.UTF-8
 export PATH="$DOTPATH/scripts:$PATH"
 
+# uv
+export UV_NO_MANAGED_PYTHON=1
+export UV_PYTHON=$(which python)
+
 files_to_source=(
   "$DOTPATH/scripts/nix-fns.sh"
   "$DOTPATH/scripts/fns.sh"
