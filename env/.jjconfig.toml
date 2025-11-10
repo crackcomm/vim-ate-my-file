@@ -7,13 +7,13 @@ email = "crackcomm@gmail.com"
 [ui]
 default-command = "sl"
 color = "auto"
-diff.tool = ["delta"]
 paginate = "auto"
 diff-editor = ":builtin"
+diff-formatter = ["delta"]
 
 [aliases]
 ll = ["log", "-n", "4"]
-sl = ["log", "-r", "crit", "--no-pager"]
+sl = ["log", "-r", "crit", "--no-pager", "-n10"]
 sq = ["squash"]
 s = ["show"]
 ops = ["op", "log", "-n", "5"]

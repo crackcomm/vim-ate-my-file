@@ -19,7 +19,7 @@
       inherit (self) outputs;
 
       system = "x86_64-linux";
-      overlays = import ./nix/overlays { inherit inputs; };
+      overlays = import ./nix/overlays;
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
