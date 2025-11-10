@@ -31,6 +31,10 @@ if [[ "${CID_EDITOR}" == "editor" ]]; then
 else
   export CID_EDITOR="editor"
   export CID_REVISION="$1"
-  jj --config="ui.editor='$0'" describe $CID_REVISION
+  if jj log --no-graph -T description -r "$1" | grep -Eq '^Change-Id: I[0-9a-f]{40}$'; then
+    echo "Change-Id already present, skipping edit"
+  else
+    jj --config="ui.editor='$0'" describe "$CID_REVISION"
+  fi
   jj describe $CID_REVISION
 fi
