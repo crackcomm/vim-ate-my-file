@@ -2,9 +2,12 @@ local autocmd = require("crackcomm.common.autocmd").autocmd
 local telescope_mapper = require("crackcomm.telescope.handler")
 local handlers = require("crackcomm.lsp.handlers")
 local inlay_hints = require("crackcomm.lsp.inlay")
+local capabilities = require("crackcomm.lsp.capabilities")
+local format = require("crackcomm.lsp.format")
 
 local autocmd_clear = vim.api.nvim_clear_autocmds
 local augroup_highlight = vim.api.nvim_create_augroup("custom-lsp-references", { clear = true })
+local augroup_format = vim.api.nvim_create_augroup("custom-lsp-format", { clear = true })
 
 local keymap = require("crackcomm.common.keymap")
 local buf_nnoremap = keymap.buf_nnoremap
@@ -14,16 +17,6 @@ local buf_vnoremap = keymap.buf_vnoremap
 local custom_init = function(client)
   client.config.flags = client.config.flags or {}
   client.config.flags.allow_incremental_sync = true
-end
-
-local function has_document_highlight_support(bufnr)
-  local clients = vim.lsp.get_clients({ bufnr = bufnr })
-  for _, client in ipairs(clients) do
-    if client:supports_method("textDocument/documentHighlight", bufnr) then
-      return true
-    end
-  end
-  return false
 end
 
 local custom_attach = function(client, bufnr)
@@ -63,7 +56,7 @@ local custom_attach = function(client, bufnr)
       "CursorHold",
       augroup_highlight,
       function()
-        if has_document_highlight_support(bufnr) then
+        if capabilities.supports_document_highlight(bufnr) then
           vim.lsp.buf.document_highlight()
         end
       end,
@@ -74,6 +67,19 @@ local custom_attach = function(client, bufnr)
 
   if client.name == "ocamllsp" then
     client.server_capabilities.semanticTokensProvider = nil
+  end
+
+  -- Auto format on save if supported
+  if capabilities.supports_formatting(client) then
+    autocmd_clear({ group = augroup_format, buffer = bufnr })
+    autocmd({
+      "BufWritePre",
+      augroup_format,
+      function()
+        format.run(client, bufnr)
+      end,
+      bufnr,
+    })
   end
 
   inlay_hints(client, bufnr)

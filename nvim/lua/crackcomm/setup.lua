@@ -54,6 +54,7 @@ end
 return function()
   --- @diagnostic disable-next-line: duplicate-set-field
   vim.deprecate = function() end
+  require("crackcomm.format").setup()
   require("crackcomm.jj").setup()
   register_vim_enter()
   register_colorscheme()
