@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+export GEMINI_API_KEY=$(cat ~/.gemini_api_key)
+export HTTPS_PROXY=http://localhost:8255
+export NODE_TLS_REJECT_UNAUTHORIZED=0
+
+node ~/x/v/gemini-cli/bundle/gemini.js -m auto
