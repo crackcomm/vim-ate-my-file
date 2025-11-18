@@ -5,6 +5,7 @@
     lsproxy = (import ./lsproxy.nix { pkgs = final.pkgs; });
     bazel-lsp = final.callPackage ./bazel-lsp.nix { };
     jujutsu = final.callPackage ./jujutsu.nix { };
+    lsp_mcp = final.callPackage ../../apps/lsp_mcp { };
   };
   modifications = final: prev: { };
 }

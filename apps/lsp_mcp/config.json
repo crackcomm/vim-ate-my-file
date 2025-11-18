@@ -1,0 +1,29 @@
+{
+  "servers": [
+    {
+      "name": "lua-ls",
+      "command": "lua-language-server",
+      "languageId": "lua",
+      "trace": true,
+      "traceArgs": ["--log-level=trace"],
+      "settings": {
+        "Lua": {
+          "runtime": { "version": "LuaJIT" },
+          "workspace": {
+            "library": [
+              "/nix/store/cmsbdfr6c1wbgzx6f6hl63z31m4mnym3-neovim-unwrapped-0.11.0/share/nvim/runtime/lua"
+            ],
+            "checkThirdParty": false
+          },
+          "hover": {
+            "previewFields": 500,
+            "expandAlias": true,
+            "enumsLimit": 50,
+            "viewString": true,
+            "viewStringMax": 10000
+          }
+        }
+      }
+    }
+  ]
+}
