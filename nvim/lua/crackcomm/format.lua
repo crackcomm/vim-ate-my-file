@@ -1,17 +1,35 @@
 local M = {}
 
+local function lsp_supports_formatting()
+  for _, client in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
+    if client.server_capabilities and client.server_capabilities.documentFormattingProvider then
+      return true
+    end
+  end
+  return false
+end
+
+local function is_ignored_filetype()
+  local ignored_filetypes = {
+    "gitcommit",
+    "json",
+    "jsonc",
+    "markdown",
+    "txt",
+  }
+  local ft = vim.bo.filetype
+  for _, ignored_ft in ipairs(ignored_filetypes) do
+    if ft == ignored_ft then
+      return true
+    end
+  end
+  return false
+end
+
 function M.setup()
   vim.keymap.set("n", "ss", function()
-    local has_lsp_formatting = false
-    for _, client in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
-      if client.server_capabilities and client.server_capabilities.documentFormattingProvider then
-        has_lsp_formatting = true
-        break
-      end
-    end
-
     -- if LSP supports formatting → just `:w`
-    if has_lsp_formatting then
+    if not is_ignored_filetype() and lsp_supports_formatting() then
       vim.cmd("write")
       return
     end

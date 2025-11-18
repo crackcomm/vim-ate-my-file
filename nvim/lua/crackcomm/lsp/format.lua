@@ -19,7 +19,7 @@ function M.run(client, bufnr)
   if #code_actions == 0 then
     local progress = create_progress_reporter(client, 1, "Formatting")
     progress.step("Running formatter...")
-    vim.lsp.buf.format({ bufnr = bufnr })
+    vim.lsp.buf.format({ bufnr = bufnr, timeout_ms = 750 })
     vim.cmd.write()
     progress.finish()
     return
@@ -33,7 +33,7 @@ function M.run(client, bufnr)
     -- After all code actions, run the final format.
     if index > #code_actions then
       progress.step("Final formatting...")
-      vim.lsp.buf.format({ bufnr = bufnr })
+      vim.lsp.buf.format({ bufnr = bufnr, timeout_ms = 750 })
       vim.cmd.write()
       progress.finish()
       vim.schedule(function()

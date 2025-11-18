@@ -22,9 +22,9 @@ function M.supported_code_action(client, action_kind)
   if not client.supports_method("textDocument/codeAction") then
     return nil
   end
-  local kinds = client.server_capabilities.codeActionProvider
+  local kinds = type(client.server_capabilities.codeActionProvider) == "table"
       and client.server_capabilities.codeActionProvider.codeActionKinds
-    or {}
+      or {}
   for _, k in ipairs(kinds) do
     if k:sub(1, #action_kind) == action_kind then
       return k
