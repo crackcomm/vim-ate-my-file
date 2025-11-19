@@ -1,8 +1,11 @@
 return {
   settings = {
-    ["nil"] = {
+    nixd = {
       formatting = {
         command = { "nixfmt" },
+      },
+      options = {
+        enableExprDiagnostics = true,
       },
     },
   },

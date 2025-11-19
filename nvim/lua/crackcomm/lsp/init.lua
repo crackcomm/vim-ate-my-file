@@ -8,7 +8,7 @@ local servers = {
   ocamllsp = require("crackcomm.lsp.config.ocamllsp"),
   lua_ls = require("crackcomm.lsp.config.lua_ls"),
   rust_analyzer = require("crackcomm.lsp.config.rust_analyzer"),
-  nil_ls = require("crackcomm.lsp.config.nil_ls"),
+  nixd = require("crackcomm.lsp.config.nixd"),
   marksman = require("crackcomm.lsp.config.marksman"),
   taplo = require("crackcomm.lsp.config.taplo"),
 }
