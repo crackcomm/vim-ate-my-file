@@ -44,4 +44,13 @@ function M.supported_code_actions(client, actions)
   return supported
 end
 
+function M.lsp_supports_formatting()
+  for _, client in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
+    if client.server_capabilities and client.server_capabilities.documentFormattingProvider then
+      return true
+    end
+  end
+  return false
+end
+
 return M

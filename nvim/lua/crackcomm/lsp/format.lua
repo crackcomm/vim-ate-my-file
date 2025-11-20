@@ -2,6 +2,12 @@ local create_progress_reporter = require("crackcomm.progress").create_reporter
 
 local M = {}
 
+local function buf_write(bufnr)
+  vim.api.nvim_buf_call(bufnr, function()
+    vim.cmd.write()
+  end)
+end
+
 function M.run(client, bufnr)
   if vim.b[bufnr] and vim.b[bufnr].is_saving then
     return
@@ -19,8 +25,8 @@ function M.run(client, bufnr)
   if #code_actions == 0 then
     local progress = create_progress_reporter(client, 1, "Formatting")
     progress.step("Running formatter...")
-    vim.lsp.buf.format({ bufnr = bufnr, timeout_ms = 750 })
-    vim.cmd.write()
+    pcall(vim.lsp.buf.format, { bufnr = bufnr, timeout_ms = 750 })
+    buf_write(bufnr)
     progress.finish()
     return
   end
@@ -33,8 +39,8 @@ function M.run(client, bufnr)
     -- After all code actions, run the final format.
     if index > #code_actions then
       progress.step("Final formatting...")
-      vim.lsp.buf.format({ bufnr = bufnr, timeout_ms = 750 })
-      vim.cmd.write()
+      pcall(vim.lsp.buf.format, { bufnr = bufnr, timeout_ms = 750 })
+      buf_write(bufnr)
       progress.finish()
       vim.schedule(function()
         vim.b[bufnr].is_saving = nil
@@ -57,16 +63,21 @@ function M.run(client, bufnr)
     }
 
     vim.lsp.buf_request(bufnr, "textDocument/codeAction", params, function(err, result)
-      if err then
-        vim.notify("LSP code action error: " .. err.message, vim.log.levels.WARN)
-      elseif result and #result > 0 then
-        local action = result[1]
-        if action.edit then
-          vim.lsp.util.apply_workspace_edit(action.edit, client.offset_encoding)
+      local ok, err_msg = pcall(function()
+        if err then
+          vim.notify("LSP code action error: " .. err.message, vim.log.levels.WARN)
+        elseif result and #result > 0 then
+          local action = result[1]
+          if action.edit then
+            vim.lsp.util.apply_workspace_edit(action.edit, client.offset_encoding)
+          end
+          if action.command then
+            vim.lsp.buf.execute_command(action)
+          end
         end
-        if action.command then
-          vim.lsp.buf.execute_command(action)
-        end
+      end)
+      if not ok then
+        vim.notify("Error processing code action '" .. kind .. "': " .. tostring(err_msg), vim.log.levels.WARN)
       end
       -- Proceed to the next action in the sequence.
       run_next_action(index + 1)

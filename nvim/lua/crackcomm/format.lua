@@ -1,13 +1,6 @@
-local M = {}
+local capabilities = require("crackcomm.lsp.capabilities")
 
-local function lsp_supports_formatting()
-  for _, client in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
-    if client.server_capabilities and client.server_capabilities.documentFormattingProvider then
-      return true
-    end
-  end
-  return false
-end
+local M = {}
 
 local function is_ignored_filetype()
   local ignored_filetypes = {
@@ -29,7 +22,7 @@ end
 function M.setup()
   vim.keymap.set("n", "ss", function()
     -- if LSP supports formatting → just `:w`
-    if not is_ignored_filetype() and lsp_supports_formatting() then
+    if not is_ignored_filetype() and capabilities.lsp_supports_formatting() then
       vim.cmd("write")
       return
     end
