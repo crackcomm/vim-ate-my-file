@@ -1,9 +1,5 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [
-    blueman # Provides blueman-applet and blueman-manager (GUI)
-    networkmanagerapplet # Tray icon for NetworkManager
-    pavucontrol # volume control
-  ];
+  home.packages = with pkgs; [ pavucontrol ];
 
   # TODO: already enabled system-wide, disable?
   xsession.windowManager.awesome.enable = true;

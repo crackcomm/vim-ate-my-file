@@ -11,7 +11,4 @@
     # If you have issues, check dmesg for firmware errors after enabling bluetooth.
     # enableA2dp = true; # This is often default/handled by PipeWire/PulseAudio now
   };
-
-  # Blueman applet for graphical management in AwesomeWM's tray
-  services.blueman.enable = true;
 }
