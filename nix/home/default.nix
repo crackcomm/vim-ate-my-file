@@ -2,6 +2,7 @@
   imports = [
     ./awesome.nix
     ./brave.nix
+    ./devenv.nix
     ../../apps/bazel_download_proxy/service.nix
   ];
 

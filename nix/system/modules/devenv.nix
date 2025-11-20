@@ -34,16 +34,7 @@ in {
   environment.systemPackages = [
     tokn
     pythonDevEnv
-
-    pkgs.zoxide
-    pkgs.zsh-command-time
-    pkgs.zsh-nix-shell
-    pkgs.zsh-vi-mode
-    pkgs.zsh-bd
-    pkgs.zsh-abbr
-    pkgs.zsh-autocomplete
     pkgs.lsproxy
     pkgs.python312Packages.jedi-language-server
-    pkgs.bazel-lsp
   ];
 }

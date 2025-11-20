@@ -1,17 +1,5 @@
 { pkgs, ... }: {
-  environment.systemPackages = with pkgs; [
-    # Basic Utilities
-    git
-    curl
-    wget
-    unzip
-    lbzip2
-    xz
-    patch
-    neovim
-    luajitPackages.luarocks
-    jujutsu
-
+  home.packages = with pkgs; [
     # Build Tools
     m4
     gnumake
@@ -35,16 +23,22 @@
     # Node.js for Github Copilot
     nodejs_22
 
-    # Development Tools
-    devenv
-
-    # Language servers and tools
-    ruff
-    lua-language-server
-    stylua
-    shfmt
-    nixfmt-classic
+    # --- Language servers and tools ---
+    # -- Common --
     keep-sorted
+    # -- Shell --
+    shfmt
+    # -- Lua --
+    stylua
+    lua-language-server
+    # -- Python --
+    uv
+    ruff
     pyright
+    # -- Nix --
+    nixd
+    nixfmt-classic
+    # -- Bazel --
+    bazel-lsp
   ];
 }

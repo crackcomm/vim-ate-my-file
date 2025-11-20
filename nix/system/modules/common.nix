@@ -1,7 +1,7 @@
 { ... }: {
   imports = [
     ./bluetooth.nix
-    ./coding.nix
+    ./bootstrap.nix
     ./desktop.nix
     ./devenv.nix
     ./docker.nix
@@ -12,10 +12,12 @@
     ./network.nix
     ./nix.nix
     ./nvidia.nix
+    ./nvim.nix
     ./shell.nix
     ./sound.nix
+    ./steam.nix
     ./time.nix
     ./users.nix
-    ./steam.nix
+    ./zsh.nix
   ];
 }
