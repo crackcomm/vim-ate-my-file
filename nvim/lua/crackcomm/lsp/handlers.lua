@@ -2,15 +2,15 @@
 local lsp_telescope = require("crackcomm.lsp.telescope")
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
-  vim.lsp.with(vim.lsp.handlers["textDocument/publishDiagnostics"], {
-    signs = {
-      severity = { min = vim.diagnostic.severity.ERROR },
-    },
-    underline = {
-      severity = { min = vim.diagnostic.severity.WARN },
-    },
-    virtual_text = true,
-  })
+    vim.lsp.with(vim.lsp.handlers["textDocument/publishDiagnostics"], {
+      signs = {
+        severity = { min = vim.diagnostic.severity.ERROR },
+      },
+      underline = {
+        severity = { min = vim.diagnostic.severity.WARN },
+      },
+      virtual_text = true,
+    })
 
 vim.lsp.handlers["window/showMessage"] = require("crackcomm.lsp.show_message")
 
@@ -142,7 +142,6 @@ M.restart = function()
 
     -- Clients are confirmed to be stopped.
     wait_timer:close()
-    vim.notify("LSP clients stopped. Restarting and re-attaching...", vim.log.levels.INFO)
 
     -- 5. THE CORE FIX: Manually restart each client and re-attach its buffers.
     for _, data in pairs(clients_to_restart) do
@@ -169,10 +168,6 @@ M.restart = function()
             vim.lsp.buf_attach_client(bufnr, new_client.id)
           end
         end
-        vim.notify(
-          string.format("LSP client '%s' re-attached to %d buffers.", new_client.name, #bufs_to_attach),
-          vim.log.levels.INFO
-        )
       end
 
       -- Use vim.lsp.start which is the modern, high-level way to start a client.
