@@ -23,6 +23,7 @@ local function register_filetypes()
       fbs = "fbs",
       sky = "bzl",
       star = "bzl",
+      axl = "bzl",
       atd = "ocaml",
       td = "tablegen",
       ts = "typescript",
