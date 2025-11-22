@@ -72,8 +72,8 @@ function M.lsp_safe_rename(prompt_bufnr)
       local new_uri = vim.uri_from_fname(new_path)
 
       for _, client in ipairs(vim.lsp.get_clients()) do
-        if client.supports_method("workspace/didRenameFiles") then
-          client.notify("workspace/didRenameFiles", {
+        if client:supports_method("workspace/didRenameFiles") then
+          client:notify("workspace/didRenameFiles", {
             files = { { oldUri = old_uri, newUri = new_uri } },
           })
         end
