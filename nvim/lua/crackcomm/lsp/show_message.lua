@@ -53,12 +53,6 @@ local function create_float_window(messages_lines)
   vim.wo[message_display.win_id].winhighlight = "Normal:FloatWindow,FloatBorder:FloatBorder"
 end
 
--- TODO: map this to a keybind :)
-function LspShowMessageBuffer()
-  vim.cmd([[new]])
-  vim.cmd([[buffer ]] .. message_display.bufnr)
-end
-
 return function(_, result, ctx)
   local client = vim.lsp.get_client_by_id(ctx.client_id)
   local client_name = client and client.name or string.format("id=%d", ctx.client_id)
