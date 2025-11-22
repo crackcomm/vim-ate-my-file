@@ -21,6 +21,11 @@ return {
             relative = "editor",
           },
         },
+        progress = {
+          display = {
+            done_ttl = 1, -- How long a message should persist after completion
+          },
+        },
       })
     end,
   },
