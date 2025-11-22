@@ -42,7 +42,6 @@ return {
   },
 
   "jose-elias-alvarez/nvim-lsp-ts-utils",
-  "folke/neodev.nvim",
 
   {
     "smjonas/inc-rename.nvim",
