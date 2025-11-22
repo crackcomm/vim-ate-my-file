@@ -63,10 +63,6 @@ local custom_attach = function(client, bufnr)
     autocmd({ "CursorMoved", augroup_highlight, vim.lsp.buf.clear_references, bufnr })
   end
 
-  if client.name == "ocamllsp" then
-    client.server_capabilities.semanticTokensProvider = nil
-  end
-
   inlay_hints(client, bufnr)
 end
 
