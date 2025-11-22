@@ -11,6 +11,7 @@ local servers = {
   nixd = require("crackcomm.lsp.config.nixd"),
   marksman = require("crackcomm.lsp.config.marksman"),
   taplo = require("crackcomm.lsp.config.taplo"),
+  bazel_lsp = require("crackcomm.lsp.config.bazel_lsp"),
 }
 
 require("mason").setup()
@@ -40,18 +41,3 @@ for server, config in pairs(servers) do
   end
 end
 
-if vim.fn.executable("bazel-lsp") == 1 then
-  local function bazel_lsp()
-    vim.lsp.start(get_merged_config({
-      name = "bazel-lsp",
-      cmd = { "bazel-lsp" },
-      -- root_dir = vim.lsp.util.root_pattern("WORKSPACE", "BUILD"),
-      filetypes = { "bzl" },
-    }))
-  end
-
-  vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = { "*.bzl", "*.bazel", "BUILD", "WORKSPACE", "*.sky" },
-    callback = bazel_lsp,
-  })
-end
