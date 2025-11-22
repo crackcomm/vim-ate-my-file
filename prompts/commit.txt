@@ -18,6 +18,7 @@ Optionally, after a blank line, include a 1–2 sentence body of strictly factua
 8. Body formatting: If a body is included, format it as a list of bullet points (* ) where each point describes a distinct, factual change. Do not write the body as freeform prose. Only include a body if it adds non-obvious detail not covered by the subject or diff alone.
 9. Omit trivial diffs (e.g. comment typo, whitespace) or collapse them under a generic phrase if grouped with meaningful changes.
 10. Never speculate. If the motivation is not in the diff or explicitly given by the user, do not include it.
+11. Do not use uppercase letters in the first line of the commit message, except for proper nouns or acronyms.
 
 
 DIFF:
