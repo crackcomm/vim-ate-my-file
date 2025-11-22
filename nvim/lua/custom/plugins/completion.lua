@@ -13,6 +13,7 @@ return {
   { "hrsh7th/cmp-nvim-lsp" },
   { "onsails/lspkind-nvim" },
   { "tamago324/cmp-zsh" },
+  { "saadparwaiz1/cmp_luasnip" },
   {
     "zbirenbaum/copilot-cmp",
     config = function()
