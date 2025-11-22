@@ -2,7 +2,7 @@ local a = require("plenary.async")
 local common = require("crackcomm.common.init")
 local jj_log = require("crackcomm.jj.log")
 
-local create_progress_reporter = require("crackcomm.progress").create_reporter
+local create_progress_reporter = require("crackcomm.common.progress").create_reporter
 
 local M = {}
 

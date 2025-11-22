@@ -3,11 +3,9 @@ local telescope_mapper = require("crackcomm.telescope.handler")
 local handlers = require("crackcomm.lsp.handlers")
 local inlay_hints = require("crackcomm.lsp.inlay")
 local capabilities = require("crackcomm.lsp.capabilities")
-local format = require("crackcomm.lsp.format")
 
 local autocmd_clear = vim.api.nvim_clear_autocmds
 local augroup_highlight = vim.api.nvim_create_augroup("custom-lsp-references", { clear = true })
-local augroup_format = vim.api.nvim_create_augroup("custom-lsp-format", { clear = true })
 
 local keymap = require("crackcomm.common.keymap")
 local buf_nnoremap = keymap.buf_nnoremap
@@ -67,19 +65,6 @@ local custom_attach = function(client, bufnr)
 
   if client.name == "ocamllsp" then
     client.server_capabilities.semanticTokensProvider = nil
-  end
-
-  -- Auto format on save if supported
-  if capabilities.supports_formatting(client) then
-    autocmd_clear({ group = augroup_format, buffer = bufnr })
-    autocmd({
-      "BufWritePre",
-      augroup_format,
-      function()
-        format.run(client, bufnr)
-      end,
-      bufnr,
-    })
   end
 
   inlay_hints(client, bufnr)

@@ -1,5 +1,7 @@
 local M = {}
 
+--- Checks if the LSP client supports formatting but not willSaveWaitUntil.
+--- @param client vim.lsp.Client: LSP client
 function M.supports_formatting(client)
   return (
     not client:supports_method("textDocument/willSaveWaitUntil")
@@ -7,14 +9,23 @@ function M.supports_formatting(client)
   )
 end
 
-function M.supports_document_highlight(bufnr)
+--- Checks if any LSP client attached to the buffer supports the given method.
+--- @param bufnr number: buffer number
+--- @param method string: LSP method to check
+function M.supports_method(bufnr, method)
   local clients = vim.lsp.get_clients({ bufnr = bufnr })
   for _, client in ipairs(clients) do
-    if client:supports_method("textDocument/documentHighlight", bufnr) then
+    if client:supports_method(method, bufnr) then
       return true
     end
   end
   return false
+end
+
+--- Checks if any LSP client attached to the buffer supports document highlight.
+--- @param bufnr number: buffer number
+function M.supports_document_highlight(bufnr)
+  return M.supports_method(bufnr, "textDocument/documentHighlight")
 end
 
 --- @return string|nil: action kind supported by the client
@@ -33,6 +44,10 @@ function M.supported_code_action(client, action_kind)
   return nil
 end
 
+--- Finds supported code actions from a list.
+--- @param client vim.lsp.Client: LSP client
+--- @param actions string[]: list of action kinds to check
+--- @return string[]: list of action kinds supported by the client
 function M.supported_code_actions(client, actions)
   local supported = {}
   for _, action in ipairs(actions) do
@@ -42,15 +57,6 @@ function M.supported_code_actions(client, actions)
     end
   end
   return supported
-end
-
-function M.lsp_supports_formatting()
-  for _, client in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
-    if client.server_capabilities and client.server_capabilities.documentFormattingProvider then
-      return true
-    end
-  end
-  return false
 end
 
 return M
