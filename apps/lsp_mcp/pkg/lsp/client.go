@@ -225,17 +225,12 @@ func NewClient(ctx context.Context, rwc io.ReadWriteCloser, handler *Handler) *C
 	}
 }
 
-// awaitIdle blocks until the server has no active work-in-progress tokens.
-func (c *Client) awaitIdle(ctx context.Context) {
-	<-c.handler.idle
-}
-
 // awaitServerReady waits for the server to be fully initialized and idle.
 func (c *Client) awaitServerReady(ctx context.Context) error {
 	if err := c.handler.awaitInitialWorkspaceLoad(ctx); err != nil {
 		return err
 	}
-	c.awaitIdle(ctx)
+	<-c.handler.idle
 	return nil
 }
 
