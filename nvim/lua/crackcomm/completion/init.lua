@@ -13,7 +13,6 @@ local _cmp_format = lspkind.cmp_format({
     -- gh_issues = "[issues]",
     -- tn = "[TabNine]",
     -- eruby = "[erb]",
-    cody = "[cody]",
     copilot = "[copilot]",
   },
 })
@@ -75,7 +74,6 @@ cmp.setup({
     ["<c-a>"] = cmp.mapping.complete({
       config = {
         sources = {
-          { name = "cody" },
           { name = "copilot" },
         },
       },
@@ -106,7 +104,6 @@ cmp.setup({
     end, { "i", "s" }),
   },
   sources = cmp.config.sources({
-    { name = "cody" },
     { name = "copilot" },
     { name = "nvim_lsp" },
     -- { name = "nvim_lua" },
