@@ -1,4 +1,3 @@
-local custom = require("crackcomm.telescope.custom")
 local autocmd = require("crackcomm.common.autocmd")
 
 local function register_vim_enter()
@@ -7,7 +6,6 @@ local function register_vim_enter()
   if #args == 1 and vim.fn.isdirectory(args[1]) == 1 then
     autocmd.window("VimEnter", function()
       vim.cmd("FrecencyValidate")
-      custom.frecency()
     end)
   end
 end
