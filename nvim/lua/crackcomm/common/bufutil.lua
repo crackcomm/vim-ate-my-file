@@ -15,7 +15,7 @@ end
 --- @param bufnr number: buffer number
 --- @param fn function: function that takes the file path as argument
 function M.file_action(bufnr, fn)
-    -- resolve buffer path (empty string if none)
+  -- resolve buffer path (empty string if none)
   local filepath = vim.api.nvim_buf_get_name(bufnr)
   if filepath == "" then
     return

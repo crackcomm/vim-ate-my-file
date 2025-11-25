@@ -40,4 +40,3 @@ for server, config in pairs(servers) do
     vim.lsp.enable(server)
   end
 end
-
