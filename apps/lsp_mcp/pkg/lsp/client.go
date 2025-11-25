@@ -2,45 +2,15 @@ package lsp
 
 import (
 	"context"
-	"io"
-
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"sync"
 
 	"github.com/sourcegraph/go-lsp"
 	"github.com/sourcegraph/jsonrpc2"
 )
-
-// MarkupContent is a struct that is not present in the forked go-lsp library.
-type MarkupContent struct {
-	Kind  string `json:"kind"`
-	Value string `json:"value"`
-}
-
-// HoverReply is a struct that correctly models the response from gopls.
-type HoverReply struct {
-	Contents MarkupContent `json:"contents"`
-}
-
-// ServerCapabilities is a minimal local struct to handle variations in LSP server responses.
-type ServerCapabilities struct {
-	TextDocumentSync   lsp.TextDocumentSyncOptions `json:"textDocumentSync"`
-	CompletionProvider lsp.CompletionOptions       `json:"completionProvider"`
-	CodeActionProvider any                         `json:"codeActionProvider"`
-}
-
-// InitializeResult is a minimal local override to use our custom ServerCapabilities.
-type InitializeResult struct {
-	Capabilities ServerCapabilities `json:"capabilities"`
-}
-
-// ProgressParams is a local copy of lsp.ProgressParams with a flexible token type.
-type ProgressParams[T any] struct {
-	Token any `json:"token"` // string | int
-	Value T   `json:"value"`
-}
 
 // Handler handles messages sent from the server and signals when ready.
 type Handler struct {
@@ -81,15 +51,6 @@ func (h *Handler) awaitInitialWorkspaceLoad(ctx context.Context) error {
 	}
 }
 
-type ConfigurationItem struct {
-	ScopeURI string `json:"scopeUri"`
-	Section  string `json:"section"`
-}
-
-type ConfigurationParams struct {
-	Items []ConfigurationItem `json:"items"`
-}
-
 // Handle handles incoming requests and notifications from the LSP server.
 func (h *Handler) Handle(ctx context.Context, conn *jsonrpc2.Conn, req *jsonrpc2.Request) {
 	log.Printf("jsonrpc2 handler received: %s", req.Method)
@@ -109,7 +70,7 @@ func (h *Handler) Handle(ctx context.Context, conn *jsonrpc2.Conn, req *jsonrpc2
 }
 
 func (h *Handler) handleWorkspaceConfiguration(ctx context.Context, conn *jsonrpc2.Conn, req *jsonrpc2.Request) {
-	var params ConfigurationParams
+	var params lsp.ConfigurationParams
 	if err := json.Unmarshal(*req.Params, &params); err != nil {
 		log.Printf("could not unmarshal workspace/configuration params: %v", err)
 		return
@@ -150,7 +111,7 @@ func (h *Handler) handleWorkDoneProgressCreate(id jsonrpc2.ID, conn *jsonrpc2.Co
 
 // handleProgress parses and routes a $/progress notification.
 func (h *Handler) handleProgress(params *json.RawMessage) {
-	var p ProgressParams[any]
+	var p lsp.ProgressParams[any]
 	if err := json.Unmarshal(*params, &p); err != nil {
 		log.Printf("could not unmarshal progress params: %v", err)
 		return
@@ -235,9 +196,9 @@ func (c *Client) awaitServerReady(ctx context.Context) error {
 }
 
 // Initialize performs the full LSP initialization handshake.
-func (c *Client) Initialize(ctx context.Context, params *lsp.InitializeParams) (*InitializeResult, error) {
+func (c *Client) Initialize(ctx context.Context, params *lsp.InitializeParams) (*lsp.InitializeResult, error) {
 	// Send the initialize request.
-	var result InitializeResult
+	var result lsp.InitializeResult
 	if err := c.conn.Call(ctx, "initialize", params, &result); err != nil {
 		return nil, err
 	}
@@ -250,12 +211,8 @@ func (c *Client) Initialize(ctx context.Context, params *lsp.InitializeParams) (
 	return &result, nil
 }
 
-type DidChangeConfigurationParams struct {
-	Settings any `json:"settings"`
-}
-
 // DidChangeConfiguration sends a `workspace/didChangeConfiguration` notification to the server.
-func (c *Client) DidChangeConfiguration(ctx context.Context, params *DidChangeConfigurationParams) error {
+func (c *Client) DidChangeConfiguration(ctx context.Context, params *lsp.DidChangeConfigurationParams[any]) error {
 	return c.conn.Notify(ctx, "workspace/didChangeConfiguration", params)
 }
 
@@ -264,7 +221,7 @@ func (c *Client) Hover(ctx context.Context, params *lsp.TextDocumentPositionPara
 	if err := c.awaitServerReady(ctx); err != nil {
 		return "workspace loading", err
 	}
-	var result HoverReply
+	var result lsp.Hover[lsp.MarkupContent]
 	err := c.conn.Call(ctx, "textDocument/hover", params, &result)
 	if err != nil {
 		return "", err

@@ -85,7 +85,7 @@ func TestClient_Gopls(t *testing.T) {
 			URI: clientGoURI,
 		},
 		Position: lsp.Position{
-			Line:      211, // Line of the Initialize function
+			Line:      214, // Line of the Initialize function
 			Character: 9,   // Character position within the function name
 		},
 	})

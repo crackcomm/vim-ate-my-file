@@ -8,7 +8,7 @@ require (
 	github.com/sourcegraph/jsonrpc2 v0.2.1
 )
 
-replace github.com/sourcegraph/go-lsp => github.com/crackcomm/go-lsp v0.0.0-20251117194205-6b67102e6ed1
+replace github.com/sourcegraph/go-lsp => github.com/crackcomm/go-lsp v0.0.0-20251125120908-17adb92a1419
 
 require (
 	github.com/bahlo/generic-list-go v0.2.0 // indirect
