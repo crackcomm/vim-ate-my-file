@@ -382,6 +382,9 @@ globalkeys = gears.table.join(
 
 clientkeys = gears.table.join(
 	awful.key({ modkey }, "f", function(c)
+		if c.class == "Brave-browser" then
+			c._user_fullscreen_toggle = true
+		end
 		c.fullscreen = not c.fullscreen
 		c:raise()
 	end, { description = "toggle fullscreen", group = "client" }),
@@ -561,6 +564,18 @@ client.connect_signal("manage", function(c)
 	if awesome.startup and not c.size_hints.user_position and not c.size_hints.program_position then
 		-- Prevent clients from being unreachable after screen count changes.
 		awful.placement.no_offscreen(c)
+	end
+
+	if c.class == "Brave-browser" then
+		c:connect_signal("property::fullscreen", function(c)
+			if c._user_fullscreen_toggle then
+				c._user_fullscreen_toggle = nil
+				return
+			end
+			if not c.fullscreen then
+				c.fullscreen = true
+			end
+		end)
 	end
 end)
 
