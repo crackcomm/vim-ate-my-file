@@ -25,15 +25,15 @@ return {
       end
 
       -- kitty +kitten show_key
-      -- "next" on Ctrl+Alt+A
-      vim.keymap.set("n", string.char(0x1b, 0x01), function()
+      -- "next" on Ctrl+>
+      vim.keymap.set("n", "<space>.", function()
         harpoon:list():next()
-      end, { desc = "Harpoon Next (raw Ctrl+Alt+A)" })
+      end, { silent = true, desc = "Harpoon Next (raw Ctrl+Alt+A)" })
 
-      -- "prev" on Ctrl+Alt+D
-      vim.keymap.set("n", string.char(0x1b, 0x04), function()
+      -- "prev" on Ctrl+<
+      vim.keymap.set("n", "<space>,", function()
         harpoon:list():prev()
-      end, { desc = "Harpoon Prev (raw Ctrl+Alt+D)" })
+      end, { silent = true, desc = "Harpoon Prev (raw Ctrl+Alt+D)" })
 
       require("telescope").load_extension("harpoon")
     end,
