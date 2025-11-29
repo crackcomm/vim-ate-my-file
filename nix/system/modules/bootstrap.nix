@@ -8,5 +8,6 @@
     xz
     patch
     jujutsu
+    inetutils
   ];
 }
