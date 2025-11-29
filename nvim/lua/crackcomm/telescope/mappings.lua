@@ -71,7 +71,7 @@ nmap({
   "telescope: current [f]ile directory [f]ile browser",
 })
 
-nmap({ "<space>of", builtin.oldfiles, "telescope: [o]ld [f]iles" })
+nmap({ "<space>of", custom.oldfiles, "telescope: [o]ld [f]iles" })
 
 -- [g]it
 nmap({ "<space>gs", builtin.git_status, "telescope: [g]it [s]tatus" })

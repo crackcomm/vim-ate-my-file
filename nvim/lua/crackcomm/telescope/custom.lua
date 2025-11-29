@@ -83,6 +83,21 @@ function M.lsp_safe_rename(prompt_bufnr)
   end)
 end
 
+M.oldfiles = function()
+  builtin.oldfiles({
+    cwd = vim.loop.cwd(),
+    entry_maker = function(entry)
+      local display = vim.fn.fnamemodify(entry, ":.")
+      display = display:gsub("^./", "")
+      return {
+        value = entry,
+        display = display,
+        ordinal = display,
+      }
+    end,
+  })
+end
+
 M.lsp_references = function()
   builtin.lsp_references({
     layout_config = {
