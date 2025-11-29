@@ -18,6 +18,8 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
-require("lazy").setup("custom.plugins")
+require("lazy").setup("custom.plugins", {
+  change_detection = { notify = false },
+})
 
 require("crackcomm.setup")()
