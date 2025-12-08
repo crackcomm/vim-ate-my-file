@@ -4,6 +4,7 @@ local dapui = R("dapui")
 local bazel = R("crackcomm.bazel")
 local bazel_python = R("crackcomm.bazel.python")
 local vt = R("nvim-dap-virtual-text")
+local log = R("crackcomm.log")
 
 local DEFAULT_ADAPTER = {
   type = "server",
@@ -26,6 +27,74 @@ local M = {}
 
 -- vim.g.last_dap_target = nil
 
+local function launch_python_debugger(target, output_path, handle)
+  if not bazel_python.debug_binary(output_path) then
+    handle:cancel()
+    return
+  end
+
+  handle:report({ title = "Starting", message = "Launching " .. target, percentage = 70 })
+
+  local remote_root = output_path .. ".runfiles/" .. bazel.main_module_name()
+
+  vim.fn.jobstart({ "/usr/bin/python3", output_path }, { cwd = remote_root })
+
+  -- Wait briefly for debugpy server to start up
+  vim.defer_fn(function()
+    -- Start the DAP session
+    dap.run({
+      type = "python",
+      request = "attach",
+      justMyCode = false,
+      name = "Attach to debugpy",
+      connect = {
+        host = "127.0.0.1",
+        port = 5678,
+      },
+      pathMappings = {
+        {
+          localRoot = vim.fn.getcwd(),
+          remoteRoot = remote_root,
+        },
+      },
+      env = {
+        PYTHONPATH = remote_root,
+      },
+    }, { new = true })
+
+    handle:report({ title = "Starting debugger", percentage = 100 })
+    handle:finish()
+  end, 400) -- Adjust delay as needed
+end
+
+local function launch_cpp_debugger(target, output_path, handle)
+  handle:report({ title = "Starting", message = "Launching " .. target, percentage = 70 })
+  dap.run({
+    type = "codelldb",
+    name = "Launch codelldb: " .. target,
+    request = "launch",
+    program = output_path,
+    cwd = vim.fn.getcwd(),
+    args = {},
+    runInTerminal = false,
+    sourceMap = {
+      ["/proc/self/cwd"] = vim.fn.getcwd(),
+    },
+    -- initCommands = {
+    --   -- This is the magic command for LLDB.
+    --   -- It sets a breakpoint by the function name '__cxa_throw'
+    --   -- and tells the debugger to automatically continue when it's hit.
+    --   "breakpoint set -n __cxa_throw --auto-continue 1",
+    -- },
+    preRunCommands = {
+      "breakpoint name configure --disable cpp_exception",
+    },
+    exceptionBreakpointFilters = { "uncaught" },
+  })
+  handle:report({ title = "Starting debugger", percentage = 100 })
+  handle:finish()
+end
+
 local bazel_build = function(target)
   if not target or not bazel.workspace_exists() then
     return
@@ -37,7 +106,7 @@ local bazel_build = function(target)
 
   local handle = progress.handle.create({
     title = "Bazel build",
-    message = "Building...",
+    message = "Building " .. target .. "...",
     lsp_client = { name = "bazel" },
     percentage = 0,
   })
@@ -56,44 +125,22 @@ local bazel_build = function(target)
       return
     end
 
+    -- Build finished successfully
     local output_path = bazel.output_path(target)
-    if not bazel_python.debug_binary(output_path) then
+    local kind_cmd = 'bazel query --noshow_progress --output=label_kind "kind(rule, ' .. target .. ')"'
+    local kind_result = vim.fn.system(kind_cmd)
+    local kind = vim.split(kind_result, " ")[1]
+
+    if kind == "py_binary" or kind == "py_test" then
+      launch_python_debugger(target, output_path, handle)
+    elseif kind == "cc_binary" or kind == "cc_test" then
+      launch_cpp_debugger(target, output_path, handle)
+    else
+      local msg = "Unsupported bazel target kind for debugging: " .. kind
+      vim.notify(msg, vim.log.levels.ERROR)
+      log.error(msg)
       handle:cancel()
-      return
     end
-
-    handle:report({ title = "Starting", message = "Launching " .. target, percentage = 70 })
-
-    local remote_root = output_path .. ".runfiles/" .. bazel.main_module_name()
-
-    vim.fn.jobstart({ "/usr/bin/python3", output_path }, { cwd = remote_root })
-
-    -- Wait briefly for debugpy server to start up
-    vim.defer_fn(function()
-      -- Start the DAP session
-      dap.run({
-        type = "python",
-        request = "attach",
-        justMyCode = false,
-        name = "Attach to debugpy",
-        connect = {
-          host = "127.0.0.1",
-          port = 5678,
-        },
-        pathMappings = {
-          {
-            localRoot = vim.fn.getcwd(),
-            remoteRoot = remote_root,
-          },
-        },
-        env = {
-          PYTHONPATH = remote_root,
-        },
-      }, { new = true })
-
-      handle:report({ title = "Starting debugger", percentage = 100 })
-      handle:finish()
-    end, 400) -- Adjust delay as needed
   end)
 end
 
@@ -114,6 +161,18 @@ M.run_last = function()
 end
 
 M.setupui = function()
+  dap.listeners.after.event_initialized["dapui_config"] = function()
+    vim.schedule(function()
+      dapui.open()
+    end)
+  end
+  dap.listeners.before.event_terminated["dapui_config"] = function()
+    dapui.close()
+  end
+  dap.listeners.before.event_exited["dapui_config"] = function()
+    dapui.close()
+  end
+
   vt.setup()
   local default_config = R("dapui.config")
   dapui.setup(vim.fn.extend(default_config, {
@@ -183,9 +242,10 @@ M.setup = function()
   setup_cpp()
 
   vim.keymap.set("n", "<C-b>", dap.toggle_breakpoint, { desc = "[DAP] Toggle [B]reakpoint" })
-  vim.keymap.set("n", "<C-F5>", dap.step_out, { desc = "[D]ebug Step Out" })
-  vim.keymap.set("n", "<C-F6>", dap.step_over, { desc = "[D]ebug Step Over" })
-  vim.keymap.set("n", "<C-F8>", dap.step_into, { desc = "[D]ebug Step Into" })
+  vim.keymap.set("n", "<leader>d<cr>", dap.continue, { desc = "[D]ebug [C]ontinue" })
+  vim.keymap.set("n", "<leader>do", dap.step_out, { desc = "[D]ebug Step [O]ut" })
+  vim.keymap.set("n", "<leader>di", dap.step_into, { desc = "[D]ebug Step [I]nto" })
+  vim.keymap.set("n", "<leader>dn", dap.step_over, { desc = "[D]ebug [N]ext" })
   vim.keymap.set("n", "<leader>dr", M.run_last, { desc = "[D]ebug [R]un Last" })
   vim.keymap.set("n", "<leader>db", M.bazel, { desc = "[D]ebug [B]azel" })
   vim.keymap.set("n", "<leader>dc", dap.clear_breakpoints, { desc = "[D]ebug [C]lear Breakpoints" })
