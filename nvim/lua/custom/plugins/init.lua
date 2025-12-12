@@ -96,4 +96,11 @@ return {
       require("mini.jump").setup()
     end,
   },
+
+  {
+    "mbbill/undotree",
+    config = function()
+      vim.keymap.set("n", "<space>u", vim.cmd.UndotreeToggle, { desc = "Undotree Toggle" })
+    end,
+  },
 }
