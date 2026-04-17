@@ -13,7 +13,7 @@ diff-formatter = ["delta"]
 
 [aliases]
 ll = ["log", "-n", "4"]
-sl = ["log", "-r", "crit", "--no-pager", "-n10"]
+sl = ["log", "-r", "shortlog", "--no-pager"]
 sq = ["squash"]
 s = ["show"]
 ops = ["op", "log", "-n", "5"]
@@ -54,13 +54,11 @@ gc = ["git", "clone", "--colocate"]
 'uninterested()' = '::(remote_bookmarks() ~ git_branches()) | tags()'
 'mine()' = 'author("crackcomm@")'
 'interested()' = 'mine() ~ uninterested()'
-'open()' = '''
-    ancestors(interested(), 2)
-  | (immutable_heads() ~ tags() ~ chore)
-  | ancestors(@, 2)
-'''
 
-'crit' = 'open() | @+'
+'shortlog' = '''
+    (@::)
+  | ancestors(@, 3)
+'''
 
 # https://martinvonz.github.io/jj/v0.11.0/config/#set-of-immutable-commits
 'immutable_heads()' = 'tags()'
