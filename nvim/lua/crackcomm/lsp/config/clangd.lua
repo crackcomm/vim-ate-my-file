@@ -1,3 +1,5 @@
+local helper = require("crackcomm.lsp.helper")
+
 local cmd = {
   "clangd",
   "--log=error",
@@ -15,7 +17,7 @@ return {
       "--compile-commands-dir=" .. workspace_dir,
       "--tweaks=-I" .. workspace_dir, -- Add the workspace directory as an include path
     })
-    return vim.lsp.rpc.start(lsp_cmd, dispatchers)
+    return helper.start_wrapped_rpc(lsp_cmd, dispatchers)
   end,
   cmd_env = {
     USER = "crackcomm",

@@ -1,4 +1,5 @@
 local gopkgsdriver = vim.fn.stdpath("config") .. "/scripts/gopackagesdriver.sh"
+local helper = require("crackcomm.lsp.helper")
 
 return {
   cmd = function(dispatchers)
@@ -7,7 +8,7 @@ return {
     if vim.uv.fs_stat(workspace_dir .. "/WORKSPACE") ~= nil then
       env["GOPACKAGESDRIVER"] = gopkgsdriver
     end
-    return vim.lsp.rpc.start({ "gopls" }, dispatchers, { env = env })
+    return helper.start_wrapped_rpc({ "gopls" }, dispatchers, { env = env })
   end,
   root_dir = vim.fn.getcwd(),
   settings = {

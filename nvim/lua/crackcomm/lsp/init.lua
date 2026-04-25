@@ -1,4 +1,5 @@
 local override = require("crackcomm.lsp.override")
+local helper = require("crackcomm.lsp.helper")
 
 local servers = {
   pyright = require("crackcomm.lsp.config.pyright"),
@@ -30,6 +31,11 @@ end
 
 for server, config in pairs(servers) do
   local cfg = get_merged_config(config)
+
+  if type(cfg.cmd) == "table" then
+    cfg.cmd = helper.wrap_cmd(cfg.cmd)
+  end
+
   local cmd = cfg.cmd or vim.lsp.config[server].cmd
   if not cmd then
     vim.notify("No command specified for LSP server: " .. server, vim.log.levels.WARN)
