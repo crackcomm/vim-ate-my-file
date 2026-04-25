@@ -32,10 +32,6 @@
 
       specialArgs = { inherit inputs outputs; };
     in {
-      packages."${system}" = {
-        inherit (pkgs) lsp_mcp;
-      };
-
       nixosConfigurations = {
         nixos-vm = nixpkgs.lib.nixosSystem {
           inherit system;
