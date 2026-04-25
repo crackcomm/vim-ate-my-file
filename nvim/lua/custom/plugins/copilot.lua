@@ -4,5 +4,7 @@ return {
     config = function()
       require("copilot").setup({})
     end,
+    cmd = "Copilot",
+    event = "InsertEnter",
   },
 }
