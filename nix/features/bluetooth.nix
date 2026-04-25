@@ -1,8 +1,7 @@
 { pkgs, ... }: {
-  environment.systemPackages = with pkgs;
-    [
-      bluez # Provides bluetoothctl command-line utility
-    ];
+  environment.systemPackages = [
+    pkgs.bluez # Provides bluetoothctl command-line utility
+  ];
 
   hardware.bluetooth = {
     enable = true; # Required to enable the Bluetooth stack

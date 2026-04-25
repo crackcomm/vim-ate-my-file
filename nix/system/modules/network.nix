@@ -1,5 +1,10 @@
 { pkgs, ... }: {
-  environment.systemPackages = with pkgs; [ networkmanager ];
+  environment.systemPackages = with pkgs; [
+    curl
+    wget
+    inetutils
+    networkmanager
+  ];
 
   networking = {
     hostName = "nixx";

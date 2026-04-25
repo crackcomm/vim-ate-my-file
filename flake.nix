@@ -5,7 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     rust-overlay = {
       url =
-        "github:crackcomm/rust-overlay?rev=2ced420b3bdf54601c08037ca05fbd54a9c6ff0c";
+        "github:oxalica/rust-overlay?rev=403c09094a877e6c4816462d00b1a56ff8198e06";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
@@ -30,7 +30,15 @@
         ];
       };
 
-      specialArgs = { inherit inputs outputs; };
+      moduleLib = import ./nix/lib/optional-module.nix { inherit (pkgs) lib; };
+
+      specialArgs = {
+        inherit inputs outputs;
+        optionalModule = moduleLib.optionalModule;
+        defaultModule = moduleLib.defaultModule;
+      };
+
+      ifPathExists = path: if builtins.pathExists path then [ path ] else [ ];
     in {
       nixosConfigurations = {
         nixos-vm = nixpkgs.lib.nixosSystem {
@@ -45,9 +53,13 @@
             {
               home-manager.users.pah = ./nix/home;
               home-manager.extraSpecialArgs = specialArgs;
+              home-manager.sharedModules = [ ./local-home.nix ];
             }
 
             ./nix/system
+            ./nix/features
+            ./nix/setups/main
+            ./local.nix
           ];
         };
       };

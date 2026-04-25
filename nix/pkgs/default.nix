@@ -1,9 +1,6 @@
-{
-  additions = final: _prev: {
-    bazel_download_proxy =
-      final.callPackage ../../apps/bazel_download_proxy { };
-    bazel-lsp = final.callPackage ./bazel-lsp.nix { };
-    jujutsu = final.callPackage ./jujutsu.nix { };
-  };
-  modifications = final: prev: { };
+{ callPackage }: {
+  bazel-lsp = callPackage ./bazel-lsp.nix { };
+  bazel_download_proxy = callPackage ../../apps/bazel_download_proxy { };
+  jujutsu = callPackage ./jujutsu.nix { };
+  tokn = callPackage ./tokn.nix { };
 }

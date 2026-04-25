@@ -1,5 +1,6 @@
-{ stdenv, fetchurl, system, autoPatchelfHook, glibc }:
+{ stdenv, fetchurl, autoPatchelfHook, glibc }:
 let
+  system = stdenv.hostPlatform.system;
   systemToBinary = {
     "x86_64-linux" = {
       name = "bazel-lsp-0.6.4-linux-amd64";

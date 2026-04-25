@@ -8,7 +8,6 @@
           terminal_output console
         '';
         enable = true;
-        version = 2;
         devices = [ "nodev" ];
         # VM:
         # efiSupport = false;

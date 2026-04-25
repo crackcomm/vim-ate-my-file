@@ -1,12 +1,9 @@
 { pkgs, ... }: {
-  environment.systemPackages = with pkgs;
-    [
-      # Desktop packages
-      awesome
-      vlc
-      # brave
-      xdg-utils
-    ];
+  environment.systemPackages = with pkgs; [
+    # Desktop packages
+    awesome
+    vlc
+  ];
 
   services.xserver = {
     enable = true;

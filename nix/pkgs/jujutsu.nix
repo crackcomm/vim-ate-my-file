@@ -1,6 +1,7 @@
-{ stdenv, fetchurl, system, autoPatchelfHook }:
+{ stdenv, fetchurl, autoPatchelfHook }:
 
 let
+  system = stdenv.hostPlatform.system;
   systemToBinary = {
     "x86_64-linux" = {
       name = "jj-v0.35.0-x86_64-unknown-linux-musl.tar.gz";

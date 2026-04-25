@@ -1,8 +1,9 @@
-{ pkgs, lib, ... }: {
+{ lib, ... }: {
   imports = [
     ./awesome.nix
     ./brave.nix
-    ./devenv.nix
+    ./screenshots.nix
+    ../programming
     ../../apps/bazel_download_proxy/service.nix
   ];
 
@@ -18,16 +19,17 @@
     DOCKER_HOST = "unix://$XDG_RUNTIME_DIR/docker.sock";
   };
 
-  home.packages = with pkgs; [ shotgun slop xclip ];
-
   programs.git = {
     enable = true;
-    userName = "Łukasz Kurowski";
-    userEmail = "crackcomm@gmail.com";
-    extraConfig = {
+    settings = {
       credential.helper = "";
       github.user = "crackcomm";
+      user = {
+        name = "Łukasz Kurowski";
+        email = "crackcomm@gmail.com";
+      };
     };
+    signing.format = "openpgp";
   };
 
   programs.fd = {

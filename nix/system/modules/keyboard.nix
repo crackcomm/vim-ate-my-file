@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   console.keyMap = "us";
 
-  environment.systemPackages = with pkgs; [ xorg.xkbutils ];
+  environment.systemPackages = with pkgs; [ xkbutils ];
 
   services.xserver.xkb = {
     layout = "us";

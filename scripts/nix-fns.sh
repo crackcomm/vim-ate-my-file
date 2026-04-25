@@ -3,7 +3,7 @@
 copy-nixos-config() {
   sudo rm -rf /etc/nixos/apps/
   sudo cp -r ~/x/dot-repo/apps /etc/nixos/
-  sudo cp ~/x/dot-repo/flake.{nix,lock} /etc/nixos/
+  sudo cp ~/x/dot-repo/*.{nix,lock} /etc/nixos/
   sudo rsync -avh --delete ~/x/dot-repo/nix/ /etc/nixos/nix/
 }
 
@@ -20,4 +20,9 @@ rebuild-nixos-test() {
 rebuild-nixos-switch() {
   copy-nixos-config
   sudo nixos-rebuild switch "$@" --flake /etc/nixos#nixos-vm
+}
+
+rebuild-nixos-boot() {
+  copy-nixos-config
+  sudo nixos-rebuild boot "$@" --flake /etc/nixos#nixos-vm
 }
