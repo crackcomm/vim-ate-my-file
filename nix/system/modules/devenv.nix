@@ -30,11 +30,4 @@ let
       unidiff
     ]);
 
-in {
-  environment.systemPackages = [
-    tokn
-    pythonDevEnv
-    pkgs.lsproxy
-    pkgs.python312Packages.jedi-language-server
-  ];
-}
+in { environment.systemPackages = [ tokn pythonDevEnv ]; }
