@@ -6,6 +6,7 @@
     ./devenv.nix
     ./docker.nix
     ./fonts.nix
+    # ./fuse.nix
     ./keyboard.nix
     ./linux.nix
     ./locale.nix
