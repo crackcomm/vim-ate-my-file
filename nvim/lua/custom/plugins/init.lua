@@ -81,10 +81,13 @@ return {
       local hop = require("hop")
       hop.setup(opts)
       -- local directions = require("hop.hint").HintDirection
+      vim.keymap.set("n", "<C-s>", function()
+        --- @diagnostic disable: missing-fields
+        hop.hint_words({})
+      end, { remap = true, desc = "Hop to char" })
       vim.keymap.set("n", "<C-p>", function()
         --- @diagnostic disable: missing-fields
         hop.hint_words({})
-        -- hop.hint_char1({})
       end, { remap = true, desc = "Hop to char" })
     end,
   },
