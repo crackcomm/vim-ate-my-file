@@ -102,38 +102,32 @@ end
 M.build = function(label, callback, opts)
   opts = opts or {}
 
-  local buf = nil
-  if opts.log then
-    vim.cmd("botright split | enew")
-
-    buf = vim.api.nvim_get_current_buf()
-
-    vim.bo[buf].buftype = "nofile"
-    vim.bo[buf].swapfile = false
-    vim.bo[buf].bufhidden = "wipe"
-    vim.api.nvim_buf_set_name(buf, "build" .. label)
-  end
-
-  local cmd = "bazel build " .. label
+  local output_lines = {}
+  local cmd = "bazel build -c dbg " .. label
   vim.fn.jobstart(cmd, {
     stdout_buffered = true,
     on_stdout = function(_, data)
-      if data and buf then
-        vim.api.nvim_buf_set_lines(buf, -1, -1, false, data)
+      if data then
+        vim.list_extend(output_lines, data)
       end
       callback(false, true)
     end,
     on_stderr = function(_, data)
-      if data and buf then
-        vim.api.nvim_buf_set_lines(buf, -1, -1, false, data)
+      if data then
+        vim.list_extend(output_lines, data)
       end
       callback(false, true)
     end,
     on_exit = function(_, code)
-      if code == 0 and buf then
-        vim.api.nvim_buf_delete(buf, { force = true })
-      elseif buf then
-        vim.api.nvim_buf_set_lines(buf, -1, -1, false, { "Bazel build failed" })
+      if code ~= 0 then
+        vim.cmd("botright split | enew")
+        local buf = vim.api.nvim_get_current_buf()
+        vim.bo[buf].buftype = "nofile"
+        vim.bo[buf].swapfile = false
+        vim.bo[buf].bufhidden = "wipe"
+        vim.api.nvim_buf_set_name(buf, "build_log: " .. label)
+        vim.api.nvim_buf_set_lines(buf, 0, -1, false, output_lines)
+        vim.api.nvim_buf_set_lines(buf, -1, -1, false, { "", "Bazel build failed" })
       end
       callback(true, code == 0)
     end,
