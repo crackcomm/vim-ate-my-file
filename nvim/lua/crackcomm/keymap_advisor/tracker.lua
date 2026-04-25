@@ -17,8 +17,12 @@ local function deep_sum(a, b)
   for key, value in pairs(b) do
     if type(value) == "table" and type(result[key]) == "table" then
       result[key] = deep_sum(result[key], value)
+    elseif type(value) == "number" and type(result[key]) == "number" then
+      result[key] = result[key] + value
+    elseif type(value) == "number" then
+      result[key] = value
     else
-      result[key] = (result[key] or 0) + value
+      result[key] = vim.deepcopy(value)
     end
   end
   return result

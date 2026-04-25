@@ -1,16 +1,15 @@
 --- LSP Handlers overrides
 local lsp_telescope = require("crackcomm.lsp.telescope")
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] =
-  vim.lsp.with(vim.lsp.handlers["textDocument/publishDiagnostics"], {
-    signs = {
-      severity = { min = vim.diagnostic.severity.ERROR },
-    },
-    underline = {
-      severity = { min = vim.diagnostic.severity.WARN },
-    },
-    virtual_text = true,
-  })
+vim.diagnostic.config({
+  signs = {
+    severity = { min = vim.diagnostic.severity.ERROR },
+  },
+  underline = {
+    severity = { min = vim.diagnostic.severity.WARN },
+  },
+  virtual_text = true,
+})
 
 vim.lsp.handlers["window/showMessage"] = require("crackcomm.lsp.show_message")
 

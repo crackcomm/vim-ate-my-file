@@ -19,7 +19,6 @@ function M.save(key, data)
   local file_path = get_file_for_key(key)
   local storage_path = get_storage_path()
 
-  print("Saving data for key: " .. key .. " to file: " .. tostring(file_path))
   local json_data = vim.json.encode(data)
 
   -- pcall(function()
