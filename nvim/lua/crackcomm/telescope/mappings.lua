@@ -82,3 +82,6 @@ vmap({ "<space>gc", builtin.git_bcommits_range, "telescope: [g]it [c]ommits" })
 
 -- [f][r]ecency
 nmap({ "<space>fr", custom.frecency, "telescope: [f]recency" })
+
+-- [t]elescope [y]anks
+nmap({ "<space>ty", builtin.registers, "telescope: [t]elescope [y]anks (registers)" })
