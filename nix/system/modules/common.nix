@@ -15,7 +15,7 @@
     ./nvim.nix
     ./shell.nix
     ./sound.nix
-    ./steam.nix
+    # ./steam.nix
     ./time.nix
     ./users.nix
     ./zsh.nix
