@@ -173,7 +173,7 @@ cmp.setup({
   },
 
   -- pretty much unique to gopls
-  -- preselect = cmp.PreselectMode.None,
+  preselect = cmp.PreselectMode.None,
 })
 
 cmp.setup.cmdline(":", {
