@@ -118,7 +118,7 @@ M.restart = function()
   end
 
   local check_interval = 100
-  local timeout = 5000
+  local timeout = 15000
 
   local function check_clients_stopped()
     timeout = timeout - check_interval
