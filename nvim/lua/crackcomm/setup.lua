@@ -51,6 +51,7 @@ local function clear_default_keymaps()
 end
 
 return function()
+  require("crackcomm.keymap_advisor.tracker").setup()
   --- @diagnostic disable-next-line: duplicate-set-field
   vim.deprecate = function() end
   require("crackcomm.format").setup()
@@ -59,5 +60,6 @@ return function()
   register_colorscheme()
   register_filetypes()
   clear_default_keymaps()
+  require("crackcomm.keymap_advisor").setup()
   require("crackcomm.telescope.mappings")
 end
