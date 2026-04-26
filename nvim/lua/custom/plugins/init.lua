@@ -44,10 +44,6 @@ return {
     opts = {},
     config = function()
       require("origami").setup({
-        -- requires with `nvim-ufo`
-        keepFoldsAcrossSessions = false, -- package.loaded["ufo"] ~= nil,
-        useLspFoldsWithTreesitterFallback = true,
-
         pauseFoldsOnSearch = true,
 
         -- incompatible with `nvim-ufo`
