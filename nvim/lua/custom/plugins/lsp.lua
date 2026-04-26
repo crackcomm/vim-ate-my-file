@@ -45,10 +45,10 @@ return {
 
   {
     "smjonas/inc-rename.nvim",
-    dependencies = { "stevearc/dressing.nvim" },
+    dependencies = { "folke/snacks.nvim" },
     config = function()
       require("inc_rename").setup({
-        input_buffer_type = "dressing",
+        input_buffer_type = "snacks",
       })
     end,
   },

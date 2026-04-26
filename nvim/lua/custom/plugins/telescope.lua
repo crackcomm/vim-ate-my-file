@@ -17,4 +17,12 @@ return {
   },
   "zschreur/telescope-jj.nvim",
   "nvim-telescope/telescope-frecency.nvim",
+
+  {
+    --- `vim.ui.input` replacement
+    "folke/snacks.nvim",
+    opts = {
+      input = {},
+    },
+  },
 }
