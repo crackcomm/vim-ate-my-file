@@ -28,6 +28,7 @@ local custom_attach = function(client, bufnr)
   buf_nnoremap({ "<space>cr", ":IncRename ", "lsp:rename" })
   buf_vnoremap({ "<space>ca", vim.lsp.buf.code_action, "lsp:code_action" })
   buf_nnoremap({ "<space>ca", vim.lsp.buf.code_action, "lsp:code_action" })
+  buf_nnoremap({ "<space>cf", R("crackcomm.lsp.fix_all").fix_all, "lsp:fix_all" })
 
   buf_nnoremap({ "gd", handlers.definition, "lsp:definition" })
   buf_nnoremap({ "gD", vim.lsp.buf.declaration, "lsp:declaration" })
