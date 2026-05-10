@@ -26,6 +26,7 @@ local custom_attach = function(client, bufnr)
   buf_inoremap({ "<c-s>", vim.lsp.buf.signature_help, "lsp:signature_help" })
 
   buf_nnoremap({ "<space>cr", ":IncRename ", "lsp:rename" })
+  buf_nnoremap({ "<space>cl", R("crackcomm.lsp.lint").suppress_diagnostic, "lsp:suppress_diagnostic" })
   buf_vnoremap({ "<space>ca", vim.lsp.buf.code_action, "lsp:code_action" })
   buf_nnoremap({ "<space>ca", vim.lsp.buf.code_action, "lsp:code_action" })
   buf_nnoremap({ "<space>cf", R("crackcomm.lsp.fix_all").fix_all, "lsp:fix_all" })
