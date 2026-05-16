@@ -3,6 +3,7 @@ local ts = require("nvim-treesitter")
 ts.setup({
   install_dir = vim.fn.stdpath("data") .. "/site",
   highlight = { enable = true },
+  indent = { enable = true },
 })
 
 local ensure_installed =
@@ -16,6 +17,7 @@ vim.treesitter.language.register(
 
 vim.api.nvim_create_autocmd("FileType", {
   callback = function(args)
+    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
     pcall(vim.treesitter.start, args.buf)
   end,
 })
