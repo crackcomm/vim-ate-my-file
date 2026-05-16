@@ -1,0 +1,11 @@
+{
+  "AllowedSymbolLoadLocations": {
+    "cc_binary": ["@rules_cc//cc:defs.bzl"],
+    "cc_common": ["@rules_cc//cc:defs.bzl"],
+    "cc_import": ["@rules_cc//cc:defs.bzl"],
+    "cc_library": ["@rules_cc//cc:defs.bzl"],
+    "cc_proto_library": ["@protobuf//bazel:cc_proto_library.bzl"],
+    "cc_test": ["@rules_cc//cc:defs.bzl"],
+    "proto_library": ["@rules_proto//proto:defs.bzl"]
+  }
+}

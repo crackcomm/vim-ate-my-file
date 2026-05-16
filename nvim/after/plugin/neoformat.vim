@@ -25,7 +25,7 @@ let g:neoformat_bzl_buildifier = {
   \ 'exe': 'buildifier',
   \ 'args': [
   \   '-lint=fix',
-  \   '--warnings=-native-cc-binary,-native-cc-import,-native-cc-library,-native-cc-shared-library,-native-cc-test,-native-cc-common,-native-cc-info,-native-cc-proto,-native-proto,-native-sh-binary',
+  \   '-add_tables=' . expand('$HOME') . '/x/dot-repo/configs/buildifier.json',
   \   '-path', '"%:p"'
   \ ],
   \ 'stdin': 1,
