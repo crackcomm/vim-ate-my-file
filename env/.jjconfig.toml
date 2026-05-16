@@ -23,7 +23,7 @@ dt = ["diff", "--tool=delta"]
 na = ["new", "-A", "@", "--no-edit"]
 nb = ["new", "-B", "@", "--no-edit"]
 ne = ["new", "--no-edit"]
-sb = ["squash", "--to", "@-"]
+sb = ["squash", "--to", "@-", "--keep-emptied"]
 si = ["squash", "-i", "--to"]
 gc = ["git", "clone", "--colocate"]
 
