@@ -7,7 +7,7 @@ ts.setup({
 })
 
 local ensure_installed =
-  { "c", "cpp", "lua", "vim", "vimdoc", "query", "go", "python", "javascript", "typescript", "rust" }
+  { "c", "cpp", "lua", "vim", "vimdoc", "query", "go", "python", "javascript", "typescript", "rust", "nix" }
 ts.install(ensure_installed)
 
 vim.treesitter.language.register(
