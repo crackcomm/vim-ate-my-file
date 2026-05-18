@@ -23,7 +23,7 @@ function M.file_action(bufnr, fn)
 
   local view = vim.fn.winsaveview()
   fn(filepath)
-  vim.cmd.checktime(filepath)
+  vim.cmd("keepjumps checktime " .. vim.fn.fnameescape(filepath))
   vim.fn.winrestview(view)
 end
 

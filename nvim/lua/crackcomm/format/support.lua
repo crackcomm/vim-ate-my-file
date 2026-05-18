@@ -2,6 +2,7 @@ local M = {}
 
 local lsp_format_enabled_clients = {
   "gopls",
+  "clangd",
 }
 
 local lsp_code_actions_enabled_clients = {

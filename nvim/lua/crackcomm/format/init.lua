@@ -47,7 +47,7 @@ function M.setup()
       if client ~= nil and support.lsp_format_enabled(client) then
         pcall(vim.lsp.buf.format, { bufnr = bufnr, timeout_ms = 750 })
       else
-        vim.cmd("Neoformat")
+        vim.cmd("keepjumps Neoformat")
       end
       on_format_complete(bufnr)
     end
