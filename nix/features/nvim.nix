@@ -1,7 +1,12 @@
-{ pkgs, ... }: {
-  environment.variables = { EDITOR = "nvim"; };
+{ pkgs, ... }:
+{
+  environment.variables = {
+    EDITOR = "nvim";
+  };
   environment.systemPackages = with pkgs; [
-    (neovim.override { withNodeJs = true; })
+    (neovim.override {
+      withNodeJs = true;
+    })
     luajitPackages.luarocks
     tree-sitter
   ];
