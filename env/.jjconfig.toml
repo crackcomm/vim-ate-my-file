@@ -12,7 +12,7 @@ diff-editor = ":builtin"
 diff-formatter = ["delta"]
 
 [aliases]
-ll = ["log", "-n", "4"]
+ll = ["log", "-n", "10", "--no-pager"]
 sl = ["log", "-r", "shortlog", "--no-pager"]
 sq = ["squash"]
 s = ["show"]
@@ -62,6 +62,8 @@ gc = ["git", "clone", "--colocate"]
 
 # https://martinvonz.github.io/jj/v0.11.0/config/#set-of-immutable-commits
 'immutable_heads()' = 'tags()'
+
+'divergent' = '(:: ~ ::@) | heads(::@ & ::(:: ~ ::@)) | @'
 
 [template-aliases]
 'format_short_id(id)' = 'id.shortest(7)'
