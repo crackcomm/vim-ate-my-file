@@ -37,8 +37,6 @@
         optionalModule = moduleLib.optionalModule;
         defaultModule = moduleLib.defaultModule;
       };
-
-      ifPathExists = path: if builtins.pathExists path then [ path ] else [ ];
     in {
       nixosConfigurations = {
         nixos-vm = nixpkgs.lib.nixosSystem {
