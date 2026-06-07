@@ -1,15 +1,5 @@
 --- LSP Handlers overrides
-local lsp_telescope = require("crackcomm.lsp.telescope")
-
-vim.diagnostic.config({
-  signs = {
-    severity = { min = vim.diagnostic.severity.ERROR },
-  },
-  underline = {
-    severity = { min = vim.diagnostic.severity.WARN },
-  },
-  virtual_text = true,
-})
+local lsp_definitions = require("crackcomm.lsp.telescope.definitions")
 
 vim.lsp.handlers["window/showMessage"] = require("crackcomm.lsp.show_message")
 
@@ -37,7 +27,7 @@ M.definition = function()
       return
     end
     -- otherwise show our picker
-    lsp_telescope.pick("LSP Definitions", results_per_client, { context = ctx })
+    lsp_definitions.pick("LSP Definitions", results_per_client, { context = ctx })
   end)
 end
 
