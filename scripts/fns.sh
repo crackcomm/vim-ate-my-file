@@ -29,6 +29,11 @@ psef() {
     --height=50% --layout=reverse
 }
 
+# Generate a random port number based on input.
+mkport() {
+  echo -n "$@" | sha256sum | cut -c1-4 | tr 'a-f' 'A-F' | xargs -I'{}' bash -c 'echo $(( 1000 + (16#{} % 9000) ))'
+}
+
 # Aliases
 scripts=$(realpath $(dirname $0))
 
