@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   console.keyMap = "us";
 
   environment.systemPackages = with pkgs; [ xkbutils ];
@@ -7,4 +8,8 @@
     layout = "us";
     options = "caps:escape";
   };
+
+  # Mouse -> Keyboard remapping
+  services.input-remapper.enable = true;
+  services.input-remapper.enableUdevRules = true;
 }

@@ -14,6 +14,7 @@ in
       "lp"
       "docker"
       "realtime"
+      "input"
     ];
     hashedPassword = verySecurePasswordYouWouldNeverGuess;
     packages = [ pkgs.home-manager ];
