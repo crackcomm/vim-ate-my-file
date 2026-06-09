@@ -26,6 +26,7 @@ local DEFAULT_CONFIG = {
 local M = {}
 
 -- vim.g.last_dap_target = nil
+local PYTHON3_BIN = vim.fn.exepath("python3")
 
 local function launch_python_debugger(target, output_path, handle)
   if not bazel_python.debug_binary(output_path) then
@@ -37,7 +38,7 @@ local function launch_python_debugger(target, output_path, handle)
 
   local remote_root = output_path .. ".runfiles/" .. bazel.main_module_name()
 
-  vim.fn.jobstart({ "/usr/bin/python3", output_path }, { cwd = remote_root })
+  vim.fn.jobstart({ PYTHON3_BIN, output_path }, { cwd = remote_root })
 
   -- Wait briefly for debugpy server to start up
   vim.defer_fn(function()
@@ -201,7 +202,7 @@ M.close = function()
 end
 
 local function setup_python()
-  R("dap-python").setup("/usr/bin/python3.10")
+  R("dap-python").setup(PYTHON3_BIN)
   dap.adapters.python = DEFAULT_ADAPTER
   table.insert(dap.configurations.python, DEFAULT_CONFIG)
 end
