@@ -2,6 +2,7 @@ return {
   {
     "numToStr/Comment.nvim",
     config = function()
+      --- @diagnostic disable: missing-fields
       require("Comment").setup({
         -- LHS of operator-pending mapping in NORMAL + VISUAL mode
         opleader = {
@@ -40,15 +41,6 @@ return {
         -- Pre-hook, called before commenting the line
         --    Can be used to determine the commentstring value
         -- pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
-
-        -- Post-hook, called after commenting is done
-        --    Can be used to alter any formatting / newlines / etc. after commenting
-        post_hook = nil,
-
-        -- Can be used to ignore certain lines when doing linewise motions.
-        --    Can be string (lua regex)
-        --    Or function (that returns lua regex)
-        ignore = nil,
 
         ---Controls space between the comment
         padding = true,
