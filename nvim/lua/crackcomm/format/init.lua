@@ -47,6 +47,12 @@ function M.setup()
       if client ~= nil and support.lsp_format_enabled(client) then
         pcall(vim.lsp.buf.format, { bufnr = bufnr, timeout_ms = 750 })
       else
+        -- Anchor the cursor for undo by performing a surgical no-op change.
+        -- This prevents Neovim from jumping to the bottom of the file on undo
+        -- when Neoformat replaces the entire buffer.
+        local line = vim.api.nvim_get_current_line()
+        vim.api.nvim_set_current_line(line)
+        pcall(vim.cmd, "undojoin")
         vim.cmd("keepjumps Neoformat")
       end
       on_format_complete(bufnr)
