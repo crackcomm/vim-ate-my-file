@@ -1,15 +1,39 @@
 local gopkgsdriver = vim.fn.stdpath("config") .. "/scripts/gopackagesdriver.sh"
 
 return {
-  cmd = function(dispatchers)
-    local workspace_dir = vim.fn.getcwd()
+  --- @param dispatchers vim.lsp.rpc.Dispatchers
+  --- @param config vim.lsp.ClientConfig
+  cmd = function(dispatchers, config)
     local env = {}
-    if vim.uv.fs_stat(workspace_dir .. "/WORKSPACE") ~= nil then
+    local workspace = vim.uv.fs_stat(config.root_dir .. "/WORKSPACE")
+    local git = vim.uv.fs_stat(config.root_dir .. "/.git")
+    if workspace and git then
       env["GOPACKAGESDRIVER"] = gopkgsdriver
     end
     return vim.lsp.rpc.start({ "gopls" }, dispatchers, { env = env })
   end,
-  root_dir = vim.fn.getcwd(),
+  --- Root directory is determined by the `go.mod` file.
+  root_dir = function(bufnr, on_dir)
+    local filepath = vim.api.nvim_buf_get_name(bufnr)
+    local root = vim.fs.dirname(vim.fs.find("go.mod", { path = filepath, upward = true })[1])
+    on_dir(root or vim.fn.getcwd())
+  end,
+  --- Reuse client for bazel-generated sources like protobufs.
+  --- @param client vim.lsp.Client
+  --- @param config vim.lsp.ClientConfig
+  reuse_client = function(client, config)
+    if client.name ~= "gopls" then
+      return false
+    end
+    if client.root_dir == config.root_dir then
+      return true
+    end
+    -- We want to reuse client, for example for:
+    -- ~/.cache/bazel/_bazel_pah/.../execroot/_main/bazel-out/k8-fastbuild/bin/ctx/service.connect.go
+    -- But not for:
+    -- ~/.cache/bazel/_bazel_pah/.../external/gazelle++go_deps+io_etcd_go_bbolt/tx.go
+    return string.gmatch(config.root_dir, "execroot/_main")()
+  end,
   settings = {
     gopls = {
       analyses = {
