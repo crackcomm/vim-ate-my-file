@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 cap() {
-  read foo
-  printf -v tmp "$foo"
+	read foo
+	printf -v tmp "$foo"
 }
 ret() { echo $tmp; }
 rgh() { rg -e "^" -e "$1"; }
@@ -12,26 +12,26 @@ clip() { xclip -sel c; }
 
 # Copy to clipboard for a language model
 cliplm() {
-  for file in "$@"; do
-    echo "File: $file"
-    echo '```'
-    cat "$file"
-    echo '```'
-    echo
-  done | xclip -sel c
+	for file in "$@"; do
+		echo "File: $file"
+		echo '```'
+		cat "$file"
+		echo '```'
+		echo
+	done | xclip -sel c
 }
 
 # ps -ef with interactive search
 psef() {
-  export FZF_DEFAULT_COMMAND='ps -ef'
-  fzf --bind "ctrl-r:reload(ps -ef)" \
-    --header 'Press CTRL-R to reload' --header-lines=1 \
-    --height=50% --layout=reverse
+	export FZF_DEFAULT_COMMAND='ps -ef'
+	fzf --bind "ctrl-r:reload(ps -ef)" \
+		--header 'Press CTRL-R to reload' --header-lines=1 \
+		--height=50% --layout=reverse
 }
 
 # Generate a random port number based on input.
 mkport() {
-  echo -n "$@" | sha256sum | cut -c1-4 | tr 'a-f' 'A-F' | xargs -I'{}' bash -c 'echo $(( 1000 + (16#{} % 9000) ))'
+	echo -n "$@" | sha256sum | cut -c1-4 | tr 'a-f' 'A-F' | xargs -I'{}' bash -c 'echo $(( 1000 + (16#{} % 9000) ))'
 }
 
 # Aliases

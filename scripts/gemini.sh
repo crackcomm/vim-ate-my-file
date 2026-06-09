@@ -14,8 +14,8 @@ PROMPT=$(cat)
 # 4. Build JSON payload using Gemini's schema
 # Gemini uses: { contents: [ { parts: [ { text: "..." } ] } ] }
 PAYLOAD=$(jq -n \
-  --arg prompt "$PROMPT" \
-  '{
+	--arg prompt "$PROMPT" \
+	'{
     contents: [{
       parts: [{
         text: $prompt
@@ -31,6 +31,6 @@ PAYLOAD=$(jq -n \
 URL="https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${GEMINI_API_KEY}"
 
 curl -sS -X POST "$URL" \
-  -H "Content-Type: application/json" \
-  -d "$PAYLOAD" | \
-  jq -r '.candidates[0].content.parts[0].text // "Error: No content returned (Check safety settings or API key)"'
+	-H "Content-Type: application/json" \
+	-d "$PAYLOAD" |
+	jq -r '.candidates[0].content.parts[0].text // "Error: No content returned (Check safety settings or API key)"'
