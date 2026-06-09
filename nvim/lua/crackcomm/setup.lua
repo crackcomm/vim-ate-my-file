@@ -36,6 +36,15 @@ local function register_filetypes()
       vim.bo.commentstring = "// %s"
     end,
   })
+
+  -- Enable comment continuation on `o`/<CR> for languages whose ftplugin
+  -- does not set the `r` and `o` flags in `formatoptions` by default.
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "go", "python" },
+    callback = function()
+      vim.cmd("setlocal formatoptions+=ro")
+    end,
+  })
 end
 
 local function clear_default_keymaps()
