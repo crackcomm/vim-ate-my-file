@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   home.packages = with pkgs; [
     # Development Libraries
     openssl

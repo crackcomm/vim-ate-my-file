@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   boot = {
     loader = {
       timeout = 5;
@@ -19,6 +20,8 @@
       efi.canTouchEfiVariables = false;
     };
 
-    kernel.sysctl = { "fs.aio-max-nr" = 1048576; };
+    kernel.sysctl = {
+      "fs.aio-max-nr" = 1048576;
+    };
   };
 }

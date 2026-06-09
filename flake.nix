@@ -4,8 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     rust-overlay = {
-      url =
-        "github:oxalica/rust-overlay?rev=403c09094a877e6c4816462d00b1a56ff8198e06";
+      url = "github:oxalica/rust-overlay?rev=403c09094a877e6c4816462d00b1a56ff8198e06";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
@@ -14,7 +13,14 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, rust-overlay, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      rust-overlay,
+      ...
+    }@inputs:
     let
       inherit (self) outputs;
 
@@ -37,7 +43,8 @@
         optionalModule = moduleLib.optionalModule;
         defaultModule = moduleLib.defaultModule;
       };
-    in {
+    in
+    {
       nixosConfigurations = {
         nixos-vm = nixpkgs.lib.nixosSystem {
           inherit system;

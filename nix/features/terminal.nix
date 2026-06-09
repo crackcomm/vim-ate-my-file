@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   environment.variables = {
     TERMINAL = "kitty -1";
     TERM = "xterm-kitty";

@@ -1,7 +1,15 @@
-{ ... }: {
-  imports = [ ./boot.nix ./hardware.nix ./modules ];
+{ ... }:
+{
+  imports = [
+    ./boot.nix
+    ./hardware.nix
+    ./modules
+  ];
 
-  nix.settings.trusted-users = [ "root" "pah" ];
+  nix.settings.trusted-users = [
+    "root"
+    "pah"
+  ];
 
   system.stateVersion = "24.05";
 

@@ -1,5 +1,14 @@
-{ pkgs, config, lib, ... }: {
-  environment.systemPackages = [ pkgs.docker pkgs.gvisor ];
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
+{
+  environment.systemPackages = [
+    pkgs.docker
+    pkgs.gvisor
+  ];
 
   virtualisation.docker = {
     enable = true;
@@ -9,11 +18,17 @@
       setSocketVariable = true;
     };
     daemon.settings = {
-      runtimes = { runsc = { path = "${pkgs.gvisor}/bin/runsc"; }; };
+      runtimes = {
+        runsc = {
+          path = "${pkgs.gvisor}/bin/runsc";
+        };
+      };
     };
   };
 
-  virtualisation.containerd = { enable = true; };
+  virtualisation.containerd = {
+    enable = true;
+  };
 
   environment.sessionVariables = {
     DOCKER_HOST = "unix://$XDG_RUNTIME_DIR/docker.sock";
@@ -29,17 +44,19 @@
   systemd.user.services.docker.serviceConfig.ExecStart = lib.mkForce [
     "" # Clear the default ExecStart
     "${config.virtualisation.docker.package}/bin/dockerd-rootless --config-file=${
-      pkgs.writeText "docker-daemon.json" (builtins.toJSON {
-        runtimes = {
-          runsc = {
-            path = "${pkgs.gvisor}/bin/runsc";
-            runtimeArgs = [
-              "--network=host"
-              "--ignore-cgroups" # Essential: Stops gVisor from trying to touch systemd/cgroups
-            ];
+      pkgs.writeText "docker-daemon.json" (
+        builtins.toJSON {
+          runtimes = {
+            runsc = {
+              path = "${pkgs.gvisor}/bin/runsc";
+              runtimeArgs = [
+                "--network=host"
+                "--ignore-cgroups" # Essential: Stops gVisor from trying to touch systemd/cgroups
+              ];
+            };
           };
-        };
-      })
+        }
+      )
     }"
   ];
 }

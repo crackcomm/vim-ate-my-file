@@ -1,1 +1,8 @@
-{ pkgs, ... }: { environment.systemPackages = with pkgs; [ unzip lbzip2 xz ]; }
+{ pkgs, ... }:
+{
+  environment.systemPackages = with pkgs; [
+    unzip
+    lbzip2
+    xz
+  ];
+}

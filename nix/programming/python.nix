@@ -1,1 +1,8 @@
-{ pkgs, ... }: { home.packages = with pkgs; [ uv ruff pyright ]; }
+{ pkgs, ... }:
+{
+  home.packages = with pkgs; [
+    uv
+    ruff
+    pyright
+  ];
+}

@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   home.packages = with pkgs; [ pavucontrol ];
 
   # TODO: already enabled system-wide, disable?

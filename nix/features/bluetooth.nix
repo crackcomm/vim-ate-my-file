@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   environment.systemPackages = [
     pkgs.bluez # Provides bluetoothctl command-line utility
   ];

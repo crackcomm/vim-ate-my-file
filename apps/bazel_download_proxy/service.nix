@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   home.packages = [ pkgs.bazel_download_proxy ];
 
   systemd.user.services.bazel_download_proxy = {
@@ -12,6 +13,8 @@
       Restart = "on-failure";
     };
 
-    Install = { WantedBy = [ "default.target" ]; };
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
   };
 }

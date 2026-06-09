@@ -1,4 +1,5 @@
-{ optionalModule, ... }: {
+{ optionalModule, ... }:
+{
   imports = [
     (optionalModule "bazel" ./bazel.nix)
     (optionalModule "common-libs" ./common-libs.nix)

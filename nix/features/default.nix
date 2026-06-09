@@ -1,4 +1,5 @@
-{ optionalModule, defaultModule, ... }: {
+{ optionalModule, defaultModule, ... }:
+{
   imports = [
     (defaultModule "bluetooth" ./bluetooth.nix)
     (defaultModule "compression" ./compression.nix)

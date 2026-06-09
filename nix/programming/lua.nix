@@ -1,1 +1,7 @@
-{ pkgs, ... }: { home.packages = with pkgs; [ stylua lua-language-server ]; }
+{ pkgs, ... }:
+{
+  home.packages = with pkgs; [
+    stylua
+    lua-language-server
+  ];
+}

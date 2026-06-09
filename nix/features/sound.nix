@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   security.rtkit.enable = true; # realtime scheduling for audio
   services.pipewire = {
     enable = true;
@@ -9,5 +10,8 @@
   };
 
   hardware.alsa.enablePersistence = true;
-  environment.systemPackages = with pkgs; [ wireplumber pulseaudio ];
+  environment.systemPackages = with pkgs; [
+    wireplumber
+    pulseaudio
+  ];
 }

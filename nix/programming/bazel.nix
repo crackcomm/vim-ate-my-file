@@ -1,1 +1,4 @@
-{ pkgs, ... }: { home.packages = with pkgs; [ bazel-lsp ]; }
+{ pkgs, ... }:
+{
+  home.packages = with pkgs; [ bazel-lsp ];
+}

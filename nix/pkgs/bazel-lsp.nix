@@ -1,4 +1,9 @@
-{ stdenv, fetchurl, autoPatchelfHook, glibc }:
+{
+  stdenv,
+  fetchurl,
+  autoPatchelfHook,
+  glibc,
+}:
 let
   system = stdenv.hostPlatform.system;
   systemToBinary = {
@@ -12,15 +17,13 @@ let
     };
   };
 
-in stdenv.mkDerivation rec {
+in
+stdenv.mkDerivation rec {
   pname = "bazel-lsp";
   version = "0.6.4";
 
   src = fetchurl {
-    url =
-      "https://github.com/cameron-martin/bazel-lsp/releases/download/v${version}/${
-        systemToBinary.${system}.name
-      }";
+    url = "https://github.com/cameron-martin/bazel-lsp/releases/download/v${version}/${systemToBinary.${system}.name}";
     sha256 = systemToBinary.${system}.sha256;
   };
 

@@ -1,1 +1,8 @@
-{ pkgs, ... }: { home.packages = with pkgs; [ shotgun slop xclip ]; }
+{ pkgs, ... }:
+{
+  home.packages = with pkgs; [
+    shotgun
+    slop
+    xclip
+  ];
+}

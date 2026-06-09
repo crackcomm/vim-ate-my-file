@@ -1,5 +1,11 @@
-{ pkgs, ... }: {
-  environment.systemPackages = with pkgs; [ git jujutsu patch gnupg ];
+{ pkgs, ... }:
+{
+  environment.systemPackages = with pkgs; [
+    git
+    jujutsu
+    patch
+    gnupg
+  ];
 
   programs.gnupg.agent = {
     enable = true;
