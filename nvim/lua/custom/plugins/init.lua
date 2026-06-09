@@ -71,7 +71,7 @@ return {
     "smoka7/hop.nvim",
     version = "*",
     opts = {
-      keys = "qweasdzcpoiukjmnb",
+      keys = "sadjlkbzxcnmo;p",
     },
     config = function(_, opts)
       local hop = require("hop")
