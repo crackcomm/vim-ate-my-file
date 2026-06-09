@@ -85,3 +85,12 @@ nmap({ "<space>fr", custom.frecency, "telescope: [f]recency" })
 
 -- [t]elescope [y]anks
 nmap({ "<space>ty", builtin.registers, "telescope: [t]elescope [y]anks (registers)" })
+
+-- [l]sp [c]lients
+nmap({
+  "<space>lc",
+  function()
+    R("crackcomm.lsp.telescope.lsp_clients")()
+  end,
+  "telescope: [l]sp [c]lients",
+})
