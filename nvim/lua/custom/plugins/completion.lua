@@ -14,10 +14,4 @@ return {
   { "onsails/lspkind-nvim" },
   { "tamago324/cmp-zsh" },
   { "saadparwaiz1/cmp_luasnip" },
-  {
-    "zbirenbaum/copilot-cmp",
-    config = function()
-      require("copilot_cmp").setup()
-    end,
-  },
 }
