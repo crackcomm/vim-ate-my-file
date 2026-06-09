@@ -17,8 +17,9 @@ M.definition = function()
     end
     if total == 1 then
       for cid, r in pairs(results_per_client) do
-        local loc = (type(r.result) == "table" and r.result[1] or r.result)
-        vim.lsp.util.jump_to_location(loc, vim.lsp.get_client_by_id(cid).offset_encoding)
+        local offset_encoding = vim.lsp.get_client_by_id(cid).offset_encoding
+        local loc = type(r.result) == "table" and r.result[1] or r.result
+        vim.lsp.util.show_document(loc, offset_encoding, { focus = true })
         return
       end
     end
@@ -36,6 +37,10 @@ M.implementation = function()
 
   vim.lsp.buf_request(0, "textDocument/implementation", params, function(err, result, ctx, config)
     local bufnr = ctx.bufnr
+    if not bufnr then
+      return
+    end
+
     local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
 
     -- In go code, I do not like to see any mocks for impls
