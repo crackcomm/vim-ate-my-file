@@ -13,6 +13,7 @@ diff-formatter = ["delta"]
 
 [aliases]
 ll = ["log", "-n", "10", "--no-pager"]
+lnp = ["log", "--no-pager"]
 sl = ["log", "-r", "shortlog", "--no-pager"]
 sq = ["squash"]
 s = ["show"]
