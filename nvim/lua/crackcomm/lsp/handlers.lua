@@ -24,7 +24,7 @@ M.definition = function()
       end
     end
     if total == 0 then
-      vim.notify("No definition found", vim.log.levels.WARN)
+      vim.notify("No definition found", vim.log.levels.INFO)
       return
     end
     -- otherwise show our picker
