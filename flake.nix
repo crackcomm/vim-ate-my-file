@@ -45,6 +45,11 @@
       };
     in
     {
+      packages.${system} = {
+        bazel_download_proxy = pkgs.bazel_download_proxy;
+        default = pkgs.bazel_download_proxy;
+      };
+
       nixosConfigurations = {
         nixos-vm = nixpkgs.lib.nixosSystem {
           inherit system;
