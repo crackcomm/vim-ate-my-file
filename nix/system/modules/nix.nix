@@ -4,9 +4,11 @@
     gc = {
       automatic = true;
       dates = "weekly";
-      options = "--delete-older-than 7d"; # Keep derivations for 7 days
+      options = "--delete-older-than 60d";
     };
     settings.auto-optimise-store = true;
+    settings.download-attempts = 1;
+    settings.connect-timeout = 5;
     settings.experimental-features = [
       "nix-command"
       "flakes"
