@@ -7,7 +7,8 @@ return {
     local env = {}
     local workspace = vim.uv.fs_stat(config.root_dir .. "/WORKSPACE")
     local git = vim.uv.fs_stat(config.root_dir .. "/.git")
-    if workspace and git then
+    local jj = vim.uv.fs_stat(config.root_dir .. "/.jj")
+    if workspace and (git or jj) then
       env["GOPACKAGESDRIVER"] = gopkgsdriver
     end
     return vim.lsp.rpc.start({ "gopls" }, dispatchers, { env = env })
