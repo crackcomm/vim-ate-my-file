@@ -5,16 +5,16 @@
 }:
 
 let
-  version = "0.42.0";
+  version = "0.43.0";
   system = stdenv.hostPlatform.system;
   systemToBinary = {
     "x86_64-linux" = {
       name = "jj-v${version}-x86_64-unknown-linux-musl.tar.gz";
-      sha256 = "2d91e81d649e617a81608e7401ad1106029c15ece01ac928c4a351abef42be6a";
+      sha256 = "59e5588583ac82b623239929368c65b90735931c0f26b5a16c1f04d5bb97643d";
     };
     "aarch64-linux" = {
       name = "jj-v${version}-aarch64-unknown-linux-musl.tar.gz";
-      sha256 = "bc962ac57ec264541a62ed8492f080898380a277222b115e1ed96163196e6fc8";
+      sha256 = "289197b6bec60b4e57d47260624b617716f737eb02cdfd9155791b2576aa5862";
     };
   };
 
