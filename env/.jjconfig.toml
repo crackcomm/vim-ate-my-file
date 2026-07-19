@@ -63,7 +63,8 @@ cid = ["util", "exec", "--", "jjcid.sh"]
 '''
 
 # https://martinvonz.github.io/jj/v0.11.0/config/#set-of-immutable-commits
-'immutable_heads()' = 'tags()'
+# all tags and master branch
+'immutable_heads()' = 'tags() | present(master@github)'
 
 'divergent' = '(:: ~ ::@) | heads(::@ & ::(:: ~ ::@)) | @'
 
