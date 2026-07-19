@@ -59,7 +59,7 @@ cid = ["util", "exec", "--", "jjcid.sh"]
 
 'shortlog' = '''
     (@::)
-  | ancestors(@, 3)
+  | ancestors(@, 10)
 '''
 
 # https://martinvonz.github.io/jj/v0.11.0/config/#set-of-immutable-commits
