@@ -27,6 +27,7 @@ ne = ["new", "--no-edit"]
 sb = ["squash", "--to", "@-", "--keep-emptied"]
 si = ["squash", "-i", "--to"]
 gc = ["git", "clone", "--colocate"]
+cid = ["util", "exec", "--", "jjcid.sh"]
 
 "e-" = ["edit", "@-"]
 "e+" = ["edit", "@+"]
