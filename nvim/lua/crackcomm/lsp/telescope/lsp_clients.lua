@@ -21,6 +21,37 @@ local function restart_client(bufnr)
   end)
 end
 
+local function stop_client(bufnr)
+  local picker = action_state.get_current_picker(bufnr)
+  local action_name = "lsp.stop_client"
+  picker:delete_selection(function(selection)
+    local client = vim.lsp.get_client_by_id(selection.value)
+    if client then
+      client:stop(true)
+      utils.notify(action_name, {
+        msg = string.format("Stopping LSP client: %s", selection.value),
+        level = "INFO",
+      })
+    end
+  end)
+end
+
+local function disable_server(bufnr)
+  local picker = action_state.get_current_picker(bufnr)
+  local action_name = "lsp.disable_server"
+  picker:delete_selection(function(selection)
+    local client = vim.lsp.get_client_by_id(selection.value)
+    if not client then
+      return
+    end
+    vim.lsp.enable(client.name, false)
+    utils.notify(action_name, {
+      msg = string.format("Disabled LSP client: %s", client.name),
+      level = "INFO",
+    })
+  end)
+end
+
 --- Shows a telescope picker with all active LSP clients.
 ---
 --- @param opts table?
@@ -47,6 +78,8 @@ return function(opts)
     }),
     attach_mappings = function(prompt_bufnr, map)
       map("n", "r", restart_client)
+      map("n", "c", stop_client)
+      map("n", "d", disable_server)
       actions.select_default:replace(function()
         restart_client(prompt_bufnr)
         actions.close(prompt_bufnr)
