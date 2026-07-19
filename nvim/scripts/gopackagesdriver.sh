@@ -9,9 +9,9 @@ fi
 GOPACKAGESDRIVER_BIN=bazel-bin/external/rules_go+/go/tools/gopackagesdriver/gopackagesdriver_/gopackagesdriver
 
 if [ ! -x $GOPACKAGESDRIVER_BIN ]; then
-  exec bazel run -- @io_bazel_rules_go//go/tools/gopackagesdriver "${@}" || true
-else
-  export BUILD_WORKSPACE_DIRECTORY=$(pwd)
-  export BUILD_WORKING_DIRECTORY=$(pwd)
-  exec $GOPACKAGESDRIVER_BIN "${@}" || true
+  exec bazel build @io_bazel_rules_go//go/tools/gopackagesdriver
 fi
+
+export BUILD_WORKSPACE_DIRECTORY=$(pwd)
+export BUILD_WORKING_DIRECTORY=$(pwd)
+exec $GOPACKAGESDRIVER_BIN "${@}" || true
