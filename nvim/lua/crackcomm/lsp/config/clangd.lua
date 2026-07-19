@@ -4,6 +4,7 @@ local cmd = {
   "--completion-style=detailed",
   "--background-index",
   "--clang-tidy",
+  "--import-insertions",
   "--header-insertion=iwyu",
   "--offset-encoding=utf-16",
 }
