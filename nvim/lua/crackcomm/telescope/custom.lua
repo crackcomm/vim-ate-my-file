@@ -33,7 +33,7 @@ function M.lsp_safe_rename(prompt_bufnr)
     end
 
     lsp_rename(old_path, new_path)
-    actions.close(prompt_bufnr)
+    pcall(actions.close, prompt_bufnr)
   end)
 end
 
