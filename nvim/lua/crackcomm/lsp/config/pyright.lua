@@ -32,6 +32,9 @@ return {
       },
     },
   },
+  reuse_client = function(client)
+    return client.name == "pyright"
+  end,
   before_init = function(_, config)
     if config.root_dir ~= nil then
       config.settings.python.pythonPath = get_python_path(config.root_dir)
