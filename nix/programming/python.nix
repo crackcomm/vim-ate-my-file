@@ -4,5 +4,6 @@
     uv
     ruff
     pyright
+    ty
   ];
 }
