@@ -164,7 +164,14 @@ func (ph *proxyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func (ph *proxyHandler) downloadAndStream(w http.ResponseWriter, url, finalCachePath string) error {
 	log.Printf("Cache miss. Streaming download from %s", url)
 
-	resp, err := http.Get(url)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		http.Error(w, "Failed to create upstream request", http.StatusInternalServerError)
+		return fmt.Errorf("failed to create request: %w", err)
+	}
+	req.Header.Set("User-Agent", "bazel-download-proxy/1.0")
+
+	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		// If we can't even start the request, send a Bad Gateway error.
 		http.Error(w, "Failed to contact upstream server", http.StatusBadGateway)
